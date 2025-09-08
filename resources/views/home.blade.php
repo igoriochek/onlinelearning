@@ -33,6 +33,15 @@
 								<p class="text-sm text-gray-600 line-clamp-2">
 									{{ $course->description }}
 								</p>
+								@if ($course->averageRating)
+									<div class="flex items-center mt-2">
+										<x-star :filled="true" />
+										<span class="ml-2 text-gray-600 text-sm mt-1">
+											({{ $course->averageRating }})
+										</span>
+									</div>
+								@endif
+
 								<div class="mt-2 flex justify-between items-center">
 									<span class="text-sm text-gray-500 capitalize">
 										{{ $course->level_name }} Level

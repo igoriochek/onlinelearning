@@ -7,6 +7,7 @@ use App\Models\Course;
 use App\Models\Section;
 use App\Models\Lesson;
 use App\Models\Step;
+use App\Models\Review;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -41,6 +42,7 @@ class DatabaseSeeder extends Seeder
 		Course::factory(5)
 			->create()
 			->each(function ($course) {
+				Review::factory(5)->create(['course_id' => $course->id]);
 				Section::factory(3)
 					->create(['course_id' => $course->id])
 					->each(function ($section, $sectionIndex) {

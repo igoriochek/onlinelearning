@@ -44,6 +44,13 @@ class Course extends Model
 		};
 	}
 
+	public function getAverageRatingAttribute()
+	{
+		return $this->reviews()->count()
+			? round($this->reviews()->avg('rating'), 1)
+			: null;
+	}
+
 	public function sections()
 	{
 		return $this->hasMany(Section::class);
@@ -52,5 +59,10 @@ class Course extends Model
 	public function author()
 	{
 		return $this->belongsTo(User::class, 'author_id');
+	}
+
+	public function reviews()
+	{
+		return $this->hasMany(Review::class);
 	}
 }

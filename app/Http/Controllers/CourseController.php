@@ -15,33 +15,37 @@ class CourseController extends Controller
 
 	public function show(Course $course)
 	{
-		$course->load('sections.lessons.steps');
+		$course->load(['sections.lessons.steps', 'reviews.user']);
 
-		$videoLessons = 0;
-		$textLessons = 0;
-		$quizzes = 0;
+		$averageRating = round($course->reviews()->avg('rating'), 1);
 
-		foreach ($course->sections as $section) {
-			foreach ($section->lessons as $lesson) {
-				foreach ($lesson->steps as $step) {
-					switch ($step->type) {
-						case 'video':
-							$videoLessons++;
-							break;
-						case 'text':
-							$textLessons++;
-							break;
-						case 'quiz':
-							$quizzes++;
-							break;
-					}
-				}
-			}
-		}
+		$videoLessons = $course->sections
+			->flatMap(fn($section) => $section->lessons)
+			->flatMap(fn($lesson) => $lesson->steps)
+			->where('type', 'video')
+			->count();
+
+		$textLessons = $course->sections
+			->flatMap(fn($section) => $section->lessons)
+			->flatMap(fn($lesson) => $lesson->steps)
+			->where('type', 'text')
+			->count();
+
+		$quizzes = $course->sections
+			->flatMap(fn($section) => $section->lessons)
+			->flatMap(fn($lesson) => $lesson->steps)
+			->where('type', 'quiz')
+			->count();
 
 		return view(
 			'courses.show',
-			compact('course', 'videoLessons', 'textLessons', 'quizzes'),
+			compact(
+				'course',
+				'averageRating',
+				'videoLessons',
+				'textLessons',
+				'quizzes',
+			),
 		);
 	}
 }
