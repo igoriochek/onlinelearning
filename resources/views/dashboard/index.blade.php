@@ -7,22 +7,21 @@
 
 	<div class="py-6">
 		<div class="max-w-7xl mx-auto sm:px-6 lg:px-8 flex gap-6">
-			<!-- Sidebar -->
-			<aside class="w-64 bg-white shadow-sm rounded-lg p-4 flex-shrink-0">
+			<aside class="w-44 bg-white shadow-sm rounded-lg p-4 h-28">
 				<nav class="space-y-2">
-					<a
+					<x-aside-nav-link
 						href="{{ route('dashboard') }}"
-						class="block px-2 py-1 rounded hover:bg-gray-100"
+						:active="request()->routeIs('dashboard')"
 					>
 						Overview
-					</a>
-					<a
+					</x-aside-nav-link>
+
+					<x-aside-nav-link
 						href="{{ route('dashboard.wishlist') }}"
-						class="block px-2 py-1 rounded hover:bg-gray-100"
+						:active="request()->routeIs('dashboard.wishlist')"
 					>
 						Wishlist
-					</a>
-					<!-- Galima pridėti Bought Courses, Finished Courses -->
+					</x-aside-nav-link>
 				</nav>
 			</aside>
 			<main class="flex-1">

@@ -60,7 +60,6 @@ class Course extends Model
 			->count();
 	}
 
-	// 4. Text lessons count
 	public function getTextLessonsCountAttribute()
 	{
 		return $this->sections
@@ -70,7 +69,6 @@ class Course extends Model
 			->count();
 	}
 
-	// 5. Quizzes count
 	public function getQuizzesCountAttribute()
 	{
 		return $this->sections
