@@ -1,4 +1,7 @@
-<nav x-data="{ open: false }" class="border-b border-gray-100 bg-white">
+<nav
+	x-data="{ open: false }"
+	class="fixed top-0 w-full border-b border-gray-100 bg-white"
+>
 	<!-- Primary Navigation Menu -->
 	<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 		<div class="flex h-16 justify-between">
@@ -20,6 +23,14 @@
 					>
 						{{ __('Home') }}
 					</x-nav-link>
+					@auth
+						<x-nav-link
+							:href="route('dashboard')"
+							:active="request()->routeIs('dashboard*')"
+						>
+							{{ __('Dashboard') }}
+						</x-nav-link>
+					@endauth
 				</div>
 			</div>
 
@@ -73,10 +84,6 @@
 						<x-slot name="content">
 							<x-dropdown-link :href="route('profile.edit')">
 								{{ __('Profile') }}
-							</x-dropdown-link>
-
-							<x-dropdown-link :href="route('dashboard')">
-								{{ __('Dashboard') }}
 							</x-dropdown-link>
 
 							<!-- Authentication -->
@@ -138,7 +145,7 @@
 		<div class="space-y-1 pb-3 pt-2">
 			<x-responsive-nav-link
 				:href="route('dashboard')"
-				:active="request()->routeIs('dashboard')"
+				:active="request()->routeIs('dashboard*')"
 			>
 				{{ __('Dashboard') }}
 			</x-responsive-nav-link>
