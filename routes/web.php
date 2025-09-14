@@ -20,7 +20,6 @@ Route::middleware(['auth', 'verified'])
 			return view('dashboard.index');
 		})->name('dashboard');
 
-		//Wishlist
 		Route::get('/wishlist', [WishlistController::class, 'index'])->name(
 			'dashboard.wishlist',
 		);

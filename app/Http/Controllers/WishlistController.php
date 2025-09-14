@@ -11,9 +11,14 @@ class WishlistController extends Controller
 {
 	public function index()
 	{
-		$wishlists = Auth::user()->wishlist()->with('course')->get();
+		/** @var \App\Models\User $user */
+		$user = Auth::user();
 
-		return view('dashboard.wishlist', compact('wishlists'));
+		$wishlists = $user->wishlist()->with('course')->get();
+
+		$courses = $wishlists->pluck('course');
+
+		return view('dashboard.wishlist', compact('courses'));
 	}
 
 	public function store(Request $request, Course $course)

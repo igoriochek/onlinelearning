@@ -9,7 +9,7 @@ class HomeController extends Controller
 {
 	public function index()
 	{
-		$courses = Course::all();
-		return view('home.index', compact('courses'));
+		$recentCourses = Course::orderBy('created_at', 'desc')->take(6)->get();
+		return view('home.index', compact('recentCourses'));
 	}
 }
