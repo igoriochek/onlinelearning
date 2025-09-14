@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\WishlistController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -12,11 +13,26 @@ Route::get('/course/{course}', [CourseController::class, 'show'])->name(
 	'courses.show',
 );
 
-Route::get('/dashboard', function () {
-	return view('dashboard');
-})
-	->middleware(['auth', 'verified'])
-	->name('dashboard');
+Route::middleware(['auth', 'verified'])
+	->prefix('dashboard')
+	->group(function () {
+		Route::get('/', function () {
+			return view('dashboard.index');
+		})->name('dashboard');
+
+		//Wishlist
+		Route::get('/wishlist', [WishlistController::class, 'index'])->name(
+			'dashboard.wishlist',
+		);
+		Route::post('/wishlist/{course}', [
+			WishlistController::class,
+			'store',
+		])->name('dashboard.wishlist.store');
+		Route::delete('/wishlist/{course}', [
+			WishlistController::class,
+			'destroy',
+		])->name('dashboard.wishlist.destroy');
+	});
 
 Route::middleware('auth')->group(function () {
 	Route::get('/profile', [ProfileController::class, 'edit'])->name(

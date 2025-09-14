@@ -17,35 +17,6 @@ class CourseController extends Controller
 	{
 		$course->load(['sections.lessons.steps', 'reviews.user']);
 
-		$averageRating = round($course->reviews()->avg('rating'), 1);
-
-		$videoLessons = $course->sections
-			->flatMap(fn($section) => $section->lessons)
-			->flatMap(fn($lesson) => $lesson->steps)
-			->where('type', 'video')
-			->count();
-
-		$textLessons = $course->sections
-			->flatMap(fn($section) => $section->lessons)
-			->flatMap(fn($lesson) => $lesson->steps)
-			->where('type', 'text')
-			->count();
-
-		$quizzes = $course->sections
-			->flatMap(fn($section) => $section->lessons)
-			->flatMap(fn($lesson) => $lesson->steps)
-			->where('type', 'quiz')
-			->count();
-
-		return view(
-			'courses.show',
-			compact(
-				'course',
-				'averageRating',
-				'videoLessons',
-				'textLessons',
-				'quizzes',
-			),
-		);
+		return view('courses.show', compact('course'));
 	}
 }

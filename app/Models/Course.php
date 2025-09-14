@@ -51,6 +51,35 @@ class Course extends Model
 			: null;
 	}
 
+	public function getVideoLessonsCountAttribute()
+	{
+		return $this->sections
+			->flatMap(fn($section) => $section->lessons)
+			->flatMap(fn($lesson) => $lesson->steps)
+			->where('type', 'video')
+			->count();
+	}
+
+	// 4. Text lessons count
+	public function getTextLessonsCountAttribute()
+	{
+		return $this->sections
+			->flatMap(fn($section) => $section->lessons)
+			->flatMap(fn($lesson) => $lesson->steps)
+			->where('type', 'text')
+			->count();
+	}
+
+	// 5. Quizzes count
+	public function getQuizzesCountAttribute()
+	{
+		return $this->sections
+			->flatMap(fn($section) => $section->lessons)
+			->flatMap(fn($lesson) => $lesson->steps)
+			->where('type', 'quiz')
+			->count();
+	}
+
 	public function sections()
 	{
 		return $this->hasMany(Section::class);
