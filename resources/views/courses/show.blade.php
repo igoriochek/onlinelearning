@@ -1,16 +1,17 @@
 <x-app-layout>
 	<x-slot name="header">
-    <div class="flex justify-between"><h2 class="text-xl font-semibold leading-tight text-gray-800">
-			{{ $course->title }}
+    <div class="flex justify-between">
+      <h2 class="text-xl font-semibold leading-tight text-gray-800">
+			  {{ $course->title }}
 		</h2>
     <div class="flex items-center">
       <div class="flex mb-1">
        @for ($i = 1; $i <= 5; $i++)
-            <x-star :filled="$i <= round($averageRating)" />
+            <x-star :filled="$i <= round($course->averageRating)" />
         @endfor
         </div>
         <span class="ml-2 text-gray-600 text-sm">
-        {{ $averageRating }}/5 ({{ $course->reviews->count() }} reviews)
+        {{ $course->averageRating }}/5 ({{ $course->reviews->count() }} reviews)
     </span>
     </div>
     
@@ -57,7 +58,7 @@
 			</div>
 
 		<div>
-			<div class="bg-white shadow rounded-lg p-6 sticky top-6">
+			<div class="bg-white shadow rounded-lg p-6 top-6">
 				<p class="text-2xl font-bold mb-2">${{ $course->price }}</p>
 				<button class="bg-blue-600 text-white px-4 py-2 rounded mb-2 w-full">
 					Buy now
@@ -65,14 +66,17 @@
 				<button class="border border-gray-300 px-4 py-2 rounded mb-2 w-full">
 					Try free trial
 				</button>
-				<button class="border border-gray-300 px-4 py-2 rounded w-full">
-					Add to Wishlist
-				</button>
+				<form action="{{ route('dashboard.wishlist.store', $course->id) }}" method="POST">
+    @csrf
+    <button class="border border-gray-300 px-4 py-2 rounded w-full">
+        Add to Wishlist
+    </button>
+</form>
 
 				<div class="mt-4 text-sm text-gray-600">
-        <p>Video Lessons: {{ $videoLessons }}</p>
-        <p>Text Lessons: {{ $textLessons }}</p>
-         <p>Quizzes: {{ $quizzes }}</p>
+        <p>Video Lessons: {{ $course->videoLessons }}</p>
+        <p>Text Lessons: {{ $course->textLessons }}</p>
+         <p>Quizzes: {{ $course->quizzes }}</p>
         </div>
 			</div>
       <div class="mt-8">
