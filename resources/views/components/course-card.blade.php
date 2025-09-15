@@ -1,4 +1,4 @@
-<a href="{{ route('courses.show', $course->id) }}" class="block">
+<a href="{{ route('courses.index', $course->id) }}" class="block">
 	<div
 		class="bg-white shadow-sm rounded-lg overflow-hidden hover:shadow-md
 			transition-shadow"
@@ -42,7 +42,7 @@
 			@auth
 				<form
 					action="{{
-       $isInWishlist
+       $course->isInWishlist()
        	? route('dashboard.wishlist.destroy', $course->id)
        	: route('dashboard.wishlist.store', $course->id)
      }}"
@@ -50,7 +50,7 @@
 					class="mt-2"
 				>
 					@csrf
-					@if ($isInWishlist)
+					@if ($course->isInWishlist())
 						@method('DELETE')
 						<button class="text-red-600 hover:text-red-800 text-sm">
 							Remove from Wishlist

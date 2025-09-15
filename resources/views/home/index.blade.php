@@ -5,7 +5,7 @@
 		</h2>
 	</x-slot>
 
-	<div class="py-6">
+	<div class="py-6 mx-2">
 		<div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
 			<x-course-section title="Most Recent" :courses="$recentCourses" />
 		</div>
