@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/course/{course}', [CourseController::class, 'show'])->name(
-	'courses.show',
+	'courses.index',
 );
 
 Route::middleware(['auth', 'verified'])

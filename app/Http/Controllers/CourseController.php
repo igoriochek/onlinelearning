@@ -17,6 +17,6 @@ class CourseController extends Controller
 	{
 		$course->load(['sections.lessons.steps', 'reviews.user']);
 
-		return view('courses.show', compact('course'));
+		return view('courses.index', compact('course'));
 	}
 }

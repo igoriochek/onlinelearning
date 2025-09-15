@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 
 class Course extends Model
 {
@@ -32,6 +33,14 @@ class Course extends Model
 				$model->id = (string) Str::uuid();
 			}
 		});
+	}
+
+	public function isInWishlist(): bool
+	{
+		$user = Auth::user();
+		return $user
+			? $user->wishlist()->where('course_id', $this->id)->exists()
+			: false;
 	}
 
 	public function getLevelNameAttribute()
