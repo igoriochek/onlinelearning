@@ -40,27 +40,7 @@
 			</div>
 
 			@auth
-				<form
-					action="{{
-       $course->isInWishlist()
-       	? route('dashboard.wishlist.destroy', $course->id)
-       	: route('dashboard.wishlist.store', $course->id)
-     }}"
-					method="POST"
-					class="mt-2"
-				>
-					@csrf
-					@if ($course->isInWishlist())
-						@method('DELETE')
-						<button class="text-red-600 hover:text-red-800 text-sm">
-							Remove from Wishlist
-						</button>
-					@else
-						<button class="text-blue-600 hover:text-blue-800 text-sm">
-							+ Add to Wishlist
-						</button>
-					@endif
-				</form>
+				<x-wishlist-button :course="$course" variant="text" />
 			@endauth
 		</div>
 	</div>

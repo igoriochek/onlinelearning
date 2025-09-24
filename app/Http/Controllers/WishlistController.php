@@ -28,7 +28,7 @@ class WishlistController extends Controller
 			'course_id' => $course->id,
 		]);
 
-		return back()->with('success', 'Course added to wishlist!');
+		return response()->json(['success' => true]);
 	}
 
 	public function destroy(Course $course)
@@ -37,6 +37,6 @@ class WishlistController extends Controller
 			->where('course_id', $course->id)
 			->delete();
 
-		return back()->with('success', 'Course removed from wishlist!');
+		return response()->json(['success' => true]);
 	}
 }
