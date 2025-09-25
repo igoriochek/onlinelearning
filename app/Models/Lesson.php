@@ -32,6 +32,6 @@ class Lesson extends Model
 
 	public function steps()
 	{
-		return $this->hasMany(Step::class);
+		return $this->hasMany(Step::class)->orderBy('position');
 	}
 }

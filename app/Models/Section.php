@@ -10,7 +10,7 @@ class Section extends Model
 	use HasFactory;
 	public function lessons()
 	{
-		return $this->hasMany(Lesson::class);
+		return $this->hasMany(Lesson::class)->orderBy('position');
 	}
 
 	public function course()
