@@ -4,14 +4,21 @@ use App\Http\Controllers\ProfileController;
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\LessonController;
 use App\Http\Controllers\WishlistController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/course/{course}', [CourseController::class, 'show'])->name(
-	'courses.index',
+	'courses.show',
 );
+Route::middleware(['auth', 'verified'])->group(function () {
+	Route::get('/lesson/{lesson}/step/{position}', [
+		LessonController::class,
+		'show',
+	])->name('lessons.step.show');
+});
 
 Route::middleware(['auth', 'verified'])
 	->prefix('dashboard')

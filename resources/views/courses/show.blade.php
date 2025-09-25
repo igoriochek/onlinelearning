@@ -25,7 +25,7 @@
 	</x-slot>
 
 	<main
-		class="max-w-6xl mx-auto py-6 grid grid-cols-1 md:grid-cols-3 gap-6 px-2"
+		class="max-w-7xl mx-auto py-6 grid grid-cols-1 md:grid-cols-3 gap-6 px-2"
 	>
 		<article class="md:col-span-2">
 			<img
@@ -136,9 +136,13 @@
 				<button class="bg-blue-600 text-white px-4 py-2 rounded mb-2 w-full">
 					Buy now
 				</button>
-				<button class="border border-gray-300 px-4 py-2 rounded mb-2 w-full">
+				<a
+					href="{{ route('lessons.step.show', ['lesson' => $firstLesson->id, 'position' => 1]) }}"
+					class="border border-gray-300 px-4 py-2 rounded w-full block
+						text-center"
+				>
 					Try free trial
-				</button>
+				</a>
 				@auth
 					<x-wishlist-button :course="$course" variant="full" />
 				@endauth
@@ -156,9 +160,13 @@
 			<button class="bg-blue-600 text-white flex-1 py-2 mx-2 rounded">
 				Buy
 			</button>
-			<button class="border border-gray-300 flex-1 py-2 mx-2 rounded">
+			<a
+				href="{{ route('lessons.step.show', ['lesson' => $firstLesson->id, 'position' => 1]) }}"
+				class="border border-gray-300 flex-1 py-2 mx-2 rounded block
+					text-center"
+			>
 				Try free
-			</button>
+			</a>
 			<div class="flex gap-2">
 				@auth
 					<x-wishlist-button :course="$course" variant="icon" />

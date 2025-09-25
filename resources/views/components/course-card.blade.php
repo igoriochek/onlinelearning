@@ -1,4 +1,4 @@
-<a href="{{ route('courses.index', $course->id) }}" class="block">
+<a href="{{ route('courses.show', $course->id) }}" class="block">
 	<div
 		class="bg-white shadow-sm rounded-lg overflow-hidden hover:shadow-md
 			transition-shadow"
