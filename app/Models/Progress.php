@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Progress extends Model
 {
+	protected $fillable = ['user_id', 'step_id', 'is_completed'];
 	public function step()
 	{
 		return $this->belongsTo(Step::class);
