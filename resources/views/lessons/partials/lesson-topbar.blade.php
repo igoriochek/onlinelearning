@@ -1,4 +1,4 @@
-<div class="sticky top-16 bg-white shadow z-10">
+<div class="sticky top-16 bg-white shadow">
 	<div class="mx-auto max-w-7xl flex gap-2 px-4 py-2 overflow-x-auto">
 		@foreach ($lesson->steps->sortBy('position') as $s)
 			<a

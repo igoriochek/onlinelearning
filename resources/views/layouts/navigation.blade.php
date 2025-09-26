@@ -1,6 +1,6 @@
 <nav
 	x-data="{ open: false }"
-	class="fixed top-0 w-full border-b border-gray-100 bg-white"
+	class="fixed top-0 w-full border-b border-gray-100 bg-white z-10"
 >
 	<!-- Primary Navigation Menu -->
 	<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
