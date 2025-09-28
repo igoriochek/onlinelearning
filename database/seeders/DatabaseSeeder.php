@@ -39,7 +39,7 @@ class DatabaseSeeder extends Seeder
 			'role' => 'student',
 		]);
 
-		Course::factory(5)
+		Course::factory(1)
 			->create()
 			->each(function ($course) {
 				Review::factory(5)->create(['course_id' => $course->id]);
@@ -55,18 +55,27 @@ class DatabaseSeeder extends Seeder
 								$lesson->position = $lessonIndex + 1;
 								$lesson->save();
 
-								Step::factory(2)
+								Step::factory(5)
 									->create(['lesson_id' => $lesson->id])
 									->each(function ($step, $stepIndex) {
 										$step->position = $stepIndex + 1;
 
 										if ($stepIndex === 1) {
-											$step->type = 'quiz';
-											$step->question = 'Sample question?';
-										} else {
+											$step->type = 'video';
+											$step->question = 'No question for video step.';
+										} elseif ($stepIndex === 2) {
 											$step->type = 'text';
+											$step->question = 'Sample question?';
+										} elseif ($stepIndex === 3) {
+											$step->type = 'quiz_multiple';
+											$step->question = 'Select all correct answers.';
+										} elseif ($stepIndex == 4) {
+											$step->type = 'quiz_single';
+											$step->question = 'Select one correct answer.';
+										} else {
+											$step->type = 'quiz_code';
+											$step->question = 'Write some code below.';
 										}
-
 										$step->save();
 									});
 							});

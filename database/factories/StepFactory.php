@@ -19,7 +19,13 @@ class StepFactory extends Factory
 	{
 		return [
 			'lesson_id' => Lesson::inRandomOrder()->first()->id,
-			'type' => $this->faker->randomElement(['text', 'video', 'quiz']),
+			'type' => $this->faker->randomElement([
+				'text',
+				'video',
+				'quiz_single',
+				'quiz_multiple',
+				'quiz_code',
+			]),
 			'content' => $this->faker->paragraph(),
 			'question' => null,
 			'position' => 1,

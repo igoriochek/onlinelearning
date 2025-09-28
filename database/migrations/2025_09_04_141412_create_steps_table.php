@@ -18,7 +18,13 @@ return new class extends Migration {
 				->references('id')
 				->on('lessons')
 				->onDelete('cascade');
-			$table->enum('type', ['text', 'video', 'quiz']);
+			$table->enum('type', [
+				'text',
+				'video',
+				'quiz_single',
+				'quiz_multiple',
+				'quiz_code',
+			]);
 			$table->text('content')->nullable();
 			$table->string('question')->nullable();
 			$table->integer('position')->default(0);

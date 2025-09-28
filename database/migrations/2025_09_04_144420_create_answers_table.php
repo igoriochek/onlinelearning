@@ -14,7 +14,7 @@ return new class extends Migration {
 			$table->id();
 			$table->foreignId('user_id')->constrained('users')->onDelete('cascade');
 			$table->foreignId('step_id')->constrained('steps')->onDelete('cascade');
-			$table->text('answer_text')->nullable();
+			$table->text('code_answer')->nullable();
 			$table->json('selected_options')->nullable();
 			$table->timestamps();
 		});

@@ -83,7 +83,7 @@ class Course extends Model
 		return $this->sections
 			->flatMap(fn($section) => $section->lessons)
 			->flatMap(fn($lesson) => $lesson->steps)
-			->where('type', 'quiz')
+			->whereIn('type', ['quiz_multiple', 'quiz_single'])
 			->count();
 	}
 
