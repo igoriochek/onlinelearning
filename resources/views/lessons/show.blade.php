@@ -1,28 +1,28 @@
 <x-app-layout>
 	@include('lessons.partials.lesson-topbar', ['lesson' => $lesson, 'step' => $step])
-
 	<main
 		class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-6 py-6 px-2"
 	>
 		@include('lessons.partials.lesson-sidebar', ['course' => $course, 'lesson' => $lesson])
-
-		<section class="md:col-span-3 bg-white shadow rounded-lg p-6">
+		<section
+			class="md:col-span-3 bg-white shadow rounded-lg p-6"
+			x-data="stepCompletion(
+           	{{ $step->id }},
+           	{{ in_array($step->type, ['text', 'video']) ? 1 : 0 }},
+           	{{ $isCompleted ? 'true' : 'false' }},
+           )"
+		>
 			@if ($step->type === 'text')
-				<div class="prose max-w-none">
-					{!! $step->content !!}
-				</div>
+				<div class="prose max-w-none">{!! $step->content !!}</div>
 			@elseif ($step->type === 'video')
-				<video controls class="w-full rounded">
-					<source src="{{ $step->content }}" type="video/mp4" />
-				</video>
-			@elseif ($step->type === 'quiz')
+				<video controls class="w-full rounded"></video>
+			@elseif ($step->type === 'quiz_code')
 				<form action="{{ route('lessons.step.submit', $step) }}" method="POST">
 					@csrf
 					<fieldset class="space-y-4">
 						<legend class="text-lg font-semibold">
 							{{ $step->question }}
 						</legend>
-
 						@foreach ($step->options as $option)
 							<label class="flex items-center gap-2">
 								<input type="radio" name="answer" value="{{ $option->id }}" />
@@ -30,7 +30,6 @@
 							</label>
 						@endforeach
 					</fieldset>
-
 					<div class="flex justify-center">
 						<button
 							type="submit"
@@ -71,7 +70,6 @@
 <script>
 	const radios = document.querySelectorAll('input[name="answer"]');
 	const submitBtn = document.getElementById('submit-btn');
-
 	radios.forEach((radio) => {
 		radio.addEventListener('change', () => {
 			submitBtn.disabled = ![...radios].some((r) => r.checked);

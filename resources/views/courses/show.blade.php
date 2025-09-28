@@ -97,7 +97,7 @@
 			>
 				<h2 id="course-stats" class="sr-only">Course statisctics</h2>
 				<p>Video Lessons: {{ $course->video_lessons_count }}</p>
-				<p>Text Lessons: {{ $course->text_lessons_count }}</p>
+				<p>Code challenges: {{ $course->text_lessons_count }}</p>
 				<p>Quizzes: {{ $course->quizzes_count }}</p>
 			</section>
 
