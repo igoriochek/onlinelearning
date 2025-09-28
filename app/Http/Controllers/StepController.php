@@ -3,47 +3,47 @@
 namespace App\Http\Controllers;
 
 use App\Models\Step;
-use App\Models\Answer;
-use App\Models\Progress;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use App\Services\AnswerService;
 use App\Services\StepNavigator;
+use App\Services\ProgressService;
 
 class StepController extends Controller
 {
+	protected AnswerService $answerService;
+	protected StepNavigator $navigator;
+	protected ProgressService $progress;
+
+	public function __construct(
+		AnswerService $answerService,
+		StepNavigator $navigator,
+		ProgressService $progress,
+	) {
+		$this->answerService = $answerService;
+		$this->navigator = $navigator;
+		$this->progress = $progress;
+	}
+
 	public function submit(Step $step, Request $request)
 	{
 		$request->validate([
-			'answer' => 'required|exists:options,id',
+			'answer' => 'required',
 		]);
 
-		$selectedOption = $step->options()->findOrFail($request->answer);
+		$this->answerService->submitAnswer($step, $request->all());
 
-		Answer::updateOrCreate(
-			[
-				'user_id' => Auth::id(),
-				'step_id' => $step->id,
-			],
-			[
-				'selected_options' => json_encode([$selectedOption->id]),
-				'answer_text' => $selectedOption->text,
-			],
-		);
-
-		Progress::updateOrCreate(
-			[
-				'user_id' => Auth::id(),
-				'step_id' => $step->id,
-			],
-			['is_completed' => true],
-		);
-
-		$nextStepRoute = StepNavigator::getStepRoute($step, 'next');
+		$nextStepRoute = $this->navigator->getStepRoute($step, 'next');
 
 		if ($nextStepRoute) {
 			return redirect()->route('lessons.step.show', $nextStepRoute);
 		}
 
 		return redirect()->route('courses.show', $step->lesson->section->course_id);
+	}
+
+	public function completeStep(Step $step)
+	{
+		$this->progress->markStepCompleted($step);
+		return response()->json(['status' => 'completed']);
 	}
 }

@@ -23,6 +23,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::post('/steps/{step}/submit', [StepController::class, 'submit'])->name(
 		'lessons.step.submit',
 	);
+	Route::post('/steps/{step}/complete', [
+		StepController::class,
+		'completeStep',
+	])->name('lessons.step.complete');
 });
 
 Route::middleware(['auth', 'verified'])
