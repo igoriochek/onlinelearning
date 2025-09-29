@@ -28,6 +28,15 @@ class LessonController extends Controller
 
 		$isCompleted = $this->progress->stepCompleted($step);
 
+		$completedSteps = $lesson->steps
+			->pluck('id')
+			->filter(
+				fn($id) => $this->progress->stepCompleted(
+					$lesson->steps->firstWhere('id', $id),
+				),
+			)
+			->toArray();
+
 		return view(
 			'lessons.show',
 			compact(
@@ -37,6 +46,7 @@ class LessonController extends Controller
 				'prevStepRoute',
 				'nextStepRoute',
 				'isCompleted',
+				'completedSteps',
 			),
 		);
 	}

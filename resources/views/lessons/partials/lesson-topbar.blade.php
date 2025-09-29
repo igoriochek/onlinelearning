@@ -4,7 +4,10 @@
 			<a
 				href="{{ route('lessons.step.show', ['lesson' => $lesson->id, 'position' => $s->position]) }}"
 				class="step-pin flex items-center justify-center w-10 h-10 rounded
-					{{ $step->id === $s->id ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700' }}"
+					border-2
+					{{ $step->id === $s->id ? 'border-black' : 'border-transparent' }}
+					{{ in_array($s->id, $completedSteps) ? 'bg-green-500 text-white' : 'bg-gray-200 text-gray-700' }}"
+				data-step-id="{{ $s->id }}"
 			>
 				@if ($s->type === 'video')
 					<svg
