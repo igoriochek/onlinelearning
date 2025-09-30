@@ -5,23 +5,23 @@ namespace App\Http\Controllers;
 use App\Models\Step;
 use Illuminate\Http\Request;
 use App\Services\AnswerService;
-use App\Services\StepNavigator;
+use App\Services\StepService;
 use App\Services\ProgressService;
 
 class StepController extends Controller
 {
 	protected AnswerService $answerService;
-	protected StepNavigator $navigator;
-	protected ProgressService $progress;
+	protected StepService $stepService;
+	protected ProgressService $progressService;
 
 	public function __construct(
 		AnswerService $answerService,
-		StepNavigator $navigator,
-		ProgressService $progress,
+		StepService $stepService,
+		ProgressService $progressService,
 	) {
 		$this->answerService = $answerService;
-		$this->navigator = $navigator;
-		$this->progress = $progress;
+		$this->stepService = $stepService;
+		$this->progressService = $progressService;
 	}
 
 	public function submit(Step $step, Request $request)
@@ -32,7 +32,7 @@ class StepController extends Controller
 
 		$this->answerService->submitAnswer($step, $request->all());
 
-		$nextStepRoute = $this->navigator->getStepRoute($step, 'next');
+		$nextStepRoute = $this->stepService->getStepRoute($step, 'next');
 
 		if ($nextStepRoute) {
 			return redirect()->route('lessons.step.show', $nextStepRoute);
@@ -43,7 +43,7 @@ class StepController extends Controller
 
 	public function completeStep(Step $step)
 	{
-		$this->progress->markStepCompleted($step);
+		$this->progressService->markStepCompleted($step);
 		return response()->json(['status' => 'completed']);
 	}
 }

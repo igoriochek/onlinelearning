@@ -2,48 +2,37 @@
 
 namespace App\Services;
 use App\Models\Step;
-use App\Models\Section;
 use App\Models\Progress;
+use App\Models\Lesson;
 use Illuminate\Support\Facades\Auth;
 
 class ProgressService
 {
-	public function stepCompleted(Step $step, $userId = null): bool
+	public function stepCompleted(Step $step): bool
 	{
-		$userId ??= Auth::id();
+		$userId = Auth::id();
 		return Progress::where('step_id', $step->id)
 			->where('user_id', $userId)
 			->where('is_completed', true)
 			->exists();
 	}
 
-	public function markStepCompleted(Step $step, $userId = null): void
+	public function markStepCompleted(Step $step): void
 	{
-		$userId ??= Auth::id();
+		$userId = Auth::id();
 		Progress::updateOrCreate(
 			['step_id' => $step->id, 'user_id' => $userId],
 			['is_completed' => true],
 		);
 	}
 
-	public function sectionCompleted(Section $section, $userId = null): bool
+	public function getCompletedSteps(Lesson $lesson): array
 	{
-		$userId ??= Auth::id();
-		$totalSteps = $section->lessons
-			->flatMap(fn($lesson) => $lesson->steps)
-			->count();
-		$completedSteps = $section->lessons
-			->flatMap(fn($lesson) => $lesson->steps)
-			->filter(fn($step) => $this->stepCompleted($step, $userId))
-			->count();
-		return $totalSteps > 0 && $totalSteps === $completedSteps;
-	}
-
-	public function getFirstIncompleteStep($lesson, $userId = null): ?Step
-	{
-		$userId ??= Auth::id();
-		return $lesson->steps->first(
-			fn($step) => !$this->stepCompleted($step, $userId),
-		);
+		$userId = Auth::id();
+		return Progress::where('user_id', $userId)
+			->whereIn('step_id', $lesson->steps->pluck('id'))
+			->where('is_completed', true)
+			->pluck('step_id')
+			->toArray();
 	}
 }

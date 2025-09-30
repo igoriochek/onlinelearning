@@ -4,16 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Lesson;
-use App\Services\StepNavigator;
+use App\Services\StepService;
 use App\Services\ProgressService;
 
 class LessonController extends Controller
 {
-	protected ProgressService $progress;
+	protected ProgressService $progressService;
 
-	public function __construct(ProgressService $progress)
+	public function __construct(ProgressService $progressService)
 	{
-		$this->progress = $progress;
+		$this->progressService = $progressService;
 	}
 
 	public function show(Lesson $lesson, $stepPosition)
@@ -23,19 +23,12 @@ class LessonController extends Controller
 
 		$step = $lesson->steps()->where('position', $stepPosition)->firstOrFail();
 
-		$prevStepRoute = StepNavigator::getStepRoute($step, 'prev');
-		$nextStepRoute = StepNavigator::getStepRoute($step, 'next');
+		$prevStepRoute = StepService::getStepRoute($step, 'prev');
+		$nextStepRoute = StepService::getStepRoute($step, 'next');
 
-		$isCompleted = $this->progress->stepCompleted($step);
+		$isCompleted = $this->progressService->stepCompleted($step);
 
-		$completedSteps = $lesson->steps
-			->pluck('id')
-			->filter(
-				fn($id) => $this->progress->stepCompleted(
-					$lesson->steps->firstWhere('id', $id),
-				),
-			)
-			->toArray();
+		$completedSteps = $this->progressService->getCompletedSteps($lesson);
 
 		return view(
 			'lessons.show',

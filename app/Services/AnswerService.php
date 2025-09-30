@@ -8,11 +8,11 @@ use Illuminate\Support\Facades\Auth;
 
 class AnswerService
 {
-	protected ProgressService $progress;
+	protected ProgressService $progressService;
 
-	public function __construct(ProgressService $progress)
+	public function __construct(ProgressService $progressService)
 	{
-		$this->progress = $progress;
+		$this->progressService = $progressService;
 	}
 
 	public function submitAnswer(Step $step, array $data): void
@@ -37,6 +37,6 @@ class AnswerService
 				['code_answer' => $data['code_answer'] ?? null],
 			);
 		}
-		$this->progress->markStepCompleted($step);
+		$this->progressService->markStepCompleted($step);
 	}
 }

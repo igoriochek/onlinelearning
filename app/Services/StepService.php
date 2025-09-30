@@ -4,7 +4,7 @@ namespace App\Services;
 
 use App\Models\Step;
 
-class StepNavigator
+class StepService
 {
 	public static function getStepRoute(Step $step, string $direction)
 	{
