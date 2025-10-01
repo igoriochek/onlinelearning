@@ -34,7 +34,7 @@ class AnswerService
 		} elseif ($step->type === 'quiz_code') {
 			Answer::updateOrCreate(
 				['step_id' => $step->id, 'user_id' => $userId],
-				['code_answer' => $data['code_answer'] ?? null],
+				['code_answer' => $data['answer'] ?? null],
 			);
 		}
 		$this->progressService->markStepCompleted($step);

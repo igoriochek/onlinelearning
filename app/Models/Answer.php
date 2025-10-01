@@ -6,7 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Answer extends Model
 {
-	protected $fillable = ['user_id', 'step_id', 'answer_id', 'selected_options'];
+	protected $fillable = [
+		'user_id',
+		'step_id',
+		'answer_id',
+		'selected_options',
+		'code_answer',
+	];
 
 	public function step()
 	{
