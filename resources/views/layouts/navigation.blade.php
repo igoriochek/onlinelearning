@@ -30,6 +30,14 @@
 						>
 							{{ __('Dashboard') }}
 						</x-nav-link>
+						@if (auth()->user()->role === 'teacher')
+							<x-nav-link
+								:href="route('teacher.courses.create')"
+								:active="request()->routeIs('teacher.courses.create')"
+							>
+								{{ __('Create Course') }}
+							</x-nav-link>
+						@endif
 					@endauth
 				</div>
 			</div>
@@ -142,14 +150,26 @@
 
 	<!-- Responsive Navigation Menu -->
 	<div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
-		<div class="space-y-1 pb-3 pt-2">
-			<x-responsive-nav-link
-				:href="route('dashboard')"
-				:active="request()->routeIs('dashboard*')"
-			>
-				{{ __('Dashboard') }}
-			</x-responsive-nav-link>
-		</div>
+		@auth
+			<div class="space-y-1 pb-3 pt-2">
+				<x-responsive-nav-link
+					:href="route('dashboard')"
+					:active="request()->routeIs('dashboard*')"
+				>
+					{{ __('Dashboard') }}
+				</x-responsive-nav-link>
+
+				@if (auth()->user()->role === 'teacher')
+					<x-nav-link
+						:href="route('teacher.courses.create')"
+						:active="request()->routeIs('teacher.courses.create')"
+					>
+						{{ __('Create Course') }}
+					</x-nav-link>
+				@endif
+			</div>
+		@endauth
+
 		@guest
 			<!-- Mobile Login/Register -->
 			<div class="border-t border-gray-200 pb-1 pt-4">
