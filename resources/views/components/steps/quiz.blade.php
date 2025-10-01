@@ -1,13 +1,20 @@
 @props([
   'step',
   'type' => 'single',
-  //'single'arba'multiple',
 ])
 
-<form action="{{ route('lessons.step.submit', $step) }}" method="POST">
+<form
+	action="{{ route('lessons.step.submit', $step) }}"
+	method="POST"
+	x-data="{ canSubmit: false }"
+	@change="canSubmit = [...$el.querySelectorAll('input')].some(i => i.checked)"
+>
 	@csrf
 	<fieldset class="space-y-4">
-		<legend class="text-lg font-semibold">{{ $step->question }}</legend>
+		<p class="text-sm">
+			{!! $step->content !!}
+		</p>
+		<p class="text-lg font-semibold mt-2">{{ $step->question }}</p>
 
 		@foreach ($step->options as $option)
 			<label class="flex items-center gap-2">
@@ -27,21 +34,9 @@
 			id="submit-btn"
 			class="mt-4 px-4 py-2 bg-blue-600 text-white rounded disabled:bg-gray-400
 				disabled:cursor-not-allowed"
-			disabled
+			:disabled="!canSubmit"
 		>
 			Submit Answer
 		</button>
 	</div>
 </form>
-
-<script>
-	const inputs = document.querySelectorAll(
-		"input[name='{{ $type === 'single' ? 'answer' : 'answer[]' }}']",
-	);
-	const submitBtn = document.getElementById('submit-btn');
-	inputs.forEach((input) => {
-		input.addEventListener('change', () => {
-			submitBtn.disabled = ![...inputs].some((i) => i.checked);
-		});
-	});
-</script>

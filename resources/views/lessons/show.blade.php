@@ -15,19 +15,14 @@
 			@if ($step->type === 'text')
 				<x-steps.text :step="$step" />
 			@elseif ($step->type === 'video')
-				<video controls class="w-full rounded"></video>
-			@elseif ($step->type === 'quiz_single')
-				<x-steps.quiz
-					:step="$step"
-					:type="$step->type === 'quiz_multiple' ? 'multiple' : 'single'"
-				/>
-			@elseif ($step->type === 'quiz_multiple')
-				<x-steps.quiz
-					:step="$step"
-					:type="$step->type === 'quiz_multiple' ? 'multiple' : 'single'"
-				/>
+				<x-steps.video :step="$step" />
 			@elseif ($step->type === 'quiz_code')
 				<x-steps.quiz-code :step="$step" />
+			@elseif (in_array($step->type, ['quiz_single', 'quiz_multiple']))
+				<x-steps.quiz
+					:step="$step"
+					:type="$step->type === 'quiz_multiple' ? 'multiple' : 'single'"
+				/>
 			@endif
 		</section>
 		<div class="md:col-span-4 w-full flex justify-end px-2 md:px-0">
@@ -53,12 +48,3 @@
 		</div>
 	</main>
 </x-app-layout>
-<script>
-	const radios = document.querySelectorAll('input[name="answer"]');
-	const submitBtn = document.getElementById('submit-btn');
-	radios.forEach((radio) => {
-		radio.addEventListener('change', () => {
-			submitBtn.disabled = ![...radios].some((r) => r.checked);
-		});
-	});
-</script>
