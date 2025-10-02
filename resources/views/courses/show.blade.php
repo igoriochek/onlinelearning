@@ -29,7 +29,7 @@
 	>
 		<article class="md:col-span-2">
 			<img
-				src="{{ $course->image_url }}"
+				src="{{ $course->image_url ? asset('storage/' . $course->image_url) : 'https://placehold.co/600x400?text=Course+Image' }}"
 				alt="{{ $course->title }}"
 				class="rounded-lg mb-4"
 				loading="lazy"

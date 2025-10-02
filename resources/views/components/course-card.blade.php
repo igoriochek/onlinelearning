@@ -3,20 +3,11 @@
 		class="bg-white shadow-sm rounded-lg overflow-hidden hover:shadow-md
 			transition-shadow"
 	>
-		@if ($course->image_url)
-			<img
-				src="{{ $course->image_url }}"
-				alt="{{ $course->title }}"
-				class="w-full h-40 object-cover"
-			/>
-		@else
-			<div
-				class="w-full h-40 bg-gray-200 flex items-center justify-center
-					text-gray-500"
-			>
-				No Image
-			</div>
-		@endif
+		<img
+			src="{{ $course->image_url ? asset('storage/' . $course->image_url) : 'https://placehold.co/600x400?text=Course+Image' }}"
+			alt="{{ $course->title }}"
+			class="w-full h-40 object-cover"
+		/>
 		<div class="p-4">
 			<h3 class="text-lg font-bold">{{ $course->title }}</h3>
 			<p class="text-sm text-gray-600 line-clamp-2">
@@ -36,7 +27,13 @@
 				<span class="text-sm text-gray-500 capitalize">
 					{{ $course->level_name }} Level
 				</span>
-				<span class="font-semibold text-green-600">${{ $course->price }}</span>
+				<span class="font-semibold text-green-600">
+					@if ($course->price == 0)
+						Free
+					@else
+						${{ $course->price }}
+					@endif
+				</span>
 			</div>
 
 			@auth

@@ -22,10 +22,10 @@ class CourseFactory extends Factory
 			'description' => $this->faker->sentence,
 			'level' => rand(1, 3),
 			'price' => $this->faker->randomFloat(2, 10, 100),
-			'image_url' => 'https://placehold.co/600x400?text=Course+Image',
 			'author_id' =>
 				optional(User::where('role', 'teacher')->inRandomOrder()->first())
 					->id ?? User::factory()->create(['role' => 'teacher'])->id,
+			'public' => true,
 		];
 	}
 }
