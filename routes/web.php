@@ -48,14 +48,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::prefix('teach')
 		->name('teacher.')
 		->group(function () {
-			Route::get('courses/create', [
-				TeacherCourseController::class,
-				'create',
-			])->name('courses.create');
-			Route::post('courses/store', [
-				TeacherCourseController::class,
-				'store',
-			])->name('courses.store');
+			Route::resource('courses', TeacherCourseController::class)
+				->only(['create', 'store'])
+				->names('courses');
 		});
 
 	Route::prefix('profile')

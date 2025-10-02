@@ -22,6 +22,7 @@ class Course extends Model
 		'level',
 		'price',
 		'image_url',
+		'public',
 	];
 
 	protected static function boot()

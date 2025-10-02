@@ -160,12 +160,12 @@
 				</x-responsive-nav-link>
 
 				@if (auth()->user()->role === 'teacher')
-					<x-nav-link
+					<x-responsive-nav-link
 						:href="route('teacher.courses.create')"
 						:active="request()->routeIs('teacher.courses.create')"
 					>
 						{{ __('Create Course') }}
-					</x-nav-link>
+					</x-responsive-nav-link>
 				@endif
 			</div>
 		@endauth

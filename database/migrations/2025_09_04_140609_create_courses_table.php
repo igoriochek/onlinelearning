@@ -18,6 +18,7 @@ return new class extends Migration {
 			$table->enum('level', ['1', '2', '3'])->default('1');
 			$table->decimal('price', 8, 2)->default(0);
 			$table->string('image_url')->nullable();
+			$table->boolean('public')->default(false);
 			$table->timestamps();
 		});
 	}

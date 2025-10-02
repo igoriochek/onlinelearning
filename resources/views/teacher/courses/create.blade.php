@@ -5,27 +5,99 @@
 		</h2>
 	</x-slot>
 	<main
-		class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-6 py-6 px-2"
+		class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-4 py-6 px-2"
 	>
 		<form
 			action="{{ route('teacher.courses.store') }}"
 			method="POST"
 			enctype="multipart/form-data"
-			class="md:col-span-4 bg-white p-6 rounded shadow"
+			class="md:col-span-4 bg-white p-6 rounded-lg shadow"
 		>
 			@csrf
 
-			<div class="mb-4">
-				<label for="title" class="block font-medium text-gray-700">
-					Course Title
-				</label>
-				<input
-					type="text"
-					name="title"
-					id="title"
-					class="mt-1 block w-full border-gray-300 rounded-md"
-					required
-				/>
+			<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+				<div class="mb-2">
+					<label for="title" class="block font-medium text-gray-700">
+						Course Title
+					</label>
+					<input
+						type="text"
+						name="title"
+						id="title"
+						value="{{ old('title') }}"
+						class="mt-1 block w-full border-gray-300 rounded-md"
+						required
+					/>
+					@error('title')
+						<span class="text-red-500 text-sm mt-1">{{ $message }}</span>
+					@enderror
+				</div>
+
+				<div class="mb-2">
+					<label for="level" class="block font-medium text-gray-700">
+						Level
+					</label>
+					<select
+						name="level"
+						id="level"
+						class="mt-1 block w-full border-gray-300 rounded-md"
+					>
+						<option value="1">Beginner</option>
+						<option value="2">Intermediate</option>
+						<option value="3">Advanced</option>
+					</select>
+				</div>
+				<div class="mb-2 flex items-end gap-4">
+					<div id="price_wrapper">
+						<label for="price" class="block font-medium text-gray-700">
+							Price $
+						</label>
+						<input
+							type="number"
+							name="price"
+							id="price"
+							class="mt-1 border-gray-300 rounded-md"
+							min="0"
+							step="0.1"
+							value="{{ old('price') }}"
+							required
+						/>
+						@error('price')
+							<span class="text-red-500 text-sm mt-1">{{ $message }}</span>
+						@enderror
+					</div>
+					<div class="flex items-center gap-2 md:pb-2">
+						<input
+							type="checkbox"
+							name="free_course"
+							id="free_course"
+							value="1"
+							onchange="togglePrice(this)"
+							class="h-5 w-5 rounded"
+						/>
+						<label for="free_course" class="text-gray-700">Free course</label>
+						<input
+							type="checkbox"
+							name="public"
+							id="public"
+							value="1"
+							class="h-5 w-5 rounded"
+							{{ old('public') ? 'checked' : '' }}
+						/>
+						<label for="public" class="text-gray-700">Public course</label>
+					</div>
+				</div>
+				<div class="mb-2 pt-1">
+					<label for="image" class="block font-medium text-gray-700">
+						Course Image
+					</label>
+					<input
+						type="file"
+						name="image"
+						id="image"
+						class="mt-1 block w-full rounded border"
+					/>
+				</div>
 			</div>
 
 			<div class="mb-4">
@@ -37,39 +109,12 @@
 					id="description"
 					rows="4"
 					class="mt-1 block w-full border-gray-300 rounded-md"
-				></textarea>
-			</div>
-
-			<div class="mb-4">
-				<label for="level" class="block font-medium text-gray-700">Level</label>
-				<select
-					name="level"
-					id="level"
-					class="mt-1 block w-full border-gray-300 rounded-md"
 				>
-					<option value="beginner">Beginner</option>
-					<option value="intermediate">Intermediate</option>
-					<option value="advanced">Advanced</option>
-				</select>
-			</div>
-
-			<div class="mb-4">
-				<label for="price" class="block font-medium text-gray-700">Price</label>
-				<input
-					type="number"
-					name="price"
-					id="price"
-					class="mt-1 block w-full border-gray-300 rounded-md"
-					min="0"
-					step="0.01"
-				/>
-			</div>
-
-			<div class="mb-4">
-				<label for="image" class="block font-medium text-gray-700">
-					Course Image
-				</label>
-				<input type="file" name="image" id="image" class="mt-1 block w-full" />
+{{ old('description') }}</textarea
+				>
+				@error('description')
+					<span class="text-red-500 pt-2">{{ $message }}</span>
+				@enderror
 			</div>
 
 			<button
@@ -81,3 +126,24 @@
 		</form>
 	</main>
 </x-app-layout>
+
+<script>
+	function togglePrice(checkbox) {
+		const priceWrapper = document.getElementById('price_wrapper');
+		const priceInput = document.getElementById('price');
+		if (checkbox.checked) {
+			priceInput.value = 0;
+			priceInput.disabled = true;
+			priceWrapper.classList.add('opacity-50');
+		} else {
+			priceInput.disabled = false;
+			priceInput.value = '';
+			priceWrapper.classList.remove('opacity-50');
+		}
+	}
+
+	document.addEventListener('DOMContentLoaded', () => {
+		const checkbox = document.getElementById('free_course');
+		togglePrice(checkbox);
+	});
+</script>
