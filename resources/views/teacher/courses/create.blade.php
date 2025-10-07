@@ -117,6 +117,19 @@
 				@enderror
 			</div>
 
+			<div id="sections_wrapper">
+				@include('teacher.courses.partials.section', ['index' => 0])
+			</div>
+
+			<button
+				type="button"
+				onclick="addSection()"
+				class="mt-2 bg-green-600 text-white px-3 py-1 rounded
+					hover:bg-green-700"
+			>
+				+ Add Section
+			</button>
+
 			<button
 				type="submit"
 				class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
@@ -146,4 +159,20 @@
 		const checkbox = document.getElementById('free_course');
 		togglePrice(checkbox);
 	});
+</script>
+<script>
+	let sectionIndex = 1;
+
+	function addSection() {
+		const wrapper = document.getElementById('sections_wrapper');
+		let html = `{!! str_replace('__INDEX__', '__INDEX__', view('teacher.courses.partials.section', ['index' => '__INDEX__'])->render()) !!}`;
+
+		html = html.replace(/__INDEX__/g, sectionIndex);
+
+		const temp = document.createElement('div');
+		temp.innerHTML = html;
+		wrapper.appendChild(temp.firstElementChild);
+
+		sectionIndex++;
+	}
 </script>
