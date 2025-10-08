@@ -29,14 +29,12 @@
 	</fieldset>
 
 	<div class="flex justify-center">
-		<button
+		<x-primary-button
 			type="submit"
-			id="submit-btn"
-			class="mt-4 px-4 py-2 bg-blue-600 text-white rounded disabled:bg-gray-400
-				disabled:cursor-not-allowed"
-			:disabled="!canSubmit"
+			x-bind:disabled="!canSubmit"
+			class="mt-4 justify-center"
 		>
 			Submit Answer
-		</button>
+		</x-primary-button>
 	</div>
 </form>

@@ -1,7 +1,6 @@
 @props([
   'course',
   'variant' => 'text',
-  //'text',
   'icon',
   'full',
 ])
@@ -45,7 +44,11 @@
 		<button
 			@click.prevent="toggle"
 			type="button"
-			class="border border-gray-300 px-4 py-2 rounded w-full"
+			class="inline-flex items-center px-4 py-2 bg-white border border-gray-300
+				rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest
+				shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2
+				focus:ring-gray-800 focus:ring-offset-2 disabled:opacity-25 transition
+				ease-in-out duration-150 w-full justify-center"
 			:class="inWishlist ? 'text-red-600' : ''"
 		>
 			<span
@@ -56,7 +59,10 @@
 		<button
 			@click.prevent="toggle"
 			type="button"
-			class="bg-gray-100 p-2 rounded flex items-center justify-center"
+			class="inline-flex items-center justify-center bg-white border
+				border-gray-300 rounded-md shadow-sm p-2 hover:bg-gray-50
+				focus:outline-none focus:ring-2 focus:ring-gray-800 focus:ring-offset-2
+				transition ease-in-out duration-150"
 			:aria-label="inWishlist ? 'Remove from wishlist' : 'Add to wishlist'"
 		>
 			<svg

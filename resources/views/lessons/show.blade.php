@@ -28,21 +28,21 @@
 		<div class="md:col-span-4 w-full flex justify-end px-2 md:px-0">
 			<div class="flex gap-2">
 				@if ($prevStepRoute)
-					<a
-						href="{{ route('lessons.step.show', $prevStepRoute) }}"
-						class="px-4 py-2 bg-gray-200 rounded"
+					<x-secondary-button
+						type="button"
+						onclick="window.location=`{{ route('lessons.step.show', $prevStepRoute) }}`"
 					>
 						Previous
-					</a>
+					</x-secondary-button>
 				@endif
 
 				@if ($nextStepRoute)
-					<a
-						href="{{ route('lessons.step.show', $nextStepRoute) }}"
-						class="px-4 py-2 bg-blue-600 text-white rounded"
+					<x-secondary-button
+						type="button"
+						onclick="window.location=`{{ route('lessons.step.show', $nextStepRoute) }}`"
 					>
-						Next
-					</a>
+						next
+					</x-secondary-button>
 				@endif
 			</div>
 		</div>
