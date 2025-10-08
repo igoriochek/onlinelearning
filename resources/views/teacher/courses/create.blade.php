@@ -17,80 +17,58 @@
 
 			<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 				<div class="mb-2">
-					<label for="title" class="block font-medium text-gray-700">
-						Course Title
-					</label>
-					<input
+					<x-input-label for="title" value="Course Title" />
+					<x-text-input
 						type="text"
 						name="title"
 						id="title"
 						value="{{ old('title') }}"
-						class="mt-1 block w-full border-gray-300 rounded-md"
 						required
+						class="mt-1 block w-full"
 					/>
-					@error('title')
-						<span class="text-red-500 text-sm mt-1">{{ $message }}</span>
-					@enderror
+					<x-input-error :messages="$errors->get('title')" class="mt-1" />
 				</div>
 
 				<div class="mb-2">
-					<label for="level" class="block font-medium text-gray-700">
-						Level
-					</label>
-					<select
-						name="level"
-						id="level"
-						class="mt-1 block w-full border-gray-300 rounded-md"
-					>
+					<x-input-label for="level" value="Level" />
+					<x-select-input name="level" id="level">
 						<option value="1">Beginner</option>
 						<option value="2">Intermediate</option>
 						<option value="3">Advanced</option>
-					</select>
+					</x-select-input>
 				</div>
-				<div class="mb-2 flex items-end gap-4">
+				<div class="mb-4 flex items-end gap-4">
 					<div id="price_wrapper">
-						<label for="price" class="block font-medium text-gray-700">
-							Price $
-						</label>
-						<input
+						<x-input-label for="price" value="Price $" />
+						<x-text-input
 							type="number"
 							name="price"
 							id="price"
-							class="mt-1 border-gray-300 rounded-md"
+							value="{{ old('price') }}"
 							min="0"
 							step="0.1"
-							value="{{ old('price') }}"
 							required
+							class="mt-1"
 						/>
-						@error('price')
-							<span class="text-red-500 text-sm mt-1">{{ $message }}</span>
-						@enderror
+						<x-input-error :messages="$errors->get('price')" />
 					</div>
 					<div class="flex items-center gap-2 md:pb-2">
-						<input
-							type="checkbox"
+						<x-checkbox-input
 							name="free_course"
 							id="free_course"
-							value="1"
-							onchange="togglePrice(this)"
-							class="h-5 w-5 rounded"
+							:checked="old('free_course')"
 						/>
-						<label for="free_course" class="text-gray-700">Free course</label>
-						<input
-							type="checkbox"
+						<x-input-label for="free_course">Free course</x-input-label>
+						<x-checkbox-input
 							name="public"
 							id="public"
-							value="1"
-							class="h-5 w-5 rounded"
-							{{ old('public') ? 'checked' : '' }}
+							:checked="old('public')"
 						/>
-						<label for="public" class="text-gray-700">Public course</label>
+						<x-input-label for="public">Public course</x-input-label>
 					</div>
 				</div>
 				<div class="mb-2 pt-1">
-					<label for="image" class="block font-medium text-gray-700">
-						Course Image
-					</label>
+					<x-input-label for="image" value="Course Image" />
 					<input
 						type="file"
 						name="image"
@@ -101,41 +79,64 @@
 			</div>
 
 			<div class="mb-4">
-				<label for="description" class="block font-medium text-gray-700">
-					Description
-				</label>
-				<textarea
-					name="description"
-					id="description"
-					rows="4"
-					class="mt-1 block w-full border-gray-300 rounded-md"
-				>
-{{ old('description') }}</textarea
-				>
-				@error('description')
-					<span class="text-red-500 pt-2">{{ $message }}</span>
-				@enderror
+				<x-input-label for="description" value="Description" />
+				<x-text-area-input name="description" id="description" rows="4">
+					{{ old('description') }}
+				</x-text-area-input>
+				<x-input-error :messages="$errors->get('description')" class="mt-1" />
 			</div>
 
 			<div id="sections_wrapper">
-				@include('teacher.courses.partials.section', ['index' => 0])
+				<div class="section mb-2 border p-2 rounded-md relative">
+					<x-input-label for="sections[0][title]" value="Section Title" />
+					<x-text-input
+						name="sections[0][title]"
+						id="sections[0][title]"
+						value="{{ old('sections.0.title') }}"
+						required
+						class="mt-1 block w-full"
+					/>
+					<x-input-error
+						:messages="$errors->get('sections.0.title')"
+						class="mt-1"
+					/>
+					<input type="hidden" class="section-position" value="1" />
+					<button
+						type="button"
+						class="remove-section-btn absolute top-2 right-2 text-red-500
+							text-lg hidden"
+					>
+						&times;
+					</button>
+				</div>
 			</div>
 
-			<button
-				type="button"
-				onclick="addSection()"
-				class="mt-2 bg-green-600 text-white px-3 py-1 rounded
-					hover:bg-green-700"
-			>
-				+ Add Section
-			</button>
-
-			<button
-				type="submit"
-				class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-			>
-				Create Course
-			</button>
+			<template id="section_template">
+				<div class="section mb-2 border p-2 rounded-md relative">
+					<x-input-label value="Section Title" />
+					<x-text-input required class="mt-1 block w-full" />
+					<input type="hidden" class="section-position" value="1" />
+					<button
+						type="button"
+						class="remove-section-btn absolute top-2 right-2 text-red-500
+							text-lg"
+					>
+						&times;
+					</button>
+				</div>
+			</template>
+			<div class="flex justify-end">
+				<x-secondary-button
+					type="button"
+					id="add_section_btn"
+					class="rounded !px-2 !py-0 !text-lg"
+				>
+					+
+				</x-secondary-button>
+			</div>
+			<div class="flex justify-center mt-4">
+				<x-primary-button type="submit">Create Course</x-primary-button>
+			</div>
 		</form>
 	</main>
 </x-app-layout>
@@ -158,21 +159,47 @@
 	document.addEventListener('DOMContentLoaded', () => {
 		const checkbox = document.getElementById('free_course');
 		togglePrice(checkbox);
+		checkbox.addEventListener('change', () => {
+			togglePrice(checkbox);
+		});
 	});
 </script>
+
 <script>
-	let sectionIndex = 1;
-
-	function addSection() {
+	document.addEventListener('DOMContentLoaded', () => {
 		const wrapper = document.getElementById('sections_wrapper');
-		let html = `{!! str_replace('__INDEX__', '__INDEX__', view('teacher.courses.partials.section', ['index' => '__INDEX__'])->render()) !!}`;
+		const addBtn = document.getElementById('add_section_btn');
+		const template = document.getElementById('section_template');
 
-		html = html.replace(/__INDEX__/g, sectionIndex);
+		function updateSections() {
+			const sections = wrapper.querySelectorAll(
+				'.section:not(#section_template)',
+			);
+			sections.forEach((sec, i) => {
+				const input = sec.querySelector('input[type="text"]');
+				if (input) input.name = `sections[${i}][title]`;
 
-		const temp = document.createElement('div');
-		temp.innerHTML = html;
-		wrapper.appendChild(temp.firstElementChild);
+				const removeBtn = sec.querySelector('.remove-section-btn');
+				if (removeBtn) {
+					if (sections.length > 1) removeBtn.classList.remove('hidden');
+					else removeBtn.classList.add('hidden');
+				}
+			});
+		}
 
-		sectionIndex++;
-	}
+		wrapper.addEventListener('click', (e) => {
+			if (e.target.matches('.remove-section-btn')) {
+				e.target.closest('.section').remove();
+				updateSections();
+			}
+		});
+
+		addBtn.addEventListener('click', () => {
+			const clone = template.content.cloneNode(true);
+			wrapper.appendChild(clone);
+			updateSections();
+		});
+
+		updateSections();
+	});
 </script>
