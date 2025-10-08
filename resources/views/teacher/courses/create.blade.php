@@ -87,34 +87,55 @@
 			</div>
 
 			<div id="sections_wrapper">
-				<div class="section mb-2 border p-2 rounded-md relative">
-					<x-input-label for="sections[0][title]" value="Section Title" />
-					<x-text-input
-						name="sections[0][title]"
-						id="sections[0][title]"
-						value="{{ old('sections.0.title') }}"
-						required
-						class="mt-1 block w-full"
-					/>
-					<x-input-error
-						:messages="$errors->get('sections.0.title')"
-						class="mt-1"
-					/>
-					<input type="hidden" class="section-position" value="1" />
-					<button
-						type="button"
-						class="remove-section-btn absolute top-2 right-2 text-red-500
-							text-lg hidden"
-					>
-						&times;
-					</button>
-				</div>
+				@php
+     $oldSections = old('sections', [['title' => '']]);
+				@endphp
+
+				@foreach ($oldSections as $i => $section)
+					<div class="section mb-2 border p-2 rounded-md relative">
+						<x-input-label
+							for="sections[{{ $i }}][title]"
+							value="Section Title"
+						/>
+						<x-text-input
+							name="sections[{{ $i }}][title]"
+							id="sections_{{ $i }}_title"
+							value="{{ $section['title'] ?? '' }}"
+							required
+							class="mt-1 block w-full"
+						/>
+						<x-input-error
+							:messages="$errors->get('sections.' . $i . '.title')"
+							class="mt-1"
+						/>
+						<input
+							type="hidden"
+							class="section-position"
+							value="{{ $i + 1 }}"
+						/>
+						<button
+							type="button"
+							class="remove-section-btn absolute top-2 right-2 text-red-500
+								text-lg {{ count($oldSections) > 1 ? '' : 'hidden' }}"
+						>
+							&times;
+						</button>
+					</div>
+				@endforeach
 			</div>
 
 			<template id="section_template">
 				<div class="section mb-2 border p-2 rounded-md relative">
-					<x-input-label value="Section Title" />
-					<x-text-input required class="mt-1 block w-full" />
+					<label for="" class="block text-sm font-medium text-gray-700">
+						Section Title
+					</label>
+					<input
+						type="text"
+						id=""
+						required
+						class="section-title mt-1 block w-full rounded-md border-gray-300
+							focus:border-gray-800 focus:ring-gray-800"
+					/>
 					<input type="hidden" class="section-position" value="1" />
 					<button
 						type="button"
@@ -177,7 +198,12 @@
 			);
 			sections.forEach((sec, i) => {
 				const input = sec.querySelector('input[type="text"]');
-				if (input) input.name = `sections[${i}][title]`;
+				const label = sec.querySelector('label');
+				if (input && label) {
+					input.name = `sections[${i}][title]`;
+					input.id = `section_${i}_title`;
+					label.setAttribute('for', input.id);
+				}
 
 				const removeBtn = sec.querySelector('.remove-section-btn');
 				if (removeBtn) {

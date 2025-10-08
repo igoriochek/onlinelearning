@@ -29,6 +29,15 @@ class StoreCourseRequest extends FormRequest
 			'price' => 'nullable|numeric|min:0',
 			'image' => 'nullable|image|max:2048',
 			'public' => 'nullable|boolean',
+			'sections' => 'required|array|min:1',
+			'sections.*.title' => 'required|string|max:255',
+		];
+	}
+
+	public function messages(): array
+	{
+		return [
+			'sections.*.title.required' => 'Section title is required.',
 		];
 	}
 }

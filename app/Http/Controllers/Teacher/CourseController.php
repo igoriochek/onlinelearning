@@ -5,10 +5,9 @@ namespace App\Http\Controllers\Teacher;
 use Exception;
 use App\Http\Controllers\Controller;
 use App\Models\Course;
+use App\Models\Section;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\ValidationException;
 use App\Http\Requests\StoreCourseRequest;
 
 class CourseController extends Controller
@@ -22,7 +21,6 @@ class CourseController extends Controller
 	{
 		try {
 			$data = $request->validated();
-
 			if ($request->hasFile('image')) {
 				$data['image_url'] = $request
 					->file('image')
@@ -31,7 +29,17 @@ class CourseController extends Controller
 
 			$data['author_id'] = Auth::id();
 
-			Course::create($data);
+			$course = Course::create($data);
+
+			if (!empty($data['sections'])) {
+				foreach ($data['sections'] as $index => $sectionData) {
+					Section::create([
+						'course_id' => $course->id,
+						'title' => $sectionData['title'],
+						'position' => $index + 1,
+					]);
+				}
+			}
 
 			return redirect()
 				->route('teacher.courses.create')
