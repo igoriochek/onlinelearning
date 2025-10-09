@@ -30,6 +30,7 @@ class StoreCourseRequest extends FormRequest
 			'image' => 'nullable|image|max:2048',
 			'public' => 'nullable|boolean',
 			'sections' => 'required|array|min:1',
+			'sections.*.position' => 'required|integer|min:1',
 			'sections.*.title' => 'required|string|max:255',
 		];
 	}

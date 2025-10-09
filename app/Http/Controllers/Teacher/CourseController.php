@@ -21,6 +21,8 @@ class CourseController extends Controller
 	{
 		try {
 			$data = $request->validated();
+
+			dd($data);
 			if ($request->hasFile('image')) {
 				$data['image_url'] = $request
 					->file('image')
@@ -36,7 +38,7 @@ class CourseController extends Controller
 					Section::create([
 						'course_id' => $course->id,
 						'title' => $sectionData['title'],
-						'position' => $index + 1,
+						'position' => $sectionData['position'] ?? 1,
 					]);
 				}
 			}

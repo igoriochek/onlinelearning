@@ -37,6 +37,7 @@
 						<option value="3">Advanced</option>
 					</x-select-input>
 				</div>
+
 				<div class="mb-4 flex items-end gap-4">
 					<div id="price_wrapper">
 						<x-input-label for="price" value="Price $" />
@@ -67,6 +68,7 @@
 						<x-input-label for="public">Public course</x-input-label>
 					</div>
 				</div>
+
 				<div class="mb-2 pt-1">
 					<x-input-label for="image" value="Course Image" />
 					<input
@@ -86,6 +88,7 @@
 				<x-input-error :messages="$errors->get('description')" class="mt-1" />
 			</div>
 
+			{{-- Sections --}}
 			<div id="sections_wrapper">
 				@php
      $oldSections = old('sections', [['title' => '']]);
@@ -93,11 +96,20 @@
 
 				@foreach ($oldSections as $i => $section)
 					<div class="section mb-2 border p-2 rounded-md relative">
-						<x-input-label
-							for="sections[{{ $i }}][title]"
-							value="Section Title"
-						/>
+						<label
+							for="sections_{{ $i }}_title"
+							class="flex items-center gap-2 text-sm font-medium text-gray-700"
+						>
+							<span
+								class="section-handle cursor-move text-gray-500
+									hover:text-gray-800"
+							>
+								&#x2630;
+							</span>
+							Section Title
+						</label>
 						<x-text-input
+							type="text"
 							name="sections[{{ $i }}][title]"
 							id="sections_{{ $i }}_title"
 							value="{{ $section['title'] ?? '' }}"
@@ -108,11 +120,7 @@
 							:messages="$errors->get('sections.' . $i . '.title')"
 							class="mt-1"
 						/>
-						<input
-							type="hidden"
-							class="section-position"
-							value="{{ $i + 1 }}"
-						/>
+						<input type="hidden" class="section-position" />
 						<button
 							type="button"
 							class="remove-section-btn absolute top-2 right-2 text-red-500
@@ -126,17 +134,17 @@
 
 			<template id="section_template">
 				<div class="section mb-2 border p-2 rounded-md relative">
-					<label for="" class="block text-sm font-medium text-gray-700">
+					<label class="text-sm font-medium text-gray-700 flex">
+						<span class="section-handle cursor-move pr-2">&#x2630;</span>
 						Section Title
 					</label>
 					<input
 						type="text"
-						id=""
 						required
 						class="section-title mt-1 block w-full rounded-md border-gray-300
 							focus:border-gray-800 focus:ring-gray-800"
 					/>
-					<input type="hidden" class="section-position" value="1" />
+					<input type="hidden" class="section-position" />
 					<button
 						type="button"
 						class="remove-section-btn absolute top-2 right-2 text-red-500
@@ -146,6 +154,7 @@
 					</button>
 				</div>
 			</template>
+
 			<div class="flex justify-end">
 				<x-secondary-button
 					type="button"
@@ -155,13 +164,13 @@
 					+
 				</x-secondary-button>
 			</div>
+
 			<div class="flex justify-center mt-4">
 				<x-primary-button type="submit">Create Course</x-primary-button>
 			</div>
 		</form>
 	</main>
 </x-app-layout>
-
 <script>
 	function togglePrice(checkbox) {
 		const priceWrapper = document.getElementById('price_wrapper');
@@ -185,7 +194,7 @@
 		});
 	});
 </script>
-
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
 <script>
 	document.addEventListener('DOMContentLoaded', () => {
 		const wrapper = document.getElementById('sections_wrapper');
@@ -193,23 +202,25 @@
 		const template = document.getElementById('section_template');
 
 		function updateSections() {
-			const sections = wrapper.querySelectorAll(
-				'.section:not(#section_template)',
-			);
+			const sections = wrapper.querySelectorAll('.section');
 			sections.forEach((sec, i) => {
-				const input = sec.querySelector('input[type="text"]');
+				const titleInput = sec.querySelector('input[type="text"]');
+				const posInput = sec.querySelector('.section-position');
 				const label = sec.querySelector('label');
-				if (input && label) {
-					input.name = `sections[${i}][title]`;
-					input.id = `section_${i}_title`;
-					label.setAttribute('for', input.id);
+
+				if (titleInput) {
+					titleInput.name = `sections[${i}][title]`;
+					titleInput.id = `section_${i}_title`;
+					if (label) label.setAttribute('for', titleInput.id);
+				}
+				if (posInput) {
+					posInput.name = `sections[${i}][position]`;
+					posInput.value = i + 1;
 				}
 
 				const removeBtn = sec.querySelector('.remove-section-btn');
-				if (removeBtn) {
-					if (sections.length > 1) removeBtn.classList.remove('hidden');
-					else removeBtn.classList.add('hidden');
-				}
+				if (removeBtn)
+					removeBtn.classList.toggle('hidden', sections.length <= 1);
 			});
 		}
 
@@ -224,6 +235,12 @@
 			const clone = template.content.cloneNode(true);
 			wrapper.appendChild(clone);
 			updateSections();
+		});
+
+		new Sortable(wrapper, {
+			handle: '.section-handle',
+			animation: 150,
+			onEnd: updateSections,
 		});
 
 		updateSections();
