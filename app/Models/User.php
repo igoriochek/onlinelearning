@@ -48,4 +48,9 @@ class User extends Authenticatable
 	{
 		return $this->hasMany(Progress::class);
 	}
+
+	public function courses()
+	{
+		return $this->hasMany(Course::class, 'author_id');
+	}
 }

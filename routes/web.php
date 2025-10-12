@@ -7,6 +7,7 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\LessonController;
 use App\Http\Controllers\WishlistController;
 use App\Http\Controllers\StepController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Teacher\CourseController as TeacherCourseController;
 use App\Http\Controllers\Teacher\SectionController as TeacherSectionController;
 use Illuminate\Support\Facades\Route;
@@ -35,6 +36,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 		})->name('dashboard');
 		Route::get('/wishlist', [WishlistController::class, 'index'])->name(
 			'dashboard.wishlist',
+		);
+		Route::get('/my-courses', [DashboardController::class, 'myCourses'])->name(
+			'dashboard.my-courses',
 		);
 		Route::post('/wishlist/{course}', [
 			WishlistController::class,

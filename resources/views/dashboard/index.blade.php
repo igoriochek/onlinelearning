@@ -10,7 +10,7 @@
 			class="max-w-7xl mx-auto sm:px-6 lg:px-8 flex flex-col md:flex-row gap-6"
 		>
 			<aside
-				class="hidden md:block w-44 bg-white shadow-sm rounded-lg p-4 h-28"
+				class="hidden md:block w-44 bg-white shadow-sm rounded-lg p-4 h-auto
 			>
 				<nav class="space-y-2">
 					<x-aside-nav-link
@@ -25,6 +25,12 @@
 						:active="request()->routeIs('dashboard.wishlist')"
 					>
 						Wishlist
+					</x-aside-nav-link>
+					<x-aside-nav-link
+						href="{{ route('dashboard.my-courses') }}"
+						:active="request()->routeIs('dashboard.my-courses')"
+					>
+						My Courses
 					</x-aside-nav-link>
 				</nav>
 			</aside>
@@ -44,6 +50,12 @@
 					:active="request()->routeIs('dashboard.wishlist')"
 				>
 					Wishlist
+				</x-aside-nav-link>
+				<x-aside-nav-link
+					href="{{ route('dashboard.my-courses') }}"
+					:active="request()->routeIs('dashboard.my-courses')"
+				>
+					My Courses
 				</x-aside-nav-link>
 			</nav>
 			<main class="flex-1">
