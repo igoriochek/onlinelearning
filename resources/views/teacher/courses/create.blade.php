@@ -60,12 +60,6 @@
 							:checked="old('free_course')"
 						/>
 						<x-input-label for="free_course">Free course</x-input-label>
-						<x-checkbox-input
-							name="public"
-							id="public"
-							:checked="old('public')"
-						/>
-						<x-input-label for="public">Public course</x-input-label>
 					</div>
 				</div>
 
@@ -88,85 +82,8 @@
 				<x-input-error :messages="$errors->get('description')" class="mt-1" />
 			</div>
 
-			{{-- Sections --}}
-			<div id="sections_wrapper">
-				@php
-     $oldSections = old('sections', [['title' => '']]);
-				@endphp
-
-				@foreach ($oldSections as $i => $section)
-					<div class="section mb-2 border p-2 rounded-md relative">
-						<label
-							for="sections_{{ $i }}_title"
-							class="flex items-center gap-2 text-sm font-medium text-gray-700"
-						>
-							<span
-								class="section-handle cursor-move text-gray-500
-									hover:text-gray-800"
-							>
-								&#x2630;
-							</span>
-							Section Title
-						</label>
-						<x-text-input
-							type="text"
-							name="sections[{{ $i }}][title]"
-							id="sections_{{ $i }}_title"
-							value="{{ $section['title'] ?? '' }}"
-							required
-							class="mt-1 block w-full"
-						/>
-						<x-input-error
-							:messages="$errors->get('sections.' . $i . '.title')"
-							class="mt-1"
-						/>
-						<input type="hidden" class="section-position" />
-						<button
-							type="button"
-							class="remove-section-btn absolute top-2 right-2 text-red-500
-								text-lg {{ count($oldSections) > 1 ? '' : 'hidden' }}"
-						>
-							&times;
-						</button>
-					</div>
-				@endforeach
-			</div>
-
-			<template id="section_template">
-				<div class="section mb-2 border p-2 rounded-md relative">
-					<label class="text-sm font-medium text-gray-700 flex">
-						<span class="section-handle cursor-move pr-2">&#x2630;</span>
-						Section Title
-					</label>
-					<input
-						type="text"
-						required
-						class="section-title mt-1 block w-full rounded-md border-gray-300
-							focus:border-gray-800 focus:ring-gray-800"
-					/>
-					<input type="hidden" class="section-position" />
-					<button
-						type="button"
-						class="remove-section-btn absolute top-2 right-2 text-red-500
-							text-lg"
-					>
-						&times;
-					</button>
-				</div>
-			</template>
-
-			<div class="flex justify-end">
-				<x-secondary-button
-					type="button"
-					id="add_section_btn"
-					class="rounded !px-2 !py-0 !text-lg"
-				>
-					+
-				</x-secondary-button>
-			</div>
-
 			<div class="flex justify-center mt-4">
-				<x-primary-button type="submit">Create Course</x-primary-button>
+				<x-primary-button type="submit">Next</x-primary-button>
 			</div>
 		</form>
 	</main>
@@ -192,57 +109,5 @@
 		checkbox.addEventListener('change', () => {
 			togglePrice(checkbox);
 		});
-	});
-</script>
-<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
-<script>
-	document.addEventListener('DOMContentLoaded', () => {
-		const wrapper = document.getElementById('sections_wrapper');
-		const addBtn = document.getElementById('add_section_btn');
-		const template = document.getElementById('section_template');
-
-		function updateSections() {
-			const sections = wrapper.querySelectorAll('.section');
-			sections.forEach((sec, i) => {
-				const titleInput = sec.querySelector('input[type="text"]');
-				const posInput = sec.querySelector('.section-position');
-				const label = sec.querySelector('label');
-
-				if (titleInput) {
-					titleInput.name = `sections[${i}][title]`;
-					titleInput.id = `section_${i}_title`;
-					if (label) label.setAttribute('for', titleInput.id);
-				}
-				if (posInput) {
-					posInput.name = `sections[${i}][position]`;
-					posInput.value = i + 1;
-				}
-
-				const removeBtn = sec.querySelector('.remove-section-btn');
-				if (removeBtn)
-					removeBtn.classList.toggle('hidden', sections.length <= 1);
-			});
-		}
-
-		wrapper.addEventListener('click', (e) => {
-			if (e.target.matches('.remove-section-btn')) {
-				e.target.closest('.section').remove();
-				updateSections();
-			}
-		});
-
-		addBtn.addEventListener('click', () => {
-			const clone = template.content.cloneNode(true);
-			wrapper.appendChild(clone);
-			updateSections();
-		});
-
-		new Sortable(wrapper, {
-			handle: '.section-handle',
-			animation: 150,
-			onEnd: updateSections,
-		});
-
-		updateSections();
 	});
 </script>

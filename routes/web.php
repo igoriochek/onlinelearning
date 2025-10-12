@@ -8,6 +8,7 @@ use App\Http\Controllers\LessonController;
 use App\Http\Controllers\WishlistController;
 use App\Http\Controllers\StepController;
 use App\Http\Controllers\Teacher\CourseController as TeacherCourseController;
+use App\Http\Controllers\Teacher\SectionController as TeacherSectionController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -51,6 +52,18 @@ Route::middleware(['auth', 'verified'])->group(function () {
 			Route::resource('courses', TeacherCourseController::class)
 				->only(['create', 'store'])
 				->names('courses');
+			Route::get('courses/{course}/builder', [
+				TeacherCourseController::class,
+				'builder',
+			])->name('courses.builder');
+			Route::get('courses/{course}/sections', [
+				TeacherSectionController::class,
+				'index',
+			])->name('sections.index');
+			Route::post('courses/{course}/publish', [
+				TeacherCourseController::class,
+				'publish',
+			])->name('courses.publish');
 		});
 
 	Route::prefix('profile')

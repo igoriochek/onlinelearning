@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Teacher;
 use Exception;
 use App\Http\Controllers\Controller;
 use App\Models\Course;
-use App\Models\Section;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreCourseRequest;
@@ -22,7 +21,6 @@ class CourseController extends Controller
 		try {
 			$data = $request->validated();
 
-			dd($data);
 			if ($request->hasFile('image')) {
 				$data['image_url'] = $request
 					->file('image')
@@ -33,21 +31,25 @@ class CourseController extends Controller
 
 			$course = Course::create($data);
 
-			if (!empty($data['sections'])) {
-				foreach ($data['sections'] as $index => $sectionData) {
-					Section::create([
-						'course_id' => $course->id,
-						'title' => $sectionData['title'],
-						'position' => $sectionData['position'] ?? 1,
-					]);
-				}
-			}
-
 			return redirect()
-				->route('teacher.courses.create')
-				->with('success', 'Course created successfuly.');
+				->route('teacher.courses.builder', $course->id)
+				->with(
+					'success',
+					'Course created successfully! You can now add sections, lessons and steps.',
+				);
 		} catch (Exception $e) {
 			return back()->with('error', $e->getMessage());
 		}
+	}
+
+	public function builder(Course $course)
+	{
+		return view('teacher.courses.builder', compact('course'));
+	}
+
+	public function publish(Course $course)
+	{
+		$course->update(['public' => !$course->public]);
+		return response()->json(['public' => $course->public]);
 	}
 }
