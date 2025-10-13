@@ -1,4 +1,12 @@
-<a href="{{ route('courses.show', $course->id) }}" class="block">
+@props([
+  'course',
+  'builder' => false,
+])
+
+<a
+	href="{{ $builder ? route('teacher.courses.builder', $course->id) : route('courses.show', $course->id) }}"
+	class="block"
+>
 	<div
 		class="bg-white shadow-sm rounded-lg overflow-hidden hover:shadow-md
 			transition-shadow"
@@ -14,7 +22,7 @@
 				{{ $course->description }}
 			</p>
 
-			@if ($course->averageRating)
+			@if (! $builder && $course->averageRating)
 				<div class="flex items-center mt-2">
 					<x-star :filled="true" />
 					<span class="ml-2 text-gray-600 text-sm mt-1">
@@ -37,7 +45,9 @@
 			</div>
 
 			@auth
-				<x-wishlist-button :course="$course" variant="text" />
+				@if (! $builder)
+					<x-wishlist-button :course="$course" variant="text" />
+				@endif
 			@endauth
 		</div>
 	</div>

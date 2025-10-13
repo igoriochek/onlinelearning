@@ -37,9 +37,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
 		Route::get('/wishlist', [WishlistController::class, 'index'])->name(
 			'dashboard.wishlist',
 		);
-		Route::get('/my-courses', [DashboardController::class, 'myCourses'])->name(
-			'dashboard.my-courses',
-		);
+		Route::get('/manage-courses', [
+			DashboardController::class,
+			'manageCourses',
+		])->name('dashboard.manage-courses');
 		Route::post('/wishlist/{course}', [
 			WishlistController::class,
 			'store',

@@ -27,10 +27,10 @@
 						Wishlist
 					</x-aside-nav-link>
 					<x-aside-nav-link
-						href="{{ route('dashboard.my-courses') }}"
-						:active="request()->routeIs('dashboard.my-courses')"
+						href="{{ route('dashboard.manage-courses') }}"
+						:active="request()->routeIs('dashboard.manage-courses')"
 					>
-						My Courses
+						Manage Courses
 					</x-aside-nav-link>
 				</nav>
 			</aside>
@@ -52,10 +52,10 @@
 					Wishlist
 				</x-aside-nav-link>
 				<x-aside-nav-link
-					href="{{ route('dashboard.my-courses') }}"
-					:active="request()->routeIs('dashboard.my-courses')"
+					href="{{ route('dashboard.manage-courses') }}"
+					:active="request()->routeIs('dashboard.manage-courses')"
 				>
-					My Courses
+					Manage Courses
 				</x-aside-nav-link>
 			</nav>
 			<main class="flex-1">
