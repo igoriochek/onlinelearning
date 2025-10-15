@@ -10,6 +10,7 @@ use App\Http\Controllers\StepController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Teacher\CourseController as TeacherCourseController;
 use App\Http\Controllers\Teacher\SectionController as TeacherSectionController;
+use App\Http\Controllers\Teacher\LessonController as TeacherLessonController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -61,14 +62,32 @@ Route::middleware(['auth', 'verified'])->group(function () {
 				TeacherCourseController::class,
 				'show',
 			])->name('courses.show');
-			Route::get('courses/{course}/sections', [
-				TeacherSectionController::class,
-				'index',
-			])->name('sections.index');
 			Route::post('courses/{course}/publish', [
 				TeacherCourseController::class,
 				'publish',
 			])->name('courses.publish');
+
+			Route::get('courses/{course}/sections', [
+				TeacherSectionController::class,
+				'index',
+			])->name('sections.index');
+			Route::post('courses/{course}/sections', [
+				TeacherSectionController::class,
+				'store',
+			])->name('courses.sections.store');
+			Route::put('sections/{section}', [
+				TeacherSectionController::class,
+				'update',
+			])->name('sections.update');
+			Route::delete('sections/{section}', [
+				TeacherSectionController::class,
+				'destroy',
+			])->name('sections.destroy');
+
+			Route::get('sections/{section}/lessons', [
+				TeacherLessonController::class,
+				'index',
+			])->name('lessons.index');
 		});
 
 	Route::prefix('profile')
