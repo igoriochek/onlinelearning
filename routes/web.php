@@ -57,10 +57,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
 			Route::resource('courses', TeacherCourseController::class)
 				->only(['create', 'store'])
 				->names('courses');
-			Route::get('courses/{course}/builder', [
+			Route::get('courses/{course}', [
 				TeacherCourseController::class,
-				'builder',
-			])->name('courses.builder');
+				'show',
+			])->name('courses.show');
 			Route::get('courses/{course}/sections', [
 				TeacherSectionController::class,
 				'index',

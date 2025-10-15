@@ -4,7 +4,7 @@
 ])
 
 <a
-	href="{{ $builder ? route('teacher.courses.builder', $course->id) : route('courses.show', $course->id) }}"
+	href="{{ $builder ? route('teacher.courses.show', $course->id) : route('courses.show', $course->id) }}"
 	class="block"
 >
 	<div

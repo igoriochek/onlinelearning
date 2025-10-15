@@ -10,7 +10,7 @@
 			class="max-w-7xl mx-auto sm:px-6 lg:px-8 flex flex-col md:flex-row gap-6"
 		>
 			<aside
-				class="hidden md:block w-44 bg-white shadow-sm rounded-lg p-4 h-auto
+				class="hidden md:block w-44 bg-white shadow-sm rounded-lg p-4 h-60
 			>
 				<nav class="space-y-2">
 					<x-aside-nav-link

@@ -32,7 +32,7 @@ class CourseController extends Controller
 			$course = Course::create($data);
 
 			return redirect()
-				->route('teacher.courses.builder', $course->id)
+				->route('teacher.courses.show', $course->id)
 				->with(
 					'success',
 					'Course created successfully! You can now add sections, lessons and steps.',
@@ -42,9 +42,9 @@ class CourseController extends Controller
 		}
 	}
 
-	public function builder(Course $course)
+	public function show(Course $course)
 	{
-		return view('teacher.courses.builder', compact('course'));
+		return view('teacher.courses.show', compact('course'));
 	}
 
 	public function publish(Course $course)
