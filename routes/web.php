@@ -11,6 +11,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Teacher\CourseController as TeacherCourseController;
 use App\Http\Controllers\Teacher\SectionController as TeacherSectionController;
 use App\Http\Controllers\Teacher\LessonController as TeacherLessonController;
+use App\Http\Controllers\Teacher\StepController as TeacherStepController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -56,38 +57,37 @@ Route::middleware(['auth', 'verified'])->group(function () {
 		->name('teacher.')
 		->group(function () {
 			Route::resource('courses', TeacherCourseController::class)
-				->only(['create', 'store'])
+				->only(['create', 'store', 'show'])
 				->names('courses');
-			Route::get('courses/{course}', [
-				TeacherCourseController::class,
-				'show',
-			])->name('courses.show');
 			Route::post('courses/{course}/publish', [
 				TeacherCourseController::class,
 				'publish',
 			])->name('courses.publish');
 
-			Route::get('courses/{course}/sections', [
-				TeacherSectionController::class,
-				'index',
-			])->name('sections.index');
-			Route::post('courses/{course}/sections', [
-				TeacherSectionController::class,
-				'store',
-			])->name('courses.sections.store');
-			Route::put('sections/{section}', [
-				TeacherSectionController::class,
-				'update',
-			])->name('sections.update');
-			Route::delete('sections/{section}', [
-				TeacherSectionController::class,
-				'destroy',
-			])->name('sections.destroy');
+			Route::resource('courses.sections', TeacherSectionController::class)
+				->shallow()
+				->except(['show', 'edit', 'create'])
+				->names([
+					'index' => 'sections.index',
+					'store' => 'sections.store',
+					'update' => 'sections.update',
+					'destroy' => 'sections.destroy',
+				]);
 
-			Route::get('sections/{section}/lessons', [
-				TeacherLessonController::class,
+			Route::resource('sections.lessons', TeacherLessonController::class)
+				->shallow()
+				->except(['show', 'edit', 'create'])
+				->names([
+					'index' => 'lessons.index',
+					'store' => 'sections.lessons.store',
+					'update' => 'lessons.update',
+					'destroy' => 'lessons.destroy',
+				]);
+
+			Route::get('lesssons/{lesson}/steps', [
+				TeacherStepController::class,
 				'index',
-			])->name('lessons.index');
+			])->name('steps.index');
 		});
 
 	Route::prefix('profile')
