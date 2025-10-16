@@ -14,6 +14,8 @@ class Lesson extends Model
 
 	public $incrementing = false;
 
+	protected $fillable = ['title', 'section_id', 'position'];
+
 	protected static function boot()
 	{
 		parent::boot();
