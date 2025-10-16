@@ -26,7 +26,7 @@ class LessonController extends Controller
 		]);
 
 		return redirect()
-			->route('teacher.lessons.index', $section->id)
+			->route('teacher.sections.lessons.index', $section->id)
 			->with('success', 'Lesson created successfully!');
 	}
 
@@ -50,8 +50,6 @@ class LessonController extends Controller
 	{
 		$lesson->delete();
 
-		return redirect()
-			->route('teacher.lessons.index', $lesson->section_id)
-			->with('success', 'Lesson deleted successfully!');
+		return back()->with('success', 'Lesson deleted successfully!');
 	}
 }

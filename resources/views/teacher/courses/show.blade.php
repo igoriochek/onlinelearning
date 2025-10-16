@@ -33,7 +33,7 @@
 				<div class="flex flex-col sm:flex-row gap-3">
 					<x-secondary-button>Edit course info</x-secondary-button>
 					<x-primary-button
-						:href="route('teacher.sections.index', $course->id)"
+						:href="route('teacher.courses.sections.index', $course->id)"
 					>
 						Manage Sections
 					</x-primary-button>

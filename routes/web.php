@@ -66,23 +66,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 			Route::resource('courses.sections', TeacherSectionController::class)
 				->shallow()
-				->except(['show', 'edit', 'create'])
-				->names([
-					'index' => 'sections.index',
-					'store' => 'sections.store',
-					'update' => 'sections.update',
-					'destroy' => 'sections.destroy',
-				]);
+				->except(['show', 'edit', 'create']);
 
 			Route::resource('sections.lessons', TeacherLessonController::class)
 				->shallow()
-				->except(['show', 'edit', 'create'])
-				->names([
-					'index' => 'lessons.index',
-					'store' => 'sections.lessons.store',
-					'update' => 'lessons.update',
-					'destroy' => 'lessons.destroy',
-				]);
+				->except(['show', 'edit', 'create']);
 
 			Route::get('lesssons/{lesson}/steps', [
 				TeacherStepController::class,

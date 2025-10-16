@@ -50,9 +50,6 @@
 					body: formData,
 				})
 					.then((res) => res.json())
-					.then((data) => {
-						console.log('Status updated:', data.public);
-					})
 					.catch((err) => {
 						alert('Error updating status');
 						input.checked = !input.checked;

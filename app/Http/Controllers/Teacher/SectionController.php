@@ -26,7 +26,7 @@ class SectionController extends Controller
 		]);
 
 		return redirect()
-			->route('teacher.sections.index', $course->id)
+			->route('teacher.courses.sections.index', $course->id)
 			->with('success', 'Section created successfully!');
 	}
 
@@ -46,11 +46,9 @@ class SectionController extends Controller
 		]);
 	}
 
-	public function destroy($sectionId)
+	public function destroy(Section $section)
 	{
-		$section = Section::findOrFail($sectionId);
 		$section->delete();
-
-		return back()->with('success', 'Section deleted succesfully');
+		return back()->with('success', 'Section deleted successfully!');
 	}
 }

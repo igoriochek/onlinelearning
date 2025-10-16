@@ -1,4 +1,4 @@
-<x-modal name="confirm-delete">
+<x-modal name="delete-lesson">
 	<form
 		x-bind:action="`{{ route('teacher.lessons.destroy', ':id') }}`.replace(':id', lessonId)"
 		method="POST"
@@ -15,7 +15,7 @@
 		<div class="flex justify-end gap-2">
 			<x-secondary-button
 				type="button"
-				@click="$dispatch('close-modal', 'confirm-delete-lesson')"
+				@click="$dispatch('close-modal', 'delete-lesson')"
 			>
 				Cancel
 			</x-secondary-button>

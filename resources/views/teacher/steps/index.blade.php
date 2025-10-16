@@ -13,14 +13,14 @@
 			</a>
 			/
 			<a
-				href="{{ route('teacher.sections.index', $lesson->section->course_id) }}"
+				href="{{ route('teacher.courses.sections.index', $lesson->section->course_id) }}"
 				class="text-blue-500"
 			>
 				Sections
 			</a>
 			/
 			<a
-				href="{{ route('teacher.lessons.index', $lesson->section_id) }}"
+				href="{{ route('teacher.sections.lessons.index', $lesson->section_id) }}"
 				class="text-blue-500"
 			>
 				Lessons

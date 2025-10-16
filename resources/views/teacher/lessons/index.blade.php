@@ -12,7 +12,7 @@
 			</a>
 			/
 			<a
-				href="{{ route('teacher.sections.index', $section->course_id) }}"
+				href="{{ route('teacher.courses.sections.index', $section->course_id) }}"
 				class="text-blue-500"
 			>
 				Sections
@@ -29,7 +29,7 @@
 			<div class="flex justify-between items-center mb-6">
 				<h3 class="text-lg font-semibold text-gray-900">Lessons</h3>
 
-				<x-primary-button @click="$dispatch('open-modal', 'add-lesson')">
+				<x-primary-button @click="$dispatch('open-modal', 'create-lesson')">
 					Add Lesson
 				</x-primary-button>
 			</div>
@@ -49,18 +49,16 @@
 							</x-secondary-button>
 							<x-primary-button
 								@click="
-        lessonId = '{{ $lesson->id }}';
-        lessonTitle = '{{ $lesson->title }}';
-        $dispatch('open-modal','edit-lesson');
-    "
+                  lessonId = '{{ $lesson->id }}';
+                  lessonTitle = document.querySelector('#lesson-title-{{ $lesson->id }}').textContent;
+                  $dispatch('open-modal','edit-lesson');"
 							>
 								Edit
 							</x-primary-button>
 							<x-danger-button
 								@click="
-        lessonId = '{{ $lesson->id }}';
-        $dispatch('open-modal','confirm-delete');
-    "
+                  lessonId = '{{ $lesson->id }}';
+                  $dispatch('open-modal','delete-lesson');"
 							>
 								Delete
 							</x-danger-button>

@@ -1,4 +1,4 @@
-<x-modal name="add-section">
+<x-modal name="create-section">
 	<form
 		action="{{ route('teacher.courses.sections.store', $course->id) }}"
 		method="POST"
@@ -17,7 +17,7 @@
 		<div class="flex justify-end gap-2">
 			<x-secondary-button
 				type="button"
-				@click="$dispatch('close-modal', 'add-section')"
+				@click="$dispatch('close-modal', 'create-section')"
 			>
 				Cancel
 			</x-secondary-button>

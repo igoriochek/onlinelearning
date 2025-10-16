@@ -22,7 +22,7 @@
 			<div class="flex justify-between items-center mb-6">
 				<h3 class="text-lg font-semibold text-gray-900">Sections</h3>
 
-				<x-primary-button @click="$dispatch('open-modal', 'add-section')">
+				<x-primary-button @click="$dispatch('open-modal', 'create-section')">
 					Add Section
 				</x-primary-button>
 			</div>
@@ -37,14 +37,14 @@
 						<p id="section-title-{{ $section->id }}">{{ $section->title }}</p>
 						<div class="flex gap-2">
 							<x-secondary-button
-								href="{{ route('teacher.lessons.index', $section->id) }}"
+								href="{{ route('teacher.sections.lessons.index', $section->id) }}"
 							>
 								Manage Lessons
 							</x-secondary-button>
 							<x-primary-button
 								@click="
                   sectionId = {{ $section->id }};
-                  sectionTitle = '{{ $section->title }}';
+                  sectionTitle = document.querySelector('#section-title-{{ $section->id }}').textContent;
                   $dispatch('open-modal', 'edit-section');
               "
 							>
@@ -54,8 +54,7 @@
 							<x-danger-button
 								@click="
                   sectionId = {{ $section->id }};
-                  $dispatch('open-modal', 'confirm-delete');
-              "
+                  $dispatch('open-modal', 'delete-section');"
 							>
 								Delete
 							</x-danger-button>
