@@ -72,10 +72,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 				->shallow()
 				->except(['show', 'edit', 'create']);
 
-			Route::get('lesssons/{lesson}/steps', [
-				TeacherStepController::class,
-				'index',
-			])->name('steps.index');
+			Route::resource('lessons.steps', TeacherStepController::class)
+				->shallow()
+				->except(['show', 'edit', 'create']);
 		});
 
 	Route::prefix('profile')

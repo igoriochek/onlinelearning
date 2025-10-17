@@ -8,6 +8,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Step extends Model
 {
 	use HasFactory;
+
+	protected $fillable = [
+		'lesson_id',
+		'question',
+		'type',
+		'position',
+		'content',
+	];
+
 	public function lesson()
 	{
 		return $this->belongsTo(Lesson::class);
