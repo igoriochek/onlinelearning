@@ -26,12 +26,16 @@
 					>
 						Wishlist
 					</x-aside-nav-link>
+          @auth
+          @if (auth()->user()->role === 'teacher')
 					<x-aside-nav-link
 						href="{{ route('dashboard.manage-courses') }}"
 						:active="request()->routeIs('dashboard.manage-courses')"
 					>
 						Manage Courses
 					</x-aside-nav-link>
+          @endif
+					@endauth
 				</nav>
 			</aside>
 			<nav
@@ -51,12 +55,14 @@
 				>
 					Wishlist
 				</x-aside-nav-link>
+        @if (auth()->user()->role === 'teacher')
 				<x-aside-nav-link
 					href="{{ route('dashboard.manage-courses') }}"
 					:active="request()->routeIs('dashboard.manage-courses')"
 				>
 					Manage Courses
 				</x-aside-nav-link>
+        @endif
 			</nav>
 			<main class="flex-1">
 				@yield('dashboard-content')

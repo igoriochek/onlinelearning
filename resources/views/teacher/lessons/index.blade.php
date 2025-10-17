@@ -43,7 +43,7 @@
 						<p id="lesson-title-{{ $lesson->id }}">{{ $lesson->title }}</p>
 						<div class="flex gap-2">
 							<x-secondary-button
-								href="{{ route('teacher.steps.index', $lesson->id) }}"
+								href="{{ route('teacher.lessons.steps.index', $lesson->id) }}"
 							>
 								Manage Lesson Steps
 							</x-secondary-button>
