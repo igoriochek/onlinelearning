@@ -19,7 +19,6 @@ export function stepCompletion(stepId, autoCompleteDelay, isCompleted) {
 				});
 
 				if (res.ok) {
-					console.log('Step completed', stepId);
 					document.dispatchEvent(
 						new CustomEvent('stepCompleted', { detail: stepId }),
 					);
