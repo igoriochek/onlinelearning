@@ -5,7 +5,6 @@
 	class="editor border rounded px-3 py-2 w-full"
 	rows="5"
 	placeholder="Enter text here..."
->
-{{ old('content_text') }}</textarea
->
+	x-bind:disabled="stepType !== 'text'"
+></textarea>
 <x-input-error :messages="$errors->get('content_text')" class="mt-1" />

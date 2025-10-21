@@ -42,13 +42,13 @@
 			<form
 				action="{{ route('teacher.lessons.steps.store', $lesson->id) }}"
 				method="POST"
-				x-data="{ type: '{{ old('type', 'text') }}' }"
+				x-data="{ stepType: '{{ old('type', 'text') }}' }"
 			>
 				@csrf
 
 				<div class="mb-4">
 					<x-input-label for="type" value="Step Type" />
-					<x-select-input name="type" id="type" x-model="type">
+					<x-select-input name="type" id="type" x-model="stepType">
 						<option value="text">Text / Content only (no answers)</option>
 						<option value="video">Video (YouTube URL)</option>
 						<option value="quiz">Multiple Choice Quiz</option>
@@ -57,15 +57,15 @@
 						</option>
 					</x-select-input>
 				</div>
-				<div class="mb-4" x-show="type === 'text'">
+				<div class="mb-4" x-show="stepType === 'text'">
 					@include('teacher.steps.partials.text-form')
 				</div>
 
-				<div class="mb-4" x-show="type === 'video'">
+				<div class="mb-4" x-show="stepType === 'video'">
 					@include('teacher.steps.partials.video-form')
 				</div>
 
-				<div class="mb-4" x-show="type === 'quiz'">
+				<div class="mb-4" x-show="stepType === 'quiz'">
 					@include('teacher.steps.partials.quiz-form')
 				</div>
 
