@@ -92,4 +92,22 @@ class StepController extends Controller
 	{
 		return view('teacher.steps.create', compact('lesson'));
 	}
+
+	public function reorder(Request $request, Lesson $lesson)
+	{
+		$order = $request->input('order', []);
+		try {
+			foreach ($order as $item) {
+				Step::where('id', $item['id'])
+					->where('lesson_id', $lesson->id)
+					->update(['position' => $item['position']]);
+			}
+			return response()->json(['status' => 'success']);
+		} catch (\Exception $e) {
+			return response()->json(
+				['status' => 'error', 'message' => $e->getMessage()],
+				500,
+			);
+		}
+	}
 }

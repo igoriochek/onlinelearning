@@ -75,6 +75,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
 			Route::resource('lessons.steps', TeacherStepController::class)
 				->shallow()
 				->except(['show', 'edit']);
+
+			Route::post('lessons/{lesson}/steps/reorder', [
+				TeacherStepController::class,
+				'reorder',
+			])->name('lessons.steps.reorder');
 		});
 
 	Route::prefix('profile')

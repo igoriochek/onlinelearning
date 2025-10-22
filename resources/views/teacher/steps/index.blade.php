@@ -41,13 +41,24 @@
 			@if ($lesson->steps->isEmpty())
 				<p class="text-gray-500">No steps created yet.</p>
 			@else
-				<div class="space-y-4">
-					@foreach ($lesson->steps->sortBy('position') as $step)
+				<div
+					id="steps-list"
+					x-data="stepReorder('{{ route('teacher.lessons.steps.reorder', $lesson->id) }}')"
+					class="space-y-4"
+				>
+					@foreach ($lesson->steps as $step)
 						<div
 							class="p-4 border rounded-lg flex items-center justify-between
 								mb-4"
+							data-id="{{ $step->id }}"
 						>
 							<div class="flex items-center gap-3">
+								<div class="cursor-grab text-gray-400 hover:text-gray-600">
+									<x-icons.drag-handle />
+								</div>
+								<span class="font-semibold text-gray-700">
+									#{{ $step->position }}
+								</span>
 								<x-steps.step-type :type="$step->type" />
 							</div>
 						</div>
