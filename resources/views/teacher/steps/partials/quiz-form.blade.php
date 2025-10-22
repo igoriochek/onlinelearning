@@ -116,21 +116,21 @@
 <script>
 	function quizForm() {
 		return {
-			quizType: '{{ old('quiz_type', 'quiz_single') }}',
-			options:
-				{!!
+			// prettier-ignore
+			quizType: "{{ old('quiz_type', 'quiz_single') }}",
+			options: JSON.parse(
+				`{!!
       json_encode(
       	old('options', [
       		['text' => '', 'correct' => false],
       		['text' => '', 'correct' => false],
       	]),
       )
-    !!}.map(
-					(opt) => ({
-						text: opt.text || '',
-						correct: !!opt.correct,
-					}),
-				),
+    !!}`,
+			).map((opt) => ({
+				text: opt.text || '',
+				correct: !!opt.correct,
+			})),
 			addOption() {
 				this.options.push({ text: '', correct: false });
 			},
