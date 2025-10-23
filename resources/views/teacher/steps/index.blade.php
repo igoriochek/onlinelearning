@@ -43,7 +43,7 @@
 			@else
 				<div
 					id="steps-list"
-					x-data="stepReorder('{{ route('teacher.lessons.steps.reorder', $lesson->id) }}')"
+					x-data="reorderItems('{{ route('teacher.lessons.steps.reorder', $lesson->id) }}')"
 					class="space-y-4"
 				>
 					@foreach ($lesson->steps as $step)

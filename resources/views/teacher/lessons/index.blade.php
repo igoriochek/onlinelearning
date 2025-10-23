@@ -36,35 +36,53 @@
 			@if ($section->lessons->isEmpty())
 				<p class="text-gray-500">No lessons created yet.</p>
 			@else
-				@foreach ($section->lessons as $lesson)
-					<div
-						class="p-4 border rounded-lg flex justify-between items-center mb-4"
-					>
-						<p id="lesson-title-{{ $lesson->id }}">{{ $lesson->title }}</p>
-						<div class="flex gap-2">
-							<x-secondary-button
-								href="{{ route('teacher.lessons.steps.index', $lesson->id) }}"
-							>
-								Manage Lesson Steps
-							</x-secondary-button>
-							<x-primary-button
-								@click="
+				<div
+					id="lessons-list"
+					x-data="reorderItems('{{ route('teacher.sections.lessons.reorder', $section->id) }}')"
+					class="space-y-4"
+				>
+					@foreach ($section->lessons as $lesson)
+						<div
+							class="p-4 border rounded-lg flex justify-between items-center
+								mb-4"
+							data-id="{{ $lesson->id }}"
+						>
+							<div class="flex items-center gap-3">
+								<div class="cursor-grab text-gray-400 hover:text-gray-600">
+									<x-icons.drag-handle />
+								</div>
+								<span class="font-semibold text-gray-700">
+									#{{ $lesson->position }}
+								</span>
+								<p id="lesson-title-{{ $lesson->id }}">
+									{{ $lesson->title }}
+								</p>
+							</div>
+							<div class="flex gap-2">
+								<x-secondary-button
+									href="{{ route('teacher.lessons.steps.index', $lesson->id) }}"
+								>
+									Manage Lesson Steps
+								</x-secondary-button>
+								<x-primary-button
+									@click="
                   lessonId = '{{ $lesson->id }}';
                   lessonTitle = document.querySelector('#lesson-title-{{ $lesson->id }}').textContent;
                   $dispatch('open-modal','edit-lesson');"
-							>
-								Edit
-							</x-primary-button>
-							<x-danger-button
-								@click="
+								>
+									Edit
+								</x-primary-button>
+								<x-danger-button
+									@click="
                   lessonId = '{{ $lesson->id }}';
                   $dispatch('open-modal','delete-lesson');"
-							>
-								Delete
-							</x-danger-button>
+								>
+									Delete
+								</x-danger-button>
+							</div>
 						</div>
-					</div>
-				@endforeach
+					@endforeach
+				</div>
 			@endif
 		</div>
 		@include('teacher.lessons.partials.create-modal')

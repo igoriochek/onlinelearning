@@ -1,6 +1,6 @@
 import Sortable from 'sortablejs';
 
-export function stepReorder(reorderUrl) {
+export function reorderItems(reorderUrl) {
 	return {
 		init() {
 			const el = this.$el;
@@ -8,7 +8,7 @@ export function stepReorder(reorderUrl) {
 				animation: 150,
 				handle: '.cursor-grab',
 				onEnd: async () => {
-					let order = [];
+					const order = [];
 					el.querySelectorAll('div[data-id]').forEach((el, index) => {
 						order.push({ id: el.dataset.id, position: index + 1 });
 						const numberSpan = el.querySelector('span.font-semibold');
@@ -29,7 +29,7 @@ export function stepReorder(reorderUrl) {
 
 						if (!res.ok) throw new Error('Network response was not ok');
 					} catch (err) {
-						console.error('Step reorder failed:', err);
+						console.error('Reorder failed:', err);
 					}
 				},
 			});
