@@ -22,7 +22,7 @@ class SectionController extends Controller
 
 		$course->sections()->create([
 			'title' => $request->title,
-			'order' => $course->sections()->count() + 1,
+			'position' => $course->sections()->max('position') + 1,
 		]);
 
 		return redirect()
@@ -50,5 +50,24 @@ class SectionController extends Controller
 	{
 		$section->delete();
 		return back()->with('success', 'Section deleted successfully!');
+	}
+
+	public function reorder(Request $request, Course $course)
+	{
+		$order = $request->input('order', []);
+
+		try {
+			foreach ($order as $item) {
+				Section::where('id', $item['id'])
+					->where('course_id', $course->id)
+					->update(['position' => $item['position']]);
+			}
+			return response()->json(['status' => 'success']);
+		} catch (\Exception $e) {
+			return response()->json(
+				['status' => 'error', 'message' => $e->getMessage()],
+				500,
+			);
+		}
 	}
 }

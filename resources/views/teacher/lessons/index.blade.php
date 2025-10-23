@@ -37,7 +37,6 @@
 				<p class="text-gray-500">No lessons created yet.</p>
 			@else
 				<div
-					id="lessons-list"
 					x-data="reorderItems('{{ route('teacher.sections.lessons.reorder', $section->id) }}')"
 					class="space-y-4"
 				>
@@ -62,7 +61,7 @@
 								<x-secondary-button
 									href="{{ route('teacher.lessons.steps.index', $lesson->id) }}"
 								>
-									Manage Lesson Steps
+									Manage Steps
 								</x-secondary-button>
 								<x-primary-button
 									@click="

@@ -68,6 +68,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
 				->shallow()
 				->except(['show', 'edit', 'create']);
 
+			Route::post('courses/{course}/sections/reorder', [
+				TeacherSectionController::class,
+				'reorder',
+			])->name('courses.sections.reorder');
+
 			Route::resource('sections.lessons', TeacherLessonController::class)
 				->shallow()
 				->except(['show', 'edit', 'create']);

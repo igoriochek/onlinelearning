@@ -42,7 +42,6 @@
 				<p class="text-gray-500">No steps created yet.</p>
 			@else
 				<div
-					id="steps-list"
 					x-data="reorderItems('{{ route('teacher.lessons.steps.reorder', $lesson->id) }}')"
 					class="space-y-4"
 				>

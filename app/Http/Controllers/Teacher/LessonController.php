@@ -22,7 +22,7 @@ class LessonController extends Controller
 
 		$section->lessons()->create([
 			'title' => $request->title,
-			'order' => $section->lessons()->count() + 1,
+			'position' => $section->lessons()->max('position') + 1,
 		]);
 
 		return redirect()
@@ -51,5 +51,25 @@ class LessonController extends Controller
 		$lesson->delete();
 
 		return back()->with('success', 'Lesson deleted successfully!');
+	}
+
+	public function reorder(Request $request, Section $section)
+	{
+		$order = $request->input('order', []);
+
+		try {
+			foreach ($order as $item) {
+				Lesson::where('id', $item['id'])
+					->where('section_id', $section->id)
+					->update(['position' => $item['position']]);
+			}
+
+			return response()->json(['status' => 'success']);
+		} catch (\Exception $e) {
+			return response()->json(
+				['status' => 'error', 'message' => $e->getMessage()],
+				500,
+			);
+		}
 	}
 }
