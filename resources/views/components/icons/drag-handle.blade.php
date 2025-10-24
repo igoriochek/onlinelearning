@@ -1,14 +1,14 @@
 <svg
 	xmlns="http://www.w3.org/2000/svg"
-	class="w-5 h-5"
 	fill="none"
 	viewBox="0 0 24 24"
+	stroke-width="3"
 	stroke="currentColor"
+	class="w-6 h-6"
 >
 	<path
 		stroke-linecap="round"
 		stroke-linejoin="round"
-		stroke-width="2"
-		d="M8 9h.01M8 15h.01M12 9h.01M12 15h.01M16 9h.01M16 15h.01"
+		d="M9 5h.01M9 12h.01M9 19h.01M15 5h.01M15 12h.01M15 19h.01"
 	/>
 </svg>
