@@ -16,7 +16,7 @@
 
 	<main
 		x-data="{ sectionId: null, sectionTitle: '' }"
-		class="max-w-7xl mx-auto py-6"
+		class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8"
 	>
 		<div class="bg-white p-6 rounded-lg shadow">
 			<div class="flex justify-between items-center mb-6">
@@ -36,44 +36,60 @@
 				>
 					@foreach ($course->sections as $section)
 						<div
-							class="p-4 border rounded-lg flex justify-between items-center
-								mb-4"
+							class="p-4 border rounded-lg space-y-4"
 							data-id="{{ $section->id }}"
 						>
-							<div class="flex items-center gap-3">
-								<div class="cursor-grab text-gray-400 hover:text-gray-600">
-									<x-icons.drag-handle />
+							<div
+								class="flex flex-col sm:flex-row sm:items-center
+									sm:justify-between gap-4"
+							>
+								<div class="flex items-center gap-3">
+									<div
+										class="cursor-grab text-gray-400 hover:text-gray-600 pt-1"
+									>
+										<x-icons.drag-handle />
+									</div>
+									<div>
+										<span class="text-sm text-gray-500">
+											#{{ $section->position }}
+										</span>
+										<p
+											id="section-title-{{ $section->id }}"
+											class="text-base font-medium text-gray-900"
+										>
+											{{ $section->title }}
+										</p>
+									</div>
 								</div>
-								<span class="font-semibold text-gray-700">
-									#{{ $section->position }}
-								</span>
-								<p id="section-title-{{ $section->id }}">
-									{{ $section->title }}
-								</p>
-							</div>
-							<div class="flex gap-2">
-								<x-secondary-button
-									href="{{ route('teacher.sections.lessons.index', $section->id) }}"
-								>
-									Manage Lessons
-								</x-secondary-button>
-								<x-primary-button
-									@click="
-                  sectionId = {{ $section->id }};
-                  sectionTitle = document.querySelector('#section-title-{{ $section->id }}').textContent;
-                  $dispatch('open-modal', 'edit-section');
-              "
-								>
-									Edit
-								</x-primary-button>
 
-								<x-danger-button
-									@click="
-                  sectionId = {{ $section->id }};
-                  $dispatch('open-modal', 'delete-section');"
-								>
-									Delete
-								</x-danger-button>
+								<div class="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+									<x-secondary-button
+										href="{{ route('teacher.sections.lessons.index', $section->id) }}"
+										class="w-full sm:w-auto justify-center"
+									>
+										Manage Lessons
+									</x-secondary-button>
+
+									<x-primary-button
+										@click="
+            sectionId = {{ $section->id }};
+            sectionTitle = document.querySelector('#section-title-{{ $section->id }}').textContent;
+            $dispatch('open-modal', 'edit-section');
+          "
+										class="w-full sm:w-auto justify-center"
+									>
+										Edit
+									</x-primary-button>
+
+									<x-danger-button
+										@click="
+            sectionId = {{ $section->id }};
+            $dispatch('open-modal', 'delete-section');"
+										class="w-full sm:w-auto justify-center"
+									>
+										Delete
+									</x-danger-button>
+								</div>
 							</div>
 						</div>
 					@endforeach
