@@ -26,7 +26,10 @@ class StepController extends Controller
 					? 'required|string|max:255'
 					: 'nullable|string|max:255',
 			'content_text' => 'required_if:type,text|string|nullable',
-			'content_video' => 'required_if:type,video|string|nullable',
+			'content_video' => [
+				'required_if:type,video',
+				'regex:/^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be|vimeo\.com)\/.+$/',
+			],
 			'content_quiz' =>
 				$type === 'quiz' ? 'required|string|nullable' : 'nullable|string',
 			'options' => 'required_if:type,quiz|array|min:2',

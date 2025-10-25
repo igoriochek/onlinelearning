@@ -6,5 +6,6 @@
 	class="w-full"
 	placeholder="https://www.youtube.com/watch?v=..."
 	x-bind:required="stepType==='video'"
+	pattern="https?://(www\.)?(youtube\.com|youtu\.be|vimeo\.com)/.+"
 />
 <x-input-error :messages="$errors->get('content_video')" class="mt-1" />
