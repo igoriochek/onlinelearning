@@ -28,7 +28,7 @@
 		</nav>
 	</x-slot>
 
-	<main class="max-w-7xl mx-auto py-6">
+	<main x-data="{ stepId: null }" class="max-w-7xl mx-auto py-6">
 		<div class="bg-white p-6 rounded-lg shadow">
 			<div class="flex justify-between items-center mb-6">
 				<h3 class="text-lg font-semibold text-gray-900">Lesson Steps</h3>
@@ -47,23 +47,37 @@
 				>
 					@foreach ($lesson->steps as $step)
 						<div
-							class="p-4 border rounded-lg flex items-center justify-between
-								mb-4"
+							class="p-4 border rounded-lg space-y-4"
 							data-id="{{ $step->id }}"
 						>
-							<div class="flex items-center gap-3">
-								<div class="cursor-grab text-gray-400 hover:text-gray-600">
-									<x-icons.drag-handle />
+							<div
+								class="flex flex-col sm:flex-row sm:items-center
+									sm:justify-between gap-4"
+							>
+								<div class="flex items-center gap-3">
+									<div class="cursor-grab text-gray-400 hover:text-gray-600">
+										<x-icons.drag-handle />
+									</div>
+									<span class="font-semibold text-gray-700">
+										#{{ $step->position }}
+									</span>
+									<x-steps.step-type :type="$step->type" />
 								</div>
-								<span class="font-semibold text-gray-700">
-									#{{ $step->position }}
-								</span>
-								<x-steps.step-type :type="$step->type" />
+								<div class="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+									<x-danger-button
+										@click=" stepId = {{ $step->id }};
+                  $dispatch('open-modal', 'delete-step');"
+										class="w-full sm:w-auto justify-center"
+									>
+										Delete
+									</x-danger-button>
+								</div>
 							</div>
 						</div>
 					@endforeach
 				</div>
 			@endif
 		</div>
+		@include('teacher.steps.partials.delete-modal')
 	</main>
 </x-app-layout>

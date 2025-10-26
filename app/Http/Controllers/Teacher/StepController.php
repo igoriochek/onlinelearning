@@ -96,6 +96,12 @@ class StepController extends Controller
 		return view('teacher.steps.create', compact('lesson'));
 	}
 
+	public function destroy(Step $step)
+	{
+		$step->delete();
+		return back()->with('success', 'Step deleted successfully');
+	}
+
 	public function reorder(Request $request, Lesson $lesson)
 	{
 		$order = $request->input('order', []);
