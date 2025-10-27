@@ -1,4 +1,4 @@
-<div x-data="quizForm()" class="space-y-4">
+<div x-data="quizForm()" x-init="init" class="space-y-4">
 	<div>
 		<x-input-label value="Step Content" />
 		<x-text-area-input
@@ -155,6 +155,23 @@
 			},
 			removeOption(index) {
 				this.options.splice(index, 1);
+			},
+			init() {
+				this.$watch('quizType', (newType) => {
+					if (newType === 'quiz_single') {
+						let selected = false;
+						this.options = this.options.map((opt) => {
+							if (!selected && opt.correct) {
+								selected = true;
+								return { ...opt, correct: true };
+							}
+							return { ...opt, correct: false };
+						});
+						if (!selected && this.options.length > 0) {
+							this.options[0].correct = true;
+						}
+					}
+				});
 			},
 		};
 	}
