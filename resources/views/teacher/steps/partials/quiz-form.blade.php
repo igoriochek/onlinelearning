@@ -6,9 +6,9 @@
 			id="content_quiz"
 			rows="5"
 			class="editor mb-4"
-			x-bind:disabled="stepType !== 'quiz'"
+			x-bind:disabled="!stepType.startsWith('quiz')"
 		>
-			{{ old('content_quiz') }}
+			{{ old('content_quiz', $content ?? '') }}
 		</x-text-area-input>
 		<x-input-error :messages="$errors->get('content_quiz')" class="mt-1" />
 	</div>
@@ -19,8 +19,8 @@
 			type="text"
 			name="question"
 			class="w-full"
-			value="{{ old('question') }}"
-			x-bind:disabled="stepType !== 'quiz'"
+			value="{{ old('question', $question ?? '') }}"
+			x-bind:disabled="!stepType.startsWith('quiz')"
 			required
 		/>
 		<x-input-error :messages="$errors->get('question')" class="mt-1" />
@@ -32,7 +32,7 @@
 			name="quiz_type"
 			id="quiz_type"
 			x-model="quizType"
-			x-bind:disabled="stepType !== 'quiz'"
+			x-bind:disabled="!stepType.startsWith('quiz')"
 		>
 			<option value="quiz_single">Radio Buttons</option>
 			<option value="quiz_multiple">Checkboxes</option>
@@ -54,14 +54,19 @@
 				<div class="cursor-grab text-gray-400 hover:text-gray-600">
 					<x-icons.drag-handle />
 				</div>
-
+				<input
+					type="hidden"
+					:name="'options[' + index + '][id]'"
+					:value="option.id"
+					x-bind:disabled="! stepType.startsWith('quiz')"
+				/>
 				<template x-if="quizType === 'quiz_multiple'">
 					<input
 						type="checkbox"
 						:name="'options['+index+'][correct]'"
 						x-model="option.correct"
 						class="w-5 h-5 text-blue-600 focus:ring-blue-500"
-						x-bind:disabled="stepType !== 'quiz'"
+						x-bind:disabled="! stepType.startsWith('quiz')"
 					/>
 				</template>
 
@@ -81,7 +86,7 @@
 					x-model="option.text"
 					class="flex-1 px-3 py-2"
 					placeholder="Enter option text..."
-					x-bind:disabled="stepType !== 'quiz'"
+					x-bind:disabled="!stepType.startsWith('quiz')"
 					required
 				/>
 
@@ -117,17 +122,31 @@
 	function quizForm() {
 		return {
 			// prettier-ignore
-			quizType: "{{ old('quiz_type', 'quiz_single') }}",
+			quizType: "{{ old('quiz_type', $quizType ?? 'quiz_single') }}",
 			options: JSON.parse(
 				`{!!
       json_encode(
-      	old('options', [
-      		['text' => '', 'correct' => false],
-      		['text' => '', 'correct' => false],
-      	]),
+      	old(
+      		'options',
+      		isset($options)
+      			? $options
+      				->map(
+      					fn ($o) => [
+      						'id' => $o->id,
+      						'text' => $o->text,
+      						'correct' => (bool) $o->is_correct,
+      					],
+      				)
+      				->values()
+      			: [
+      				['text' => '', 'correct' => false],
+      				['text' => '', 'correct' => false],
+      			],
+      	),
       )
     !!}`,
 			).map((opt) => ({
+				id: opt.id ?? null,
 				text: opt.text || '',
 				correct: !!opt.correct,
 			})),

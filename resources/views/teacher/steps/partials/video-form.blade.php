@@ -9,7 +9,8 @@
 	class="w-full"
 	placeholder="{{ $content ? 'Current: ' . $content : 'https://www.youtube.com/watch?v=...' }}"
 	value="{{ old('content_video', $content ?? '') }}"
-	required
+	x-bind:disabled="stepType !== 'video'"
+	x-bind:required="stepType === 'video'"
 	pattern="https?://(www\.)?(youtube\.com|youtu\.be|vimeo\.com)/.+"
 />
 

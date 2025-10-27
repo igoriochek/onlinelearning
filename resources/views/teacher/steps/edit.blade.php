@@ -54,15 +54,35 @@
 			<form
 				action="{{ route('teacher.steps.update', $step->id) }}"
 				method="POST"
+				x-data="{ stepType: '{{ $step->type }}' }"
 			>
 				@csrf
 				@method('PUT')
 
-				@if ($step->type === 'text')
-					@include('teacher.steps.partials.text-form', ['content' => $step->content])
-				@elseif ($step->type === 'video')
-					@include('teacher.steps.partials.video-form', ['content' => $step->content])
-				@endif
+				@switch($step->type)
+					@case('text')
+						@include('teacher.steps.partials.text-form', ['content' => $step->content])
+
+						@break
+					@case('video')
+						@include('teacher.steps.partials.video-form', ['content' => $step->content])
+
+						@break
+					@case('quiz_single')
+					@case('quiz_multiple')
+						@include(
+      	'teacher.steps.partials.quiz-form',
+      	[
+      		'content' => $step->content,
+      		'question' => $step->question,
+      		'quizType' => $step->type,
+      		'options' => $step->options,
+      	]
+      )
+
+						@break
+					@default
+				@endswitch
 
 				<div class="flex justify-center mt-4">
 					<x-primary-button type="submit">Update Step</x-primary-button>

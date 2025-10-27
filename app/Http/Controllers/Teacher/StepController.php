@@ -52,6 +52,12 @@ class StepController extends Controller
 			default => $request->input('content_quiz'),
 		};
 
+		$options = $validated['options'] ?? [];
+
+		if (in_array($stepType, ['quiz_single', 'quiz_multiple'])) {
+			$this->ensureAtLeastOneCorrectOption($options);
+		}
+
 		$position = $lesson->steps()->max('position') + 1;
 
 		$step = $lesson->steps()->create([
@@ -62,32 +68,11 @@ class StepController extends Controller
 		]);
 
 		if (in_array($stepType, ['quiz_single', 'quiz_multiple'])) {
-			$options = $request->input('options', []);
-
-			$hasCorrect = false;
-
-			foreach ($options as $index => $opt) {
-				$isCorrect = isset($opt['correct']) && $opt['correct'] ? true : false;
-				if ($isCorrect) {
-					$hasCorrect = true;
-				}
-
+			foreach ($options as $opt) {
 				$step->options()->create([
 					'text' => $opt['text'],
-					'is_correct' => $isCorrect,
+					'is_correct' => !empty($opt['correct']),
 				]);
-			}
-
-			if (!$hasCorrect) {
-				$step->options()->delete();
-				$step->delete();
-
-				return back()
-					->withInput()
-					->withErrors([
-						'options_correct' =>
-							'At least one option must be marked as correct.',
-					]);
 			}
 		}
 
@@ -104,32 +89,109 @@ class StepController extends Controller
 
 	public function update(Request $request, Step $step)
 	{
-		if ($step->type === 'text') {
-			$validated = $request->validate([
-				'content_text' => 'required|string',
-			]);
-
-			$step->update([
-				'content' => $validated['content_text'],
-			]);
-		}
-
-		if ($step->type === 'video') {
-			$validated = $request->validate([
-				'content_video' => [
-					'required',
-					'regex:/^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be|vimeo\.com)\/.+$/',
-				],
-			]);
-
-			$step->update([
-				'content' => $validated['content_video'],
-			]);
+		switch ($step->type) {
+			case 'text':
+				$this->updateTextStep($request, $step);
+				break;
+			case 'video':
+				$this->updateVideoStep($request, $step);
+				break;
+			case 'quiz_single':
+			case 'quiz_multiple':
+				$this->updateQuizStep($request, $step);
+				break;
 		}
 
 		return redirect()
 			->route('teacher.lessons.steps.index', $step->lesson_id)
 			->with('success', 'Step updated successfully.');
+	}
+
+	protected function updateTextStep(Request $request, Step $step): void
+	{
+		$validated = $request->validate([
+			'content_text' => 'required|string',
+		]);
+
+		$step->update([
+			'content' => $validated['content_text'],
+		]);
+	}
+
+	protected function updateVideoStep(Request $request, Step $step): void
+	{
+		$validated = $request->validate([
+			'content_video' => [
+				'required',
+				'regex:/^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be|vimeo\.com)\/.+$/',
+			],
+		]);
+
+		$step->update([
+			'content' => $validated['content_video'],
+		]);
+	}
+
+	protected function updateQuizStep(Request $request, Step $step): void
+	{
+		$validated = $request->validate([
+			'content_quiz' => 'required|string',
+			'question' => 'required|string',
+			'quiz_type' => 'required|in:quiz_single,quiz_multiple',
+			'options' => 'required|array|min:2',
+			'options.*.text' => 'required|string',
+			'options.*.correct' => 'nullable',
+		]);
+		$this->ensureAtLeastOneCorrectOption($validated['options']);
+
+		$step->update([
+			'type' => $validated['quiz_type'],
+			'content' => $validated['content_quiz'],
+			'question' => $validated['question'],
+		]);
+
+		$this->syncQuizOptions($step, $validated['options']);
+	}
+
+	protected function syncQuizOptions(Step $step, array $options): void
+	{
+		$existingOptions = $step->options()->get()->keyBy('id');
+		$receivedIds = [];
+
+		foreach ($options as $optionData) {
+			$id = $optionData['id'] ?? null;
+			$isCorrect = !empty($optionData['correct']);
+
+			if ($id && $existingOptions->has($id)) {
+				$existingOptions[$id]->update([
+					'text' => $optionData['text'],
+					'is_correct' => $isCorrect,
+				]);
+
+				$receivedIds[] = $id;
+			} else {
+				$newOption = $step->options()->create([
+					'text' => $optionData['text'],
+					'is_correct' => $isCorrect,
+				]);
+
+				$receivedIds[] = $newOption->id;
+			}
+		}
+
+		$step->options()->whereNotIn('id', $receivedIds)->delete();
+	}
+
+	protected function ensureAtLeastOneCorrectOption(array $options): void
+	{
+		if (!collect($options)->contains(fn($opt) => !empty($opt['correct']))) {
+			back()
+				->withInput()
+				->withErrors([
+					'options_correct' => 'At least one option must be marked as correct.',
+				])
+				->throwResponse();
+		}
 	}
 
 	public function destroy(Step $step)
