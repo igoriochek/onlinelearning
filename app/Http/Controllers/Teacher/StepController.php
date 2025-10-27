@@ -14,6 +14,11 @@ class StepController extends Controller
 		return view('teacher.steps.index', compact('lesson'));
 	}
 
+	public function create(Lesson $lesson)
+	{
+		return view('teacher.steps.create', compact('lesson'));
+	}
+
 	public function store(Request $request, Lesson $lesson)
 	{
 		$type = $request->input('type');
@@ -91,9 +96,40 @@ class StepController extends Controller
 			->with('success', 'Step created successfully.');
 	}
 
-	public function create(Lesson $lesson)
+	public function edit(Step $step)
 	{
-		return view('teacher.steps.create', compact('lesson'));
+		$lesson = $step->lesson;
+		return view('teacher.steps.edit', compact('step', 'lesson'));
+	}
+
+	public function update(Request $request, Step $step)
+	{
+		if ($step->type === 'text') {
+			$validated = $request->validate([
+				'content_text' => 'required|string',
+			]);
+
+			$step->update([
+				'content' => $validated['content_text'],
+			]);
+		}
+
+		if ($step->type === 'video') {
+			$validated = $request->validate([
+				'content_video' => [
+					'required',
+					'regex:/^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be|vimeo\.com)\/.+$/',
+				],
+			]);
+
+			$step->update([
+				'content' => $validated['content_video'],
+			]);
+		}
+
+		return redirect()
+			->route('teacher.lessons.steps.index', $step->lesson_id)
+			->with('success', 'Step updated successfully.');
 	}
 
 	public function destroy(Step $step)

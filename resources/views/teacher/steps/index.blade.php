@@ -64,6 +64,12 @@
 									<x-steps.step-type :type="$step->type" />
 								</div>
 								<div class="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+									<x-primary-button
+										href="{{ route('teacher.steps.edit', $step->id) }}"
+										class="w-full sm:w-auto justify-center"
+									>
+										Edit
+									</x-primary-button>
 									<x-danger-button
 										@click=" stepId = {{ $step->id }};
                   $dispatch('open-modal', 'delete-step');"
