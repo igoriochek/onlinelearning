@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Course;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\StoreCourseRequest;
 
 class CourseController extends Controller
@@ -47,6 +48,17 @@ class CourseController extends Controller
 		return view('teacher.courses.show', compact('course'));
 	}
 
+	public function destroy(Course $course)
+	{
+		$this->deleteCourseImage($course->image_url);
+
+		$course->delete();
+
+		return redirect()
+			->route('dashboard.manage-courses')
+			->with('success', 'Course deleted successfully.');
+	}
+
 	public function publish(Course $course)
 	{
 		$course->load('sections.lessons.steps');
@@ -63,5 +75,12 @@ class CourseController extends Controller
 
 		$course->update(['public' => !$course->public]);
 		return response()->json(['public' => $course->public]);
+	}
+
+	private function deleteCourseImage(?string $path): void
+	{
+		if ($path && Storage::disk('public')->exists($path)) {
+			Storage::disk('public')->delete($path);
+		}
 	}
 }

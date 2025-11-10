@@ -5,7 +5,7 @@
 		</h2>
 	</x-slot>
 
-	<main class="max-w-7xl mx-auto py-6">
+	<main x-data="{ courseId: null }" class="max-w-7xl mx-auto py-6">
 		<div class="bg-white p-6 rounded-lg shadow">
 			<h3 class="text-lg font-semibold mb-2">Course Overview</h3>
 			<img
@@ -32,6 +32,16 @@
 				</div>
 
 				<div class="flex flex-col sm:flex-row gap-3">
+					<x-danger-button
+						@click="
+        courseId = '{{ $course->id }}';
+        courseTitle = '{{ $course->title }}';
+        $dispatch('open-modal', 'delete-course');
+    "
+						class="w-full sm:w-auto justify-center"
+					>
+						Delete Course
+					</x-danger-button>
 					<x-secondary-button>Edit course info</x-secondary-button>
 					<x-primary-button
 						:href="route('teacher.courses.sections.index', $course->id)"
@@ -41,5 +51,6 @@
 				</div>
 			</div>
 		</div>
+		@include('teacher.courses.partials.delete-modal')
 	</main>
 </x-app-layout>

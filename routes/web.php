@@ -65,7 +65,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 		->name('teacher.')
 		->group(function () {
 			Route::resource('courses', TeacherCourseController::class)
-				->only(['create', 'store', 'show'])
+				->except(['index'])
 				->names('courses');
 			Route::post('courses/{course}/publish', [
 				TeacherCourseController::class,
