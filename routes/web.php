@@ -8,6 +8,7 @@ use App\Http\Controllers\LessonController;
 use App\Http\Controllers\WishlistController;
 use App\Http\Controllers\StepController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\EnrollmentController;
 use App\Http\Controllers\Teacher\CourseController as TeacherCourseController;
 use App\Http\Controllers\Teacher\SectionController as TeacherSectionController;
 use App\Http\Controllers\Teacher\LessonController as TeacherLessonController;
@@ -20,6 +21,13 @@ Route::get('/course/{course}', [CourseController::class, 'show'])->name(
 );
 
 Route::middleware(['auth', 'verified'])->group(function () {
+	Route::post('/courses/{course}/enroll', [
+		EnrollmentController::class,
+		'store',
+	])
+		->middleware(['auth'])
+		->name('courses.enroll');
+
 	Route::get('/lesson/{lesson}/step/{position}', [
 		LessonController::class,
 		'show',

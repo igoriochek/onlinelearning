@@ -123,4 +123,16 @@ class Course extends Model
 	{
 		return $this->hasMany(Review::class);
 	}
+
+	public function enrollments()
+	{
+		return $this->hasMany(Enrollment::class);
+	}
+
+	public function students()
+	{
+		return $this->belongsToMany(User::class, 'enrollments')
+			->withTimestamps()
+			->withPivot('purchased_at');
+	}
 }

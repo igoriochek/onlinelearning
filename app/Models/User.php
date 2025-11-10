@@ -53,4 +53,16 @@ class User extends Authenticatable
 	{
 		return $this->hasMany(Course::class, 'author_id');
 	}
+
+	public function enrollments()
+	{
+		return $this->hasMany(Enrollment::class);
+	}
+
+	public function enrolledCourses()
+	{
+		return $this->belongsToMany(Course::class, 'enrollments')
+			->withTimestamps()
+			->withPivot('purchased_at');
+	}
 }

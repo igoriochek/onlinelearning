@@ -133,15 +133,25 @@
 		<aside class="hidden md:block md:col-span-1">
 			<div class="md:sticky md:top-20 bg-white shadow rounded-lg p-6 space-y-2">
 				<p class="text-2xl font-bold mb-2">${{ $course->price }}</p>
-				<x-primary-button class="mb-2 w-full justify-center">
-					Buy now
-				</x-primary-button>
-				<x-secondary-button
-					:href="route('lessons.step.show', ['lesson' => $firstLesson->id, 'position' => 1])"
-					class="mb-2 w-full justify-center"
-				>
-					Try free trial
-				</x-secondary-button>
+				@if ($course->author_id !== auth()->id() && ! $course->students->contains(auth()->id()))
+					<form action="{{ route('courses.enroll', $course) }}" method="POST">
+						@csrf
+						<x-primary-button class="w-full justify-center">
+							Buy Now
+						</x-primary-button>
+					</form>
+					<x-secondary-button class="mb-2 w-full justify-center">
+						Try free trial
+					</x-secondary-button>
+				@else
+					<x-primary-button
+						:href="route('lessons.step.show', ['lesson' => $firstLesson->id, 'position' => 1])"
+						class="mb-2 w-full justify-center"
+					>
+						Study
+					</x-primary-button>
+				@endif
+
 				@auth
 					<x-wishlist-button :course="$course" variant="full" />
 				@endauth
@@ -156,17 +166,32 @@
 	>
 		<span class="text-lg font-bold ml-2">${{ $course->price }}</span>
 		<div class="flex gap-2 justify-between">
-			<x-primary-button class="flex-1 mx-2 py-2 justify-center">
-				Buy
-			</x-primary-button>
+			@if ($course->author_id !== auth()->id() && ! $course->students->contains(auth()->id()))
+				<form
+					action="{{ route('courses.enroll', $course) }}"
+					method="POST"
+					class="flex-1"
+				>
+					@csrf
+					<x-primary-button class="w-full justify-center">Buy</x-primary-button>
+				</form>
 
-			<x-secondary-button
-				:href="route('lessons.step.show', ['lesson' => $firstLesson->id, 'position' => 1])"
-				class="flex-1 mx-2 py-2 justify-center"
-			>
-				Try free
-			</x-secondary-button>
-			<div class="flex gap-2">
+				<x-secondary-button
+					:href="route('lessons.step.show', ['lesson' => $firstLesson->id, 'position' => 1])"
+					class="flex-1 justify-center"
+				>
+					Try free
+				</x-secondary-button>
+			@else
+				<x-primary-button
+					:href="route('lessons.step.show', ['lesson' => $firstLesson->id, 'position' => 1])"
+					class="w-full justify-center"
+				>
+					Study
+				</x-primary-button>
+			@endif
+
+			<div class="flex items-center">
 				@auth
 					<x-wishlist-button :course="$course" variant="icon" />
 				@endauth
