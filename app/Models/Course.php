@@ -88,6 +88,27 @@ class Course extends Model
 			->count();
 	}
 
+	public function getIsCompletableAttribute(): bool
+	{
+		if ($this->sections->isEmpty()) {
+			return false;
+		}
+
+		foreach ($this->sections as $section) {
+			if ($section->lessons->isEmpty()) {
+				return false;
+			}
+
+			foreach ($section->lessons as $lesson) {
+				if ($lesson->steps->isEmpty()) {
+					return false;
+				}
+			}
+		}
+
+		return true;
+	}
+
 	public function sections()
 	{
 		return $this->hasMany(Section::class)->orderBy('position');

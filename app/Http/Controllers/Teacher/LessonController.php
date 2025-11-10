@@ -20,6 +20,11 @@ class LessonController extends Controller
 			'title' => 'required|string|max:255',
 		]);
 
+		$course = $section->course;
+		if ($course->public) {
+			$course->update(['public' => false]);
+		}
+
 		$section->lessons()->create([
 			'title' => $request->title,
 			'position' => $section->lessons()->max('position') + 1,
@@ -48,7 +53,12 @@ class LessonController extends Controller
 
 	public function destroy(Lesson $lesson)
 	{
+		$course = $lesson->section->course;
 		$lesson->delete();
+
+		if ($course->public) {
+			$course->update(['public' => false]);
+		}
 
 		return back()->with('success', 'Lesson deleted successfully!');
 	}

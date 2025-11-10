@@ -2,6 +2,7 @@
 	'checked' => false,
 	'action' => '#',
 	'id' => null,
+	'disabled' => false,
 ])
 
 <form action="{{ $action }}" method="POST" class="inline-block switch-form">
@@ -11,12 +12,14 @@
 			id="{{ $id }}"
 			type="checkbox"
 			{{ $checked ? 'checked' : '' }}
+			{{ $disabled ? 'disabled' : '' }}
 			class="sr-only peer switch-input"
 		/>
 		<div
-			class="w-12 h-6 bg-gray-300 rounded-full shadow-inner transition-colors
-				duration-200 peer-checked:bg-gray-800"
+			class="w-12 h-6 rounded-full shadow-inner transition-colors duration-200
+				{{ $disabled ? 'bg-gray-200 cursor-not-allowed' : 'bg-gray-300 peer-checked:bg-gray-800' }}"
 		></div>
+
 		<div
 			class="dot absolute left-0.5 top-0.5 w-5 h-5 bg-white rounded-full shadow
 				transform transition-transform duration-200 peer-checked:translate-x-6"
@@ -43,7 +46,7 @@
 
 			input.addEventListener('change', () => {
 				const formData = new FormData(form);
-
+				if (input.disabled) return;
 				fetch(form.action, {
 					method: 'POST',
 					headers: { 'X-Requested-With': 'XMLHttpRequest' },

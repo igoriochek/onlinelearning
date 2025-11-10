@@ -196,7 +196,13 @@ class StepController extends Controller
 
 	public function destroy(Step $step)
 	{
+		$course = $step->lesson->section->course;
 		$step->delete();
+
+		if ($course->public) {
+			$course->update(['public' => false]);
+		}
+
 		return back()->with('success', 'Step deleted successfully');
 	}
 

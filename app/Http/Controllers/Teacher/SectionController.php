@@ -20,6 +20,10 @@ class SectionController extends Controller
 			'title' => 'required|string|max:255',
 		]);
 
+		if ($course->public) {
+			$course->update(['public' => false]);
+		}
+
 		$course->sections()->create([
 			'title' => $request->title,
 			'position' => $course->sections()->max('position') + 1,
@@ -48,7 +52,13 @@ class SectionController extends Controller
 
 	public function destroy(Section $section)
 	{
+		$course = $section->course;
 		$section->delete();
+
+		if ($course->public) {
+			$course->update(['public' => false]);
+		}
+
 		return back()->with('success', 'Section deleted successfully!');
 	}
 

@@ -31,7 +31,7 @@
 			<img
 				src="{{ $course->image_url ? asset('storage/' . $course->image_url) : 'https://placehold.co/600x400?text=Course+Image' }}"
 				alt="{{ $course->title }}"
-				class="rounded-lg mb-4"
+				class="rounded-lg mb-4 w-[60%]"
 				loading="lazy"
 			/>
 

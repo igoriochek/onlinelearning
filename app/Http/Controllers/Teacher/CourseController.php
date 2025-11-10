@@ -49,6 +49,18 @@ class CourseController extends Controller
 
 	public function publish(Course $course)
 	{
+		$course->load('sections.lessons.steps');
+
+		if (!$course->is_completable) {
+			return response()->json(
+				[
+					'error' =>
+						'Course is incomplete. You must add sections, lessons and steps before publishing.',
+				],
+				422,
+			);
+		}
+
 		$course->update(['public' => !$course->public]);
 		return response()->json(['public' => $course->public]);
 	}
