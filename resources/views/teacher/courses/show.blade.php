@@ -11,7 +11,7 @@
 			<img
 				src="{{ $course->image_url ? asset('storage/' . $course->image_url) : 'https://placehold.co/600x400?text=Course+Image' }}"
 				alt="{{ $course->title }}"
-				class="rounded-lg mb-4 w-[40%]"
+				class="aspect-video w-full max-w-2xl object-cover rounded-lg mb-4"
 				loading="lazy"
 			/>
 			<p class="text-gray-700 mb-4">{{ $course->description }}</p>
@@ -42,7 +42,9 @@
 					>
 						Delete Course
 					</x-danger-button>
-					<x-secondary-button>Edit course info</x-secondary-button>
+					<x-secondary-button :href="route('teacher.courses.edit', $course)">
+						Edit course info
+					</x-secondary-button>
 					<x-primary-button
 						:href="route('teacher.courses.sections.index', $course->id)"
 					>

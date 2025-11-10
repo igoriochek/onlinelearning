@@ -59,6 +59,27 @@ class CourseController extends Controller
 			->with('success', 'Course deleted successfully.');
 	}
 
+	public function edit(Course $course)
+	{
+		return view('teacher.courses.edit', compact('course'));
+	}
+
+	public function update(StoreCourseRequest $request, Course $course)
+	{
+		$data = $request->validated();
+
+		if ($request->hasFile('image')) {
+			$this->deleteCourseImage($course->image_url);
+			$data['image_url'] = $request->file('image')->store('courses', 'public');
+		}
+
+		$course->update($data);
+
+		return redirect()
+			->route('teacher.courses.show', $course)
+			->with('success', 'Course updated successfully.');
+	}
+
 	public function publish(Course $course)
 	{
 		$course->load('sections.lessons.steps');
