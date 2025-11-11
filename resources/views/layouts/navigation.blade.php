@@ -25,7 +25,7 @@
 					</x-nav-link>
 					@auth
 						<x-nav-link
-							:href="route('dashboard')"
+							:href="route('dashboard.my-courses')"
 							:active="request()->routeIs('dashboard*')"
 						>
 							{{ __('Dashboard') }}
@@ -153,7 +153,7 @@
 		@auth
 			<div class="space-y-1 pb-3 pt-2">
 				<x-responsive-nav-link
-					:href="route('dashboard')"
+					:href="route('dashboard.my-courses')"
 					:active="request()->routeIs('dashboard*')"
 				>
 					{{ __('Dashboard') }}

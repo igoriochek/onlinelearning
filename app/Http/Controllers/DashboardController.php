@@ -21,4 +21,18 @@ class DashboardController extends Controller
 		$courses = $user->courses()->latest()->get();
 		return view('dashboard.manage-courses', compact('courses'));
 	}
+	public function myCourses()
+	{
+		/** @var User $user */
+		$user = Auth::user();
+
+		$courses = $user
+			->enrollments()
+			->with('course')
+			->latest('purchased_at')
+			->get()
+			->pluck('course');
+
+		return view('dashboard.my-courses', compact('courses'));
+	}
 }

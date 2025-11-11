@@ -44,6 +44,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
 		Route::get('/', function () {
 			return view('dashboard.index');
 		})->name('dashboard');
+		Route::get('/my-courses', [DashboardController::class, 'myCourses'])->name(
+			'dashboard.my-courses',
+		);
+
 		Route::get('/wishlist', [WishlistController::class, 'index'])->name(
 			'dashboard.wishlist',
 		);

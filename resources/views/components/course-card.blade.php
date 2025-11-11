@@ -1,15 +1,16 @@
 @props([
   'course',
   'builder' => false,
+  'showPrice' => true,
 ])
 
 <a
 	href="{{ $builder ? route('teacher.courses.show', $course->id) : route('courses.show', $course->id) }}"
-	class="block"
+	class="block h-full"
 >
 	<div
 		class="bg-white shadow-sm rounded-lg overflow-hidden hover:shadow-md
-			transition-shadow"
+			transition-shadow flex flex-col h-full"
 	>
 		<img
 			src="{{ $course->image_url ? asset('storage/' . $course->image_url) : 'https://placehold.co/600x400?text=Course+Image' }}"
@@ -17,8 +18,10 @@
 			class="w-full h-40 object-cover"
 		/>
 		<div class="p-4">
-			<h3 class="text-lg font-bold">{{ $course->title }}</h3>
-			<p class="text-sm text-gray-600 line-clamp-2">
+			<h3 class="text-lg font-bold line-clamp-1">
+				{{ $course->title }}
+			</h3>
+			<p class="text-sm text-gray-600 line-clamp-1">
 				{{ $course->description }}
 			</p>
 
@@ -35,17 +38,19 @@
 				<span class="text-sm text-gray-500 capitalize">
 					{{ $course->level_name }} Level
 				</span>
-				<span class="font-semibold text-green-600">
-					@if ($course->price == 0)
-						Free
-					@else
-						${{ $course->price }}
-					@endif
-				</span>
+				@if ($showPrice)
+					<span class="font-semibold text-green-600">
+						@if ($course->price == 0)
+							Free
+						@else
+							${{ $course->price }}
+						@endif
+					</span>
+				@endif
 			</div>
 
 			@auth
-				@if (! $builder)
+				@if (! $builder &&! auth()->user()->enrollments->contains('course_id', $course->id))
 					<x-wishlist-button :course="$course" variant="text" />
 				@endif
 			@endauth

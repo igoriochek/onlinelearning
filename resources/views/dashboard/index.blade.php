@@ -14,10 +14,10 @@
 			>
 				<nav class="space-y-2">
 					<x-aside-nav-link
-						href="{{ route('dashboard') }}"
-						:active="request()->routeIs('dashboard')"
+						href="{{ route('dashboard.my-courses') }}"
+					:active="request()->routeIs('dashboard.my-courses')"
 					>
-						Overview
+						My Courses
 					</x-aside-nav-link>
 
 					<x-aside-nav-link
@@ -43,10 +43,10 @@
 					rounded-lg"
 			>
 				<x-aside-nav-link
-					href="{{ route('dashboard') }}"
-					:active="request()->routeIs('dashboard')"
+					href="{{ route('dashboard.my-courses') }}"
+					:active="request()->routeIs('dashboard.my-courses')"
 				>
-					Overview
+					My Courses
 				</x-aside-nav-link>
 
 				<x-aside-nav-link
