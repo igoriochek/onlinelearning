@@ -1,3 +1,8 @@
+@php
+ $isAuthor = auth()->id() === $course->author_id;
+ $isEnrolled = $course->students->contains(auth()->id());
+@endphp
+
 <x-app-layout>
 	<x-slot name="header">
 		<header class="flex justify-between">
@@ -121,63 +126,16 @@
 		</article>
 
 		<aside class="hidden md:block md:col-span-1">
-			<div
-				class="md:sticky md:top-20 bg-white shadow rounded-lg p-6 space-y-10"
-			>
-				<div class="space-y-2">
-					<p class="text-2xl font-bold mb-2">${{ $course->price }}</p>
-					@if ($course->author_id !== auth()->id() && ! $course->students->contains(auth()->id()))
-						<form
-							action="{{ route('courses.enroll', $course) }}"
-							method="POST"
-						>
-							@csrf
-							<x-primary-button class="w-full justify-center">
-								Buy Now
-							</x-primary-button>
-						</form>
-						<x-secondary-button class="w-full justify-center">
-							Try free trial
-						</x-secondary-button>
-						@auth
-							<x-wishlist-button :course="$course" variant="full" />
-						@endauth
-					@endif
+			<div class="md:sticky md:top-20 bg-white shadow rounded-lg p-6 space-y-4">
+				@if ($isAuthor)
+					@include('courses.partials.sidebar.sidebar-author')
+				@elseif ($isEnrolled)
+					@include('courses.partials.sidebar.sidebar-enrolled')
+				@else
+					@include('courses.partials.sidebar.sidebar-guest')
+				@endif
 
-					@if ($course->students->contains(auth()->id()))
-						<x-primary-button
-							:href="route('lessons.step.show', ['lesson' => $firstLesson->id, 'position' => 1])"
-							class="mb-2 w-full justify-center"
-						>
-							Study
-						</x-primary-button>
-						<div class="p-6 bg-white shadow rounded-lg space-y-4">
-							<h2 class="text-lg font-semibold">Your progress</h2>
-
-							<p>Progress: {{ $progress['percent'] }}%</p>
-						</div>
-					@endif
-				</div>
-				<div class="rounded-lg text-sm text-gray-700 space-y-3">
-					<h2 class="text-lg font-semibold">This course includes</h2>
-					<div class="flex items-center gap-2">
-						<span>
-							<strong>{{ $course->lesson_count }}</strong>
-							lessons
-						</span>
-					</div>
-					<div class="flex items-center gap-2">
-						<span>
-							<strong>{{ $course->quizzes_count }}</strong>
-							quizzes
-						</span>
-					</div>
-					<div class="flex items-center gap-2">
-						<p class="italic">
-							Last update: {{ $course->updated_at->format('Y/m/d') }}
-						</p>
-					</div>
-				</div>
+				@include('courses.partials.sidebar.sidebar-includes')
 			</div>
 		</aside>
 	</main>
@@ -187,9 +145,31 @@
 			md:hidden"
 		aria-label="Mobile purchase options"
 	>
-		<span class="text-lg font-bold ml-2">${{ $course->price }}</span>
-		<div class="flex gap-2 justify-between">
-			@if ($course->author_id !== auth()->id() && ! $course->students->contains(auth()->id()))
+		@if ($isAuthor)
+			<x-primary-button
+				:href="route('teacher.courses.show', $course->id)"
+				class="w-full justify-center mb-2"
+			>
+				Manage Course
+			</x-primary-button>
+
+			<x-secondary-button
+				:href="route('lessons.step.show', ['lesson' => $firstLesson->id, 'position' => 1])"
+				class="w-full justify-center"
+			>
+				Preview
+			</x-secondary-button>
+		@elseif ($isEnrolled)
+			<x-primary-button
+				:href="route('lessons.step.show', ['lesson' => $firstLesson->id, 'position' => 1])"
+				class="w-full justify-center"
+			>
+				Study
+			</x-primary-button>
+		@else
+			<span class="text-lg font-bold ml-2 mb-1">${{ $course->price }}</span>
+
+			<div class="flex gap-2 justify-between">
 				<form
 					action="{{ route('courses.enroll', $course) }}"
 					method="POST"
@@ -199,26 +179,16 @@
 					<x-primary-button class="w-full justify-center">Buy</x-primary-button>
 				</form>
 
-				<x-secondary-button
-					:href="route('lessons.step.show', ['lesson' => $firstLesson->id, 'position' => 1])"
-					class="flex-1 justify-center"
-				>
+				<x-secondary-button class="flex-1 justify-center">
 					Try free
 				</x-secondary-button>
-			@else
-				<x-primary-button
-					:href="route('lessons.step.show', ['lesson' => $firstLesson->id, 'position' => 1])"
-					class="w-full justify-center"
-				>
-					Study
-				</x-primary-button>
-			@endif
 
-			<div class="flex items-center">
-				@auth
-					<x-wishlist-button :course="$course" variant="icon" />
-				@endauth
+				<div class="flex items-center">
+					@auth
+						<x-wishlist-button :course="$course" variant="icon" />
+					@endauth
+				</div>
 			</div>
-		</div>
+		@endif
 	</nav>
 </x-app-layout>

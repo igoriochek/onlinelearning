@@ -38,7 +38,9 @@ class Course extends Model
 
 	public function isInWishlist(): bool
 	{
+		/** @var \App\Models\User $user */
 		$user = Auth::user();
+
 		return $user
 			? $user->wishlist()->where('course_id', $this->id)->exists()
 			: false;
