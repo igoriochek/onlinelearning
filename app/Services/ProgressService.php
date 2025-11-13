@@ -4,6 +4,7 @@ namespace App\Services;
 use App\Models\Step;
 use App\Models\Progress;
 use App\Models\Lesson;
+use App\Models\Course;
 use Illuminate\Support\Facades\Auth;
 
 class ProgressService
@@ -34,5 +35,36 @@ class ProgressService
 			->where('is_completed', true)
 			->pluck('step_id')
 			->toArray();
+	}
+
+	public function getCourseProgress(Course $course): array
+	{
+		$userId = Auth::id();
+
+		$allStepIds = $course->sections
+			->flatMap(fn($section) => $section->lessons)
+			->flatMap(fn($lesson) => $lesson->steps)
+			->pluck('id');
+
+		$totalSteps = $allStepIds->count();
+
+		if ($totalSteps === 0) {
+			return [
+				'total' => 0,
+				'completed' => 0,
+				'percent' => 0,
+			];
+		}
+
+		$completed = Progress::where('user_id', $userId)
+			->whereIn('step_id', $allStepIds)
+			->where('is_completed', true)
+			->count();
+
+		return [
+			'total' => $totalSteps,
+			'completed' => $completed,
+			'percent' => round(($completed / $totalSteps) * 100),
+		];
 	}
 }

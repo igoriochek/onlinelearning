@@ -91,16 +91,6 @@
 				</ol>
 			</div>
 
-			<section
-				aria-labelledby="course-stats"
-				class="mt-4 text-sm text-gray-600"
-			>
-				<h2 id="course-stats" class="sr-only">Course statisctics</h2>
-				<p>Video Lessons: {{ $course->video_lessons_count }}</p>
-				<p>Code challenges: {{ $course->text_lessons_count }}</p>
-				<p>Quizzes: {{ $course->quizzes_count }}</p>
-			</section>
-
 			<section aria-labelledby="student-reviews" class="mt-8">
 				<h2 id="student-reviews" class="text-xl font-semibold mb-4">
 					Student Reviews
@@ -131,30 +121,63 @@
 		</article>
 
 		<aside class="hidden md:block md:col-span-1">
-			<div class="md:sticky md:top-20 bg-white shadow rounded-lg p-6 space-y-2">
-				<p class="text-2xl font-bold mb-2">${{ $course->price }}</p>
-				@if ($course->author_id !== auth()->id() && ! $course->students->contains(auth()->id()))
-					<form action="{{ route('courses.enroll', $course) }}" method="POST">
-						@csrf
-						<x-primary-button class="w-full justify-center">
-							Buy Now
-						</x-primary-button>
-					</form>
-					<x-secondary-button class="mb-2 w-full justify-center">
-						Try free trial
-					</x-secondary-button>
-				@else
-					<x-primary-button
-						:href="route('lessons.step.show', ['lesson' => $firstLesson->id, 'position' => 1])"
-						class="mb-2 w-full justify-center"
-					>
-						Study
-					</x-primary-button>
-				@endif
+			<div
+				class="md:sticky md:top-20 bg-white shadow rounded-lg p-6 space-y-10"
+			>
+				<div class="space-y-2">
+					<p class="text-2xl font-bold mb-2">${{ $course->price }}</p>
+					@if ($course->author_id !== auth()->id() && ! $course->students->contains(auth()->id()))
+						<form
+							action="{{ route('courses.enroll', $course) }}"
+							method="POST"
+						>
+							@csrf
+							<x-primary-button class="w-full justify-center">
+								Buy Now
+							</x-primary-button>
+						</form>
+						<x-secondary-button class="w-full justify-center">
+							Try free trial
+						</x-secondary-button>
+						@auth
+							<x-wishlist-button :course="$course" variant="full" />
+						@endauth
+					@endif
 
-				@auth
-					<x-wishlist-button :course="$course" variant="full" />
-				@endauth
+					@if ($course->students->contains(auth()->id()))
+						<x-primary-button
+							:href="route('lessons.step.show', ['lesson' => $firstLesson->id, 'position' => 1])"
+							class="mb-2 w-full justify-center"
+						>
+							Study
+						</x-primary-button>
+						<div class="p-6 bg-white shadow rounded-lg space-y-4">
+							<h2 class="text-lg font-semibold">Your progress</h2>
+
+							<p>Progress: {{ $progress['percent'] }}%</p>
+						</div>
+					@endif
+				</div>
+				<div class="rounded-lg text-sm text-gray-700 space-y-3">
+					<h2 class="text-lg font-semibold">This course includes</h2>
+					<div class="flex items-center gap-2">
+						<span>
+							<strong>{{ $course->lesson_count }}</strong>
+							lessons
+						</span>
+					</div>
+					<div class="flex items-center gap-2">
+						<span>
+							<strong>{{ $course->quizzes_count }}</strong>
+							quizzes
+						</span>
+					</div>
+					<div class="flex items-center gap-2">
+						<p class="italic">
+							Last update: {{ $course->updated_at->format('Y/m/d') }}
+						</p>
+					</div>
+				</div>
 			</div>
 		</aside>
 	</main>
