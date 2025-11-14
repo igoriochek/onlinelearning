@@ -28,4 +28,5 @@
 	>
 		Continue
 	</x-primary-button>
+	<x-wishlist-button :course="$course" variant="full" />
 </div>

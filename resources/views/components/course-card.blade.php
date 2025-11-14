@@ -10,13 +10,19 @@
 >
 	<div
 		class="bg-white shadow-sm rounded-lg overflow-hidden hover:shadow-md
-			transition-shadow flex flex-col h-full"
+			transition-shadow flex flex-col h-full relative"
 	>
 		<img
 			src="{{ $course->image_url ? asset('storage/' . $course->image_url) : 'https://placehold.co/600x400?text=Course+Image' }}"
 			alt="{{ $course->title }}"
 			class="w-full h-40 object-cover"
 		/>
+		@auth
+			@if (! $builder && auth()->id() !== $course->author_id)
+				<x-wishlist-button :course="$course" variant="card" />
+			@endif
+		@endauth
+
 		<div class="p-4">
 			<h3 class="text-lg font-bold line-clamp-1">
 				{{ $course->title }}
@@ -48,12 +54,6 @@
 					</span>
 				@endif
 			</div>
-
-			@auth
-				@if (! $builder &&! auth()->user()->enrollments->contains('course_id', $course->id))
-					<x-wishlist-button :course="$course" variant="text" />
-				@endif
-			@endauth
 		</div>
 	</div>
 </a>
