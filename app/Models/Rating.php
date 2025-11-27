@@ -2,14 +2,14 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
-class Review extends Model
+class Rating extends Model
 {
   use HasFactory;
 
-  protected $fillable = ['user_id', 'course_id', 'comment', 'status'];
+  protected $fillable = ['user_id', 'course_id', 'rating'];
 
   public function user()
   {

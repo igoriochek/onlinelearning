@@ -19,8 +19,10 @@ return new class extends Migration {
 				->on('courses')
 				->onDelete('cascade');
 			$table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-			$table->TinyInteger('rating');
 			$table->text('comment')->nullable();
+      $table->enum('status', ['pending', 'approved', 'rejected'])
+          ->default('pending');
+      $table->unique(['user_id', 'course_id']);
 			$table->timestamps();
 		});
 	}

@@ -11,18 +11,18 @@ use App\Models\User;
  */
 class ReviewFactory extends Factory
 {
-	/**
-	 * Define the model's default state.
-	 *
-	 * @return array<string, mixed>
-	 */
-	public function definition(): array
-	{
-		return [
-			'course_id' => Course::inRandomOrder()->first()->id,
-			'user_id' => User::where('role', 'student')->inRandomOrder()->first()->id,
-			'rating' => $this->faker->numberBetween(1, 5),
-			'comment' => $this->faker->sentence(),
-		];
-	}
+  /**
+   * Define the model's default state.
+   *
+   * @return array<string, mixed>
+   */
+  public function definition(): array
+  {
+    return [
+      'course_id' => Course::inRandomOrder()->first()->id,
+      'user_id' => User::where('role', 'student')->inRandomOrder()->first()->id,
+      'comment' => $this->faker->sentence(),
+      'status' => 'approved',
+    ];
+  }
 }

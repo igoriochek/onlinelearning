@@ -1,194 +1,176 @@
-@php
- $isAuthor = auth()->id() === $course->author_id;
- $isEnrolled = $course->students->contains(auth()->id());
-@endphp
-
 <x-app-layout>
-	<x-slot name="header">
-		<header class="flex justify-between">
-			<div class="container">
-				<h1 class="text-3xl font-semibold leading-tight text-gray-800">
-					{{ $course->title }}
-				</h1>
-				<p class="text-gray-600 mt-1">
-					{{ $course->description }}
-				</p>
-				<div class="flex items-center mt-2 gap-2">
-					<span class="text-sm text-gray-500 capitalize">
-						{{ $course->level_name }} Level
-					</span>
-				</div>
-			</div>
-			<div class="flex items-center" aria-label="Course rating">
-				<x-rating :value="$course->averageRating" />
-				<span class="ml-2 text-gray-600 text-sm">
-					{{ $course->averageRating }}/5 ({{ $course->reviews->count() }}
-					reviews)
-				</span>
-			</div>
-		</header>
-	</x-slot>
+  <x-slot name="header">
+    <header class="flex justify-between">
+      <div class="container">
+        <h1 class="text-3xl font-semibold leading-tight text-gray-800">
+          {{ $course->title }}
+        </h1>
+        <p class="text-gray-600 mt-1">
+          {{ $course->description }}
+        </p>
+        <div class="flex items-center mt-2 gap-2">
+          <span class="text-sm text-gray-500 capitalize">
+            {{ $course->level_name }} Level
+          </span>
+        </div>
+      </div>
+      <div class="flex items-center" aria-label="Course rating">
+        <x-rating :value="$course->averageRating" />
+        <span class="ml-2 text-gray-600 text-sm">
+          {{ $course->averageRating }}/5 ({{ $course->ratings->count() }}
+          reviews)
+        </span>
+      </div>
+    </header>
+  </x-slot>
 
-	<main
-		class="max-w-7xl mx-auto py-6 grid grid-cols-1 md:grid-cols-3 gap-6 px-2"
-	>
-		<article class="md:col-span-2">
-			<img
-				src="{{ $course->image_url ? asset('storage/' . $course->image_url) : 'https://placehold.co/600x400?text=Course+Image' }}"
-				alt="{{ $course->title }}"
-				class="aspect-video w-full max-w-2xl object-cover rounded-lg mb-4"
-				loading="lazy"
-			/>
+  <main
+    class="max-w-7xl mx-auto py-6 grid grid-cols-1 md:grid-cols-3 gap-6 px-2">
+    <article class="md:col-span-2">
+      <img
+        src="{{ $course->image_url ? asset('storage/' . $course->image_url) : 'https://placehold.co/600x400?text=Course+Image' }}"
+        alt="{{ $course->title }}"
+        class="aspect-video w-full max-w-2xl object-cover rounded-lg mb-4"
+        loading="lazy" />
 
-			<section aria-labelledby="learning-outcomes" class="mb-6">
-				<h2 id="learning-outcomes" class="text-xl font-semibold mb-2">
-					What you'll learn
-				</h2>
-				<ul class="list-disc ml-6 space-y-2">
-					@foreach ($course->sections as $section)
-						<li>{{ $section->title }}</li>
-					@endforeach
-				</ul>
-			</section>
+      <section aria-labelledby="learning-outcomes" class="mb-6">
+        <h2 id="learning-outcomes" class="text-xl font-semibold mb-2">
+          What you'll learn
+        </h2>
+        <ul class="list-disc ml-6 space-y-2">
+          @foreach ($course->sections as $section)
+          <li>{{ $section->title }}</li>
+          @endforeach
+        </ul>
+      </section>
 
-			<section aria-labelledby="about-course" class="mb-6">
-				<h2 id="about-course" class="text-xl font-semibold mb-2">
-					About this course
-				</h2>
-				<p>{{ $course->description }}</p>
-			</section>
+      <section aria-labelledby="about-course" class="mb-6">
+        <h2 id="about-course" class="text-xl font-semibold mb-2">
+          About this course
+        </h2>
+        <p>{{ $course->description }}</p>
+      </section>
 
-			<section aria-labelledby="instructor" class="mb-6">
-				<h2 id="instructor" class="text-xl font-semibold mb-2">
-					Meet the instructor
-				</h2>
-				<div class="flex items-center gap-3">
-					<img
-						src="{{ $course->author->avatar_url ?? 'https://placehold.co/12x12?text=Course+Author' }}"
-						alt="Instructor {{ $course->author->name }}"
-						class="w-12 h-12 rounded-full"
-					/>
-					<p class="font-medium">{{ $course->author->name }}</p>
-				</div>
-			</section>
+      <section aria-labelledby="instructor" class="mb-6">
+        <h2 id="instructor" class="text-xl font-semibold mb-2">
+          Meet the instructor
+        </h2>
+        <div class="flex items-center gap-3">
+          <img
+            src="{{ $course->author->avatar_url ?? 'https://placehold.co/12x12?text=Course+Author' }}"
+            alt="Instructor {{ $course->author->name }}"
+            class="w-12 h-12 rounded-full" />
+          <p class="font-medium">{{ $course->author->name }}</p>
+        </div>
+      </section>
 
-			<div aria-labelledby="learning-method" class="mb-6">
-				<h2 id="learning-method" class="text-xl font-semibold mb-2">
-					How you will learn
-				</h2>
-				<ol class="list-decimal ml-6 space-y-1">
-					@foreach ($course->sections as $section)
-						<li>
-							<strong>{{ $section->title }}</strong>
-							<ul class="list-disc ml-6 text-sm text-gray-600">
-								@foreach ($section->lessons->take(3) as $lesson)
-									<li>{{ $lesson->title }}</li>
-								@endforeach
+      <div aria-labelledby="learning-method" class="mb-6">
+        <h2 id="learning-method" class="text-xl font-semibold mb-2">
+          How you will learn
+        </h2>
+        <ol class="list-decimal ml-6 space-y-1">
+          @foreach ($course->sections as $section)
+          <li>
+            <strong>{{ $section->title }}</strong>
+            <ul class="list-disc ml-6 text-sm text-gray-600">
+              @foreach ($section->lessons->take(3) as $lesson)
+              <li>{{ $lesson->title }}</li>
+              @endforeach
 
-								@if ($section->lessons->count() > 3)
-									<li>
-										...and {{ $section->lessons->count() - 3 }} more lessons
-									</li>
-								@endif
-							</ul>
-						</li>
-					@endforeach
-				</ol>
-			</div>
+              @if ($section->lessons->count() > 3)
+              <li>
+                ...and {{ $section->lessons->count() - 3 }} more lessons
+              </li>
+              @endif
+            </ul>
+          </li>
+          @endforeach
+        </ol>
+      </div>
 
-			<section aria-labelledby="student-reviews" class="mt-8">
-				<h2 id="student-reviews" class="text-xl font-semibold mb-4">
-					Student Reviews
-				</h2>
+      <section aria-labelledby="student-reviews" class="mt-8">
+        <h2 id="student-reviews" class="text-xl font-semibold mb-4">
+          Student Reviews
+        </h2>
 
-				@forelse ($course->reviews as $review)
-					<article class="border-b border-gray-200 pb-4 mb-4">
-						<header class="flex items-center justify-between">
-							<p class="font-semibold">{{ $review->user->name }}</p>
-							<time
-								class="text-sm text-gray-500"
-								datetime="{{ $review->created_at->toDateString() }}"
-							>
-								{{ $review->created_at->format('M d, Y') }}
-							</time>
-						</header>
+        @forelse ($reviewsWithRatings as $review)
+        <article class="border-b border-gray-200 pb-4 mb-4">
+          <header class="flex items-center justify-between">
+            <p class="font-semibold">{{ $review->user->name }}</p>
+            <time class="text-sm text-gray-500" datetime="{{ $review->created_at->toDateString() }}">
+              {{ $review->created_at->format('M d, Y') }}
+            </time>
+          </header>
 
-						<x-rating :value="$course->averageRating" size="4" class="mt-1" />
+          @if($review->userRating)
+          <x-rating :value="$review->userRating" size="4" class="mt-1" />
+          @endif
 
-						@if ($review->comment)
-							<p class="mt-2 text-gray-700">{{ $review->comment }}</p>
-						@endif
-					</article>
-				@empty
-					<p class="text-gray-500">No reviews yet.</p>
-				@endforelse
-			</section>
-		</article>
+          @if ($review->comment)
+          <p class="mt-2 text-gray-700">{{ $review->comment }}</p>
+          @endif
+        </article>
+        @empty
+        <p class="text-gray-500">No reviews yet.</p>
+        @endforelse
+      </section>
+    </article>
 
-		<aside class="hidden md:block md:col-span-1">
-			<div class="md:sticky md:top-20 bg-white shadow rounded-lg p-6 space-y-4">
-				@if ($isAuthor)
-					@include('courses.partials.sidebar.sidebar-author')
-				@elseif ($isEnrolled)
-					@include('courses.partials.sidebar.sidebar-enrolled')
-				@else
-					@include('courses.partials.sidebar.sidebar-guest')
-				@endif
+    <aside class="hidden md:block md:col-span-1">
+      <div class="md:sticky md:top-20 bg-white shadow rounded-lg p-6 space-y-4">
+        @if ($isAuthor)
+        @include('courses.partials.sidebar.sidebar-author')
+        @elseif ($isEnrolled)
+        @include('courses.partials.sidebar.sidebar-enrolled')
+        @else
+        @include('courses.partials.sidebar.sidebar-guest')
+        @endif
 
-				@include('courses.partials.sidebar.sidebar-includes')
-			</div>
-		</aside>
-	</main>
+        @include('courses.partials.sidebar.sidebar-includes')
+      </div>
+    </aside>
+  </main>
 
-	<nav
-		class="fixed bottom-0 left-0 w-full bg-white shadow-md p-2 flex flex-col
+  <nav
+    class="fixed bottom-0 left-0 w-full bg-white shadow-md p-2 flex flex-col
 			md:hidden"
-		aria-label="Mobile purchase options"
-	>
-		@if ($isAuthor)
-			<x-primary-button
-				:href="route('teacher.courses.show', $course->id)"
-				class="w-full justify-center mb-2"
-			>
-				Manage Course
-			</x-primary-button>
+    aria-label="Mobile purchase options">
+    @if ($isAuthor)
+    <x-primary-button
+      :href="route('teacher.courses.show', $course->id)"
+      class="w-full justify-center mb-2">
+      Manage Course
+    </x-primary-button>
 
-			<x-secondary-button
-				:href="route('lessons.step.show', ['lesson' => $firstLesson->id, 'position' => 1])"
-				class="w-full justify-center"
-			>
-				Preview
-			</x-secondary-button>
-		@elseif ($isEnrolled)
-			<x-primary-button
-				:href="route('lessons.step.show', ['lesson' => $firstLesson->id, 'position' => 1])"
-				class="w-full justify-center"
-			>
-				Study
-			</x-primary-button>
-		@else
-			<span class="text-lg font-bold ml-2 mb-1">${{ $course->price }}</span>
+    <x-secondary-button
+      :href="route('lessons.step.show', ['lesson' => $firstLesson->id, 'position' => 1])"
+      class="w-full justify-center">
+      Preview
+    </x-secondary-button>
+    @elseif ($isEnrolled)
+    <x-primary-button
+      :href="route('lessons.step.show', ['lesson' => $firstLesson->id, 'position' => 1])"
+      class="w-full justify-center">
+      Study
+    </x-primary-button>
+    @else
+    <span class="text-lg font-bold ml-2 mb-1">${{ $course->price }}</span>
 
-			<div class="flex gap-2 justify-between">
-				<form
-					action="{{ route('courses.enroll', $course) }}"
-					method="POST"
-					class="flex-1"
-				>
-					@csrf
-					<x-primary-button class="w-full justify-center">Buy</x-primary-button>
-				</form>
+    <div class="flex gap-2 justify-between">
+      <form
+        action="{{ route('courses.enroll', $course) }}"
+        method="POST"
+        class="flex-1">
+        @csrf
+        <x-primary-button class="w-full justify-center">Enroll</x-primary-button>
+      </form>
 
-				<x-secondary-button class="flex-1 justify-center">
-					Try free
-				</x-secondary-button>
-
-				<div class="flex items-center">
-					@auth
-						<x-wishlist-button :course="$course" variant="icon" />
-					@endauth
-				</div>
-			</div>
-		@endif
-	</nav>
+      <div class="flex items-center">
+        @auth
+        <x-wishlist-button :course="$course" variant="icon" />
+        @endauth
+      </div>
+    </div>
+    @endif
+  </nav>
 </x-app-layout>

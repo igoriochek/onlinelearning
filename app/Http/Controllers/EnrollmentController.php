@@ -14,7 +14,7 @@ class EnrollmentController extends Controller
 		$user = Auth::user();
 
 		if ($course->author_id === $user->id) {
-			return back()->with('error', 'You cannot buy your own course.');
+			return back()->with('error', 'You cannot enroll into your own course.');
 		}
 
 		$alreadyEnrolled = Enrollment::where('user_id', $user->id)

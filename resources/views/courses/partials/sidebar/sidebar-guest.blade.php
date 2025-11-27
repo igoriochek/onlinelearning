@@ -3,12 +3,8 @@
 
 	<form action="{{ route('courses.enroll', $course) }}" method="POST">
 		@csrf
-		<x-primary-button class="w-full justify-center">Buy Now</x-primary-button>
+		<x-primary-button class="w-full justify-center">Enroll</x-primary-button>
 	</form>
-
-	<x-secondary-button class="w-full justify-center">
-		Try free trial
-	</x-secondary-button>
 
 	@auth
 		<x-wishlist-button :course="$course" variant="full" />
