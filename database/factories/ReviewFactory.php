@@ -3,8 +3,6 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\Course;
-use App\Models\User;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Review>
@@ -19,8 +17,7 @@ class ReviewFactory extends Factory
   public function definition(): array
   {
     return [
-      'course_id' => Course::inRandomOrder()->first()->id,
-      'user_id' => User::where('role', 'student')->inRandomOrder()->first()->id,
+      'rating' => $this->faker->numberBetween(1, 5),
       'comment' => $this->faker->sentence(),
       'status' => 'approved',
     ];

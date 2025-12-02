@@ -6,7 +6,6 @@ use App\Models\User;
 use App\Models\Course;
 use App\Models\Section;
 use App\Models\Lesson;
-use App\Models\Rating;
 use App\Models\Step;
 use App\Models\Review;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -51,10 +50,6 @@ class DatabaseSeeder extends Seeder
           Review::factory()->create([
             'course_id' => $course->id,
             'user_id' => $student->id,
-          ]);
-          Rating::factory()->create([
-            'course_id' => $course->id,
-            'user_id' => $student->id
           ]);
         }
         Section::factory(3)
