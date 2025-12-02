@@ -58,9 +58,22 @@ class Course extends Model
 
   public function getAverageRatingAttribute()
   {
-    return $this->ratings()->count()
-      ? round($this->ratings()->avg('rating'), 1)
-      : null;
+    $avg = $this->reviews()
+      ->where('status', 'approved')
+      ->where('rating', '>', 0)
+      ->avg('rating');
+
+    return $avg ? round($avg, 1) : null;
+  }
+
+  public function getApprovedReviewsAttribute()
+  {
+    return $this->reviews()->where('status', 'approved')->get();
+  }
+
+  public function getReviewsWithRatingAttribute()
+  {
+    return $this->getApprovedReviewsAttribute()->where('rating', '>', 0);
   }
 
   public function getLessonCountAttribute()
@@ -98,6 +111,21 @@ class Course extends Model
     return true;
   }
 
+  public function reviewBy(User $user)
+  {
+    return $this->reviews()->where('user_id', $user->id)->first();
+  }
+
+  public function isAuthoredBy(User $user): bool
+  {
+    return $this->author_id === $user->id;
+  }
+
+  public function isEnrolled(User $user): bool
+  {
+    return $this->students->contains($user->id);
+  }
+
   public function sections()
   {
     return $this->hasMany(Section::class)->orderBy('position');
@@ -111,11 +139,6 @@ class Course extends Model
   public function reviews()
   {
     return $this->hasMany(Review::class);
-  }
-
-  public function ratings()
-  {
-    return $this->hasMany(Rating::class);
   }
 
   public function enrollments()

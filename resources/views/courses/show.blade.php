@@ -17,8 +17,8 @@
       <div class="flex items-center" aria-label="Course rating">
         <x-rating :value="$course->averageRating" />
         <span class="ml-2 text-gray-600 text-sm">
-          {{ $course->averageRating }}/5 ({{ $course->ratings->count() }}
-          reviews)
+          {{ $course->averageRating }}/5 ({{ $course->reviewsWithRating->count() }}
+          votes)
         </span>
       </div>
     </header>
@@ -93,8 +93,8 @@
           Student Reviews
         </h2>
 
-        @forelse ($reviewsWithRatings as $review)
-        <article class="border-b border-gray-200 pb-4 mb-4">
+        @forelse ($course->approvedReviews as $review)
+        <article x-data class="border-b border-gray-200 pb-4 mb-4">
           <header class="flex items-center justify-between">
             <p class="font-semibold">{{ $review->user->name }}</p>
             <time class="text-sm text-gray-500" datetime="{{ $review->created_at->toDateString() }}">
@@ -102,17 +102,49 @@
             </time>
           </header>
 
-          @if($review->userRating)
-          <x-rating :value="$review->userRating" size="4" class="mt-1" />
+          @if($review->rating)
+          <x-rating :value="$review->rating" size="4" class="mt-1" />
           @endif
 
-          @if ($review->comment)
-          <p class="mt-2 text-gray-700">{{ $review->comment }}</p>
+          <div class="flex justify-between items-start">
+            <p class="mt-2 text-gray-700">{{ $review->comment }}</p>
+            @if(Auth::id() === $review->user_id)
+            <div class="flex gap-x-2">
+              <button
+                @click="$refs['editForm{{ $review->id }}'].classList.toggle('hidden')"
+                class="p-1 text-gray-700">
+                <x-icons.pencil />
+              </button>
+              <form action="{{ route('courses.review.destroy', $review->id) }}" method="POST">
+                @csrf
+                @method('DELETE')
+                <button class="p-1 text-gray-700">
+                  <x-icons.trash />
+                </button>
+              </form>
+            </div>
+            @endif
+          </div>
+
+          @if(Auth::id() === $review->user_id)
+          <div x-ref="editForm{{ $review->id }}" class="mt-2 hidden">
+            <x-course-review-form
+              :course-id="$course->id"
+              :user-rating="$review->rating"
+              :user-comment="$review->comment" />
+          </div>
           @endif
         </article>
         @empty
-        <p class="text-gray-500">No reviews yet.</p>
+        <p class="text-gray-500 mb-4">No reviews yet.</p>
         @endforelse
+        @if($isEnrolled && !$userReview)
+
+        <div class="mb-10">
+          <x-course-review-form :course-id="$course->id" />
+        </div>
+
+        @endif
       </section>
     </article>
 

@@ -90,7 +90,8 @@
         <x-input-error :messages="$errors->get('description')" class="mt-1" />
       </div>
 
-      <div class="flex justify-center mt-4">
+      <div class="flex justify-between mt-4">
+        <x-secondary-button href="{{ route('teacher.courses.show', $course) }}">Cancel</x-secondary-button>
         <x-primary-button type="submit">Update</x-primary-button>
       </div>
     </form>

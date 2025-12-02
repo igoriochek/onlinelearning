@@ -18,20 +18,13 @@ class CourseController extends Controller
 
   public function show(Course $course)
   {
-    $course->load(['sections.lessons.steps', 'reviews.user', 'ratings']);
+    $course->load(['sections.lessons.steps']);
 
     $firstLesson = $course->sections->flatMap->lessons->first();
-
     $progress = $this->progressService->getCourseProgress($course);
-
-    $isAuthor = Auth::id() === $course->author_id;
-    $isEnrolled = $course->students->contains(Auth::id());
-    $reviewsWithRatings = $course->reviews->map(function ($review) use ($course) {
-      $review->userRating = $course->ratings
-        ->where('user_id', $review->user_id)
-        ->first()?->rating;
-      return $review;
-    });
+    $isAuthor = $course->isAuthoredBy(Auth::user());
+    $isEnrolled = $course->isEnrolled(Auth::user());
+    $userReview = $course->reviewBy(Auth::user());
 
     return view('courses.show', compact(
       'course',
@@ -39,7 +32,7 @@ class CourseController extends Controller
       'progress',
       'isAuthor',
       'isEnrolled',
-      'reviewsWithRatings'
+      'userReview',
     ));
   }
 }
