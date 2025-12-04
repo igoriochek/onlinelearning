@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Admin\CourseController as AdminCourseController;
+use App\Http\Controllers\Admin\ReviewController as AdminReviewController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\ProfileController;
 
 use App\Http\Controllers\HomeController;
@@ -109,6 +112,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
         TeacherStepController::class,
         'reorder',
       ])->name('lessons.steps.reorder');
+    });
+
+  Route::prefix('admin')
+    ->middleware('role:admin')
+    ->name('admin')
+    ->group(function () {
+      Route::resource('users', UserController::class);
+      Route::resource('courses', AdminCourseController::class);
+      Route::resource('reviews', AdminReviewController::class);
     });
 
   Route::prefix('profile')
