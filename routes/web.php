@@ -72,6 +72,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
   });
 
   Route::prefix('teach')
+    ->middleware('role:teacher')
     ->name('teacher.')
     ->group(function () {
       Route::resource('courses', TeacherCourseController::class)
