@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\CourseController as AdminCourseController;
+use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\ReviewController as AdminReviewController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\ProfileController;
@@ -116,8 +117,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
   Route::prefix('admin')
     ->middleware('role:admin')
-    ->name('admin')
+    ->name('admin.')
     ->group(function () {
+      Route::get('/dashboard', [AdminDashboardController::class, 'index'])
+        ->name('dashboard');
       Route::resource('users', UserController::class);
       Route::resource('courses', AdminCourseController::class);
       Route::resource('reviews', AdminReviewController::class);
