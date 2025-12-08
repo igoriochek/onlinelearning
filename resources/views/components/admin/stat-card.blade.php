@@ -1,6 +1,6 @@
 @props(['label', 'value', 'color'])
 <div class="bg-white rounded-xl p-5 shadow-sm border border-gray-200 flex items-center gap-4 hover:shadow-md transition">
-  <div class="p-3 rounded-full bg-gray-100 text-{{ $color }}-600">
+  <div class="p-3 rounded-full bg-gray-100 text-{{ $color }}-400">
     {{ $slot }}
   </div>
   <div>
