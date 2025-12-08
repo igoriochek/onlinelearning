@@ -18,18 +18,10 @@ export default {
         },
     },
     safelist: [
-        "bg-green-100",
-        "text-green-800",
-        "bg-red-100",
-        "text-red-800",
-        "bg-yellow-100",
-        "text-yellow-800",
-        "text-indigo-400",
-        "text-red-400",
-        "text-green-400",
-        "text-yellow-400",
-        "text-orange-400",
-        "text-gray-400",
+        {
+            pattern:
+                /(bg|text)-(red|blue|indigo|green|yellow|orange|purple)-(100|400|700|800)/,
+        },
     ],
 
     plugins: [forms, typography],
