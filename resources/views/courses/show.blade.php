@@ -56,10 +56,7 @@
           Meet the instructor
         </h2>
         <div class="flex items-center gap-3">
-          <img
-            src="{{ $course->author->avatar_url ?? 'https://placehold.co/12x12?text=Course+Author' }}"
-            alt="Instructor {{ $course->author->name }}"
-            class="w-12 h-12 rounded-full" />
+          <x-avatar :user="$course->author" />
           <p class="font-medium">{{ $course->author->name }}</p>
         </div>
       </section>

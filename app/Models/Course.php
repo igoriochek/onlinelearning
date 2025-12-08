@@ -111,18 +111,30 @@ class Course extends Model
     return true;
   }
 
-  public function reviewBy(User $user)
+  public function reviewBy(?User $user)
   {
+    if (!$user) {
+      return null;
+    }
+
     return $this->reviews()->where('user_id', $user->id)->first();
   }
 
-  public function isAuthoredBy(User $user): bool
+  public function isAuthoredBy(?User $user): bool
   {
+    if (!$user) {
+      return false;
+    }
+
     return $this->author_id === $user->id;
   }
 
-  public function isEnrolled(User $user): bool
+  public function isEnrolled(?User $user): bool
   {
+    if (!$user) {
+      return false;
+    }
+
     return $this->students->contains($user->id);
   }
 
