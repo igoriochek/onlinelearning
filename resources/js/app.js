@@ -1,12 +1,13 @@
-import './bootstrap';
+import "./bootstrap";
 
-import Alpine from 'alpinejs';
+import Alpine from "alpinejs";
 
-import { stepCompletion } from './steps/step-progress';
-import { reorderItems } from './components/reorder';
+import "./table/sort";
+import { stepCompletion } from "./steps/step-progress";
+import { reorderItems } from "./components/reorder";
 
-Alpine.data('reorderItems', reorderItems);
-Alpine.data('stepCompletion', stepCompletion);
+Alpine.data("reorderItems", reorderItems);
+Alpine.data("stepCompletion", stepCompletion);
 window.Alpine = Alpine;
 
 Alpine.start();
