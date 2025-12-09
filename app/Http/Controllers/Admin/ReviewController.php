@@ -23,11 +23,14 @@ class ReviewController extends Controller
       'status' => 'required|in:approved,rejected',
     ]);
 
-    $review->status = $request->status;
-    $review->save();
+    if ($review->status !== $request->status) {
+      $review->update(['status' => $request->status]);
+      return redirect()->route('admin.reviews.index')
+        ->with('success', 'Review updated successfully.');
+    }
 
     return redirect()->route('admin.reviews.index')
-      ->with('success', 'Review updated successfully.');
+      ->with('info', 'No changes made.');
   }
 
   public function destroy(Review $review)
