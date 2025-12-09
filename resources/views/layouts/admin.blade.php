@@ -30,6 +30,8 @@
     </header>
     @endisset
 
+    @include('components.toast-message')
+
     <!-- Page Content -->
     <main class="p-6">
       {{ $slot }}
