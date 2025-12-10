@@ -11,9 +11,7 @@
         <p class="text-sm text-gray-500 truncate max-w-xs w-full break-words">{{ $review->comment }}</p>
       </div>
       <div class="flex items-center gap-2 mt-1 md:mt-0">
-        <span class="px-2 py-1 rounded-full text-xs font-semibold {{ $review->status_class }}">
-          {{ ucfirst($review->status) }}
-        </span>
+        <x-badge :type="$review->status">{{ ucfirst($review->status) }}</x-badge>
         <span class="font-semibold {{ $review->rating ? 'text-yellow-500' : 'text-gray-400' }}">
           {{ $review->rating }} ★
         </span>

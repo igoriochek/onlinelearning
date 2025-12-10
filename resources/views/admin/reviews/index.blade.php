@@ -58,9 +58,7 @@
               </td>
 
               <td class="px-6 py-4 whitespace-nowrap">
-                <span class="px-2 py-1 text-xs rounded-full font-semibold {{ $review->status_class }}">
-                  {{ ucfirst($review->status) }}
-                </span>
+                <x-badge :type="$review->status">{{ ucfirst($review->status) }}</x-badge>
               </td>
 
               <td class="px-4 py-4 whitespace-nowrap text-right text-sm font-medium">

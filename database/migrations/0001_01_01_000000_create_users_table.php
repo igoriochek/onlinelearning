@@ -20,6 +20,8 @@ return new class extends Migration {
       $table->string('avatar')->nullable();
       $table->rememberToken();
       $table->timestamp('last_login_at')->nullable();
+      $table->enum('account_status', ['active', 'blocked'])
+        ->default('active');
       $table->timestamps();
     });
 
