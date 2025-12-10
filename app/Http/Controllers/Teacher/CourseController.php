@@ -73,11 +73,18 @@ class CourseController extends Controller
       $data['image_url'] = $request->file('image')->store('courses', 'public');
     }
 
-    $course->update($data);
+    $course->fill($data);
+
+    if ($course->isDirty()) {
+      $course->save();
+      return redirect()
+        ->route('teacher.courses.show', $course)
+        ->with('success', 'Course updated successfully.');
+    }
 
     return redirect()
       ->route('teacher.courses.show', $course)
-      ->with('success', 'Course updated successfully.');
+      ->with('info', 'No updates were applied.');
   }
 
   public function publish(Course $course)

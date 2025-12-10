@@ -8,11 +8,11 @@
 
     <div>
       <div class="mb-4 text-gray-600" x-show="review">
-        <p><strong>User:</strong> <span x-text="review.user.name"></span></p>
-        <p><strong>Course:</strong> <span x-text="review.course.title"></span></p>
-        <p><strong>Rating:</strong> <span x-text="review.rating"></span></p>
+        <p><strong>User:</strong> <span x-text="review?.user?.name"></span></p>
+        <p><strong>Course:</strong> <span x-text="review?.course?.title"></span></p>
+        <p><strong>Rating:</strong> <span x-text="review?.rating"></span></p>
         <div class="mt-2 border rounded-lg p-4 bg-gray-50 text-gray-800">
-          <span x-text="review.comment"></span>
+          <span x-text="review?.comment"></span>
         </div>
       </div>
 
@@ -21,7 +21,7 @@
           Cancel
         </x-secondary-button>
         <div>
-          <form method="POST" :action="`/admin/reviews/${review.id}`" class="flex gap-2">
+          <form method="POST" :action="`/admin/reviews/${review?.id}`" class="flex gap-2">
             @csrf
             @method('PATCH')
 

@@ -67,9 +67,9 @@
                 <div class="flex justify-end items-center gap-3">
                   <button
                     @click="
-    selectedReview = {{ $review->toJson() }};
-    $dispatch('open-modal', 'moderate-review');
-"
+                      selectedReview = {{ $review->toJson() }};
+                      $dispatch('open-modal', 'moderate-review');
+                    "
                     class="p-1 rounded-md text-gray-500 hover:text-gray-700 hover:bg-gray-100 transition"
                     title="Moderate review">
                     <x-lucide-eye class="w-5 h-5" />
