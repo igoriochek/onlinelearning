@@ -23,6 +23,7 @@ class Course extends Model
     'price',
     'image_url',
     'public',
+    'status'
   ];
 
   protected static function boot()
@@ -111,6 +112,11 @@ class Course extends Model
     return true;
   }
 
+  public function getFirstLessonAttribute()
+  {
+    return $this->sections->flatMap->lessons->first();
+  }
+
   public function reviewBy(?User $user)
   {
     if (!$user) {
@@ -136,6 +142,11 @@ class Course extends Model
     }
 
     return $this->students->contains($user->id);
+  }
+
+  public function getStudentsCountAttribute(): int
+  {
+    return $this->enrollments->count();
   }
 
   public function sections()

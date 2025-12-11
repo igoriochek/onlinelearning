@@ -10,22 +10,23 @@ use App\Models\User;
  */
 class CourseFactory extends Factory
 {
-	/**
-	 * Define the model's default state.
-	 *
-	 * @return array<string, mixed>
-	 */
-	public function definition()
-	{
-		return [
-			'title' => $this->faker->word,
-			'description' => $this->faker->sentence,
-			'level' => rand(1, 3),
-			'price' => $this->faker->randomFloat(2, 10, 100),
-			'author_id' =>
-				optional(User::where('role', 'teacher')->inRandomOrder()->first())
-					->id ?? User::factory()->create(['role' => 'teacher'])->id,
-			'public' => true,
-		];
-	}
+  /**
+   * Define the model's default state.
+   *
+   * @return array<string, mixed>
+   */
+  public function definition()
+  {
+    return [
+      'title' => $this->faker->word,
+      'description' => $this->faker->sentence,
+      'level' => rand(1, 3),
+      'price' => $this->faker->randomFloat(2, 10, 100),
+      'author_id' =>
+      optional(User::where('role', 'teacher')->inRandomOrder()->first())
+        ->id ?? User::factory()->create(['role' => 'teacher'])->id,
+      'public' => true,
+      'status' => 'approved',
+    ];
+  }
 }

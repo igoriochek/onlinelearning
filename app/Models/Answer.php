@@ -6,20 +6,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class Answer extends Model
 {
-	protected $fillable = [
-		'user_id',
-		'step_id',
-		'answer_id',
-		'selected_options',
-		'code_answer',
-	];
+  protected $fillable = [
+    'user_id',
+    'step_id',
+    'selected_options',
+    'code_answer',
+  ];
 
-	public function step()
-	{
-		return $this->belongsTo(Step::class);
-	}
-	public function user()
-	{
-		return $this->belongsTo(User::class);
-	}
+  public function step()
+  {
+    return $this->belongsTo(Step::class);
+  }
+  public function user()
+  {
+    return $this->belongsTo(User::class);
+  }
 }
