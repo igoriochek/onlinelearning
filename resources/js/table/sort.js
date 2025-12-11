@@ -27,9 +27,9 @@ document.addEventListener("DOMContentLoaded", () => {
                         b.children[index].textContent.trim();
 
                     if (type === "number") {
-                        return ascending
-                            ? parseFloat(cellA) - parseFloat(cellB)
-                            : parseFloat(cellB) - parseFloat(cellA);
+                        const numA = parseFloat(cellA) || 0;
+                        const numB = parseFloat(cellB) || 0;
+                        return ascending ? numA - numB : numB - numA;
                     } else {
                         return ascending
                             ? cellA.localeCompare(cellB)

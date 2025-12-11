@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\CourseController as AdminCourseController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Admin\LessonController as AdminLessonController;
 use App\Http\Controllers\Admin\ReviewController as AdminReviewController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\ProfileController;
@@ -124,7 +125,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
       Route::resource('users', UserController::class)->only(['index']);
       Route::patch('users/{user}/toggle-status', [UserController::class, 'toggleStatus'])->name('users.toggle-status');
       Route::patch('users/{user}/update-role', [UserController::class, 'updateRole'])->name('users.update-role');
-      Route::resource('courses', AdminCourseController::class);
+      Route::resource('courses', AdminCourseController::class)->only(['index']);
+      Route::get('/lesson/{lesson}/step/{position}', [
+        AdminLessonController::class,
+        'show',
+      ])->name('courses.step.show');
+      Route::patch('/courses/{course}/update-status', [AdminCourseController::class, 'updateStatus'])
+        ->name('courses.update-status');
       Route::resource('reviews', AdminReviewController::class);
     });
 
