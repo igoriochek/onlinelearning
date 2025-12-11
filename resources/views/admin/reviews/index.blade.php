@@ -52,7 +52,13 @@
             <tr class="border-b  border-default">
               <td class="px-6 py-4 whitespace-nowrap">{{ $review->user->name }}</td>
               <td class="px-6 py-4 whitespace-nowrap">{{ $review->course->title }}</td>
-              <td class="px-12 py-4 whitespace-nowrap">{{ $review->rating }}</td>
+              <td class="px-10 py-4 whitespace-nowrap">
+                @if($review->rating)
+                <span class="text-yellow-500">{{ $review->rating }} ★</span>
+                @else
+                —
+                @endif
+              </td>
               <td class="px-6 py-4 max-w-xs truncate" title="{{ $review->comment }}">
                 {{ $review->comment }}
               </td>
