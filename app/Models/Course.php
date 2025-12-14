@@ -141,7 +141,9 @@ class Course extends Model
       return false;
     }
 
-    return $this->students->contains($user->id);
+    return Enrollment::where('course_id', $this->id)
+      ->where('user_id', $user->id)
+      ->exists();
   }
 
   public function getStudentsCountAttribute(): int

@@ -9,31 +9,27 @@ use Illuminate\Support\Facades\Auth;
 
 class EnrollmentController extends Controller
 {
-	public function store(Course $course)
-	{
-		$user = Auth::user();
+  public function store(Course $course)
+  {
+    $user = Auth::user();
 
-		if ($course->author_id === $user->id) {
-			return back()->with('error', 'You cannot enroll into your own course.');
-		}
+    if ($course->isAuthoredBy($user)) {
+      return back()->with('error', 'You cannot enroll into your own course.');
+    }
 
-		$alreadyEnrolled = Enrollment::where('user_id', $user->id)
-			->where('course_id', $course->id)
-			->exists();
+    if ($course->isEnrolled($user)) {
+      return back()->with('info', 'You are already enrolled in this course.');
+    }
 
-		if ($alreadyEnrolled) {
-			return back()->with('info', 'You are already enrolled in this course.');
-		}
+    Enrollment::create([
+      'user_id' => $user->id,
+      'course_id' => $course->id,
+      'purchased_at' => now(),
+    ]);
 
-		Enrollment::create([
-			'user_id' => $user->id,
-			'course_id' => $course->id,
-			'purchased_at' => now(),
-		]);
-
-		return back()->with(
-			'success',
-			'You have successfully enrolled in the course!',
-		);
-	}
+    return back()->with(
+      'success',
+      'You have successfully enrolled in the course!',
+    );
+  }
 }
