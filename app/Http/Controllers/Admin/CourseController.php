@@ -10,7 +10,7 @@ class CourseController extends Controller
 {
   public function index()
   {
-    $courses = Course::with('author')->withCount('enrollments')->get(10);
+    $courses = Course::with('author')->withCount('enrollments')->paginate(20);
 
     return view('admin.courses.index', compact('courses'));
   }
