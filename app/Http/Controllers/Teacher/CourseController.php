@@ -50,13 +50,19 @@ class CourseController extends Controller
 
   public function destroy(Course $course)
   {
-    $this->deleteCourseImage($course->image_url);
+    try {
+      $this->deleteCourseImage($course->image_url);
 
-    $course->delete();
+      $course->delete();
 
-    return redirect()
-      ->route('dashboard.manage-courses')
-      ->with('success', 'Course deleted successfully.');
+      return redirect()
+        ->route('dashboard.manage-courses')
+        ->with('success', 'Course deleted successfully.');
+    } catch (Exception $e) {
+      return redirect()
+        ->route('dashboard.manage-courses')
+        ->with('error', 'Failed to delete course. Please try again.');
+    }
   }
 
   public function edit(Course $course)
@@ -74,17 +80,20 @@ class CourseController extends Controller
     }
 
     $course->fill($data);
+    try {
+      if ($course->isDirty()) {
+        $course->save();
+        return redirect()
+          ->route('teacher.courses.show', $course)
+          ->with('success', 'Course updated successfully.');
+      }
 
-    if ($course->isDirty()) {
-      $course->save();
       return redirect()
         ->route('teacher.courses.show', $course)
-        ->with('success', 'Course updated successfully.');
+        ->with('info', 'No updates were applied.');
+    } catch (Exception $e) {
+      return back()->with('error', 'Failed to update course.');
     }
-
-    return redirect()
-      ->route('teacher.courses.show', $course)
-      ->with('info', 'No updates were applied.');
   }
 
   public function publish(Course $course)
