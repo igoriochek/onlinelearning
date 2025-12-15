@@ -17,11 +17,15 @@ class UserController extends Controller
 
   public function toggleStatus(User $user)
   {
-    $user->update([
-      'account_status' => $user->account_status === 'active' ? 'blocked' : 'active'
-    ]);
+    try {
+      $user->update([
+        'account_status' => $user->account_status === 'active' ? 'blocked' : 'active'
+      ]);
 
-    return back()->with('success', 'User status updated successfully.');
+      return back()->with('success', 'User status updated successfully.');
+    } catch (\Exception $e) {
+      return back()->with('error', 'Failed to update user status.');
+    }
   }
 
   public function updateRole(Request $request, User $user)
@@ -32,11 +36,15 @@ class UserController extends Controller
 
     $user->fill($request->only('role'));
 
-    if ($user->isDirty()) {
-      $user->save();
-      return back()->with('success', "Role updated to {$user->role}.");
-    }
+    try {
+      if ($user->isDirty()) {
+        $user->save();
+        return back()->with('success', "Role updated to {$user->role}.");
+      }
 
-    return back()->with('info', 'No updates were applied.');
+      return back()->with('info', 'No updates were applied.');
+    } catch (\Exception $e) {
+      return back()->with('error', 'Failed to update user role.');
+    }
   }
 }

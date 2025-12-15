@@ -21,9 +21,13 @@ class CourseController extends Controller
       'status' => 'required|in:pending,approved,rejected',
     ]);
 
-    $course->status = $request->status;
-    $course->save();
+    try {
+      $course->status = $request->status;
+      $course->save();
 
-    return redirect()->back()->with('success', 'Course status updated.');
+      return redirect()->back()->with('success', 'Course status updated.');
+    } catch (\Exception $e) {
+      return redirect()->back()->with('error', 'Failed to update course status.');
+    }
   }
 }

@@ -25,20 +25,30 @@ class ReviewController extends Controller
 
     $review->fill($request->only('status'));
 
-    if ($review->isDirty()) {
-      $review->save();
-      return redirect()->route('admin.reviews.index')
-        ->with('success', 'Review updated successfully.');
-    }
+    try {
+      if ($review->isDirty()) {
+        $review->save();
+        return redirect()->route('admin.reviews.index')
+          ->with('success', 'Review updated successfully.');
+      }
 
-    return redirect()->route('admin.reviews.index')
-      ->with('info', 'No updates were applied.');
+      return redirect()->route('admin.reviews.index')
+        ->with('info', 'No updates were applied.');
+    } catch (\Exception $e) {
+      return redirect()->route('admin.reviews.index')
+        ->with('error', 'Failed to update review.');
+    }
   }
 
   public function destroy(Review $review)
   {
-    $review->delete();
-    return redirect()->route('admin.reviews.index')
-      ->with('success', 'Review deleted successfully.');
+    try {
+      $review->delete();
+      return redirect()->route('admin.reviews.index')
+        ->with('success', 'Review deleted successfully.');
+    } catch (\Exception $e) {
+      return redirect()->route('admin.reviews.index')
+        ->with('error', 'Failed to delete review.');
+    }
   }
 }
