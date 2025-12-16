@@ -28,7 +28,7 @@
           <x-nav-link
             :href="route('admin.courses.index')"
             :active="request()->routeIs('admin.courses.*')">
-            {{ __('admin.courses') }}
+            {{ __('admin.courses.label') }}
           </x-nav-link>
           <x-nav-link
             :href="route('admin.reviews.index')"
@@ -173,7 +173,7 @@
       <x-responsive-nav-link
         :href="route('admin.courses.index')"
         :active="request()->routeIs('admin.courses.*')">
-        {{ __('admin.courses') }}
+        {{ __('admin.courses.label') }}
       </x-responsive-nav-link>
       <x-responsive-nav-link
         :href="route('admin.reviews.index')"

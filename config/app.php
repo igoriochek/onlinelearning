@@ -85,7 +85,7 @@ return [
 
   'available_locales' => [
     'English' => 'en',
-    'Lithuanian' => 'lt',
+    'Lietuvių' => 'lt',
   ],
 
   /*

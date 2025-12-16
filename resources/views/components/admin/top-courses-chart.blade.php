@@ -1,7 +1,7 @@
 @props(['labels', 'data'])
 
 <div class="bg-white rounded-xl shadow-sm border p-6">
-  <h3 class="text-lg font-semibold text-gray-800 mb-4">Most Popular Courses</h3>
+  <h3 class="text-lg font-semibold text-gray-800 mb-4"> {{ __('admin.top_courses') }}</h3>
 
   <div id="topCoursesChart" class="w-full h-72"></div>
 </div>
@@ -27,7 +27,7 @@
         }
       },
       series: [{
-        name: 'Enrollments',
+        name: '{{ __("admin.enrollments") }}',
         data: data
       }],
       xaxis: {
@@ -41,7 +41,7 @@
       },
       yaxis: {
         title: {
-          text: 'Enrollments'
+          text: '{{ __("admin.enrollments") }}'
         }
       },
       grid: {

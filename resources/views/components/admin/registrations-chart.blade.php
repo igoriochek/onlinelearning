@@ -1,7 +1,7 @@
 @props(['labels', 'data'])
 
 <div class="bg-white rounded-xl shadow-sm border p-6">
-  <h3 class="text-lg font-semibold text-gray-800 mb-4">{{ __('User Registrations This Week') }}</h3>
+  <h3 class="text-lg font-semibold text-gray-800 mb-4">{{ __('admin.registrations_this_week') }}</h3>
 
   <div id="registrationsChart" class="w-full h-72"></div>
 </div>

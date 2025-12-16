@@ -1,7 +1,7 @@
 <x-admin-layout>
   <x-slot name="header">
     <h2 class="text-xl font-semibold leading-tight text-gray-800">
-      {{ __('Dashboard') }}
+      {{ __('admin.dashboard') }}
     </h2>
   </x-slot>
 
@@ -10,35 +10,35 @@
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
 
-        <x-admin.stat-card label="{{ __('Total Users') }}" :value="$totalUsers" color="indigo">
+        <x-admin.stat-card label="{{ __('admin.total_users') }}" :value="$totalUsers" color="indigo">
           <x-lucide-users class="w-6 h-6" />
         </x-admin.stat-card>
 
-        <x-admin.stat-card label="{{ __('New Users This Month') }}" :value="$newUsersThisMonth" color="indigo">
+        <x-admin.stat-card label="{{ __('admin.new_users_this_month') }}" :value="$newUsersThisMonth" color="indigo">
           <x-lucide-user-plus class="w-6 h-6" />
         </x-admin.stat-card>
 
-        <x-admin.stat-card label="{{ __('Active Users This Week') }}" :value="$activeUsersThisWeek" color="indigo">
+        <x-admin.stat-card label="{{ __('admin.active_users_this_week') }}" :value="$activeUsersThisWeek" color="indigo">
           <x-lucide-activity class="w-6 h-6" />
         </x-admin.stat-card>
 
-        <x-admin.stat-card label="{{ __('Total Courses') }}" :value="$totalCourses" color="red">
+        <x-admin.stat-card label="{{ __('admin.total_courses') }}" :value="$totalCourses" color="red">
           <x-lucide-book-open class="w-6 h-6" />
         </x-admin.stat-card>
 
-        <x-admin.stat-card label="{{ __('New Courses This Month') }}" :value="$newCoursesThisMonth" color="red">
+        <x-admin.stat-card label="{{ __('admin.new_courses_this_month') }}" :value="$newCoursesThisMonth" color="red">
           <x-lucide-file-plus class="w-6 h-6" />
         </x-admin.stat-card>
 
-        <x-admin.stat-card label="{{ __('Enrollments This Month') }}" :value="$enrollmentsThisMonth" color="green">
+        <x-admin.stat-card label="{{ __('admin.enrollments_this_month') }}" :value="$enrollmentsThisMonth" color="green">
           <x-lucide-graduation-cap class="w-6 h-6" />
         </x-admin.stat-card>
 
-        <x-admin.stat-card label="{{ __('Average Course Rating') }}" :value="number_format($averageCourseRating, 1) . ' ★'" color="yellow">
+        <x-admin.stat-card label="{{ __('admin.average_course_rating') }}" :value="number_format($averageCourseRating, 1) . ' ★'" color="yellow">
           <x-lucide-star class="w-6 h-6" />
         </x-admin.stat-card>
 
-        <x-admin.stat-card label="{{ __('Ratings This Month') }}" :value="$ratingsThisMonth" color="orange">
+        <x-admin.stat-card label="{{ __('admin.ratings_this_month') }}" :value="$ratingsThisMonth" color="orange">
           <x-lucide-message-circle class="w-6 h-6" />
         </x-admin.stat-card>
       </div>

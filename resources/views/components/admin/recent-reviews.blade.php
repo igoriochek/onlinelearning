@@ -1,7 +1,7 @@
 @props(['reviews'])
 
 <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
-  <h3 class="text-lg font-semibold text-gray-800 mb-4">Recent Reviews</h3>
+  <h3 class="text-lg font-semibold text-gray-800 mb-4">{{ __('admin.recent_reviews') }}</h3>
 
   <ul class="divide-y divide-gray-100">
     @foreach ($reviews as $review)
@@ -11,7 +11,7 @@
         <p class="text-sm text-gray-500 truncate max-w-xs w-full break-words">{{ $review->comment }}</p>
       </div>
       <div class="flex items-center gap-2 mt-1 md:mt-0">
-        <x-badge :type="$review->status">{{ ucfirst($review->status) }}</x-badge>
+        <x-badge :type="$review->status">{{ __('status.' . $review->status) }}</x-badge>
         <span class="font-semibold {{ $review->rating ? 'text-yellow-500' : 'text-gray-400' }}">
           {{ $review->rating }} ★
         </span>
@@ -23,7 +23,7 @@
   </ul>
   <div class="text-right">
     <a href="{{ route('admin.reviews.index') }}" class="text-sm text-gray-500 hover:underline">
-      See all reviews
+      {{ __('admin.see_all_reviews') }}
     </a>
   </div>
 </div>

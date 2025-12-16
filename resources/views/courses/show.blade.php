@@ -10,7 +10,7 @@
         </p>
         <div class="flex items-center mt-2 gap-2">
           <span class="text-sm text-gray-500 capitalize">
-            {{ $course->level_name }} Level
+            {{ __('levels.' . $course->level_key) }} Level
           </span>
         </div>
       </div>

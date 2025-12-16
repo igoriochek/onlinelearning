@@ -1,7 +1,7 @@
 @props(['users'])
 
 <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
-  <h3 class="text-lg font-semibold text-gray-800 mb-4">Recent Users</h3>
+  <h3 class="text-lg font-semibold text-gray-800 mb-4">{{ __('admin.recent_users') }}</h3>
 
   <ul class="divide-y divide-gray-100">
     @foreach ($users as $user)
@@ -21,7 +21,7 @@
   </ul>
   <div class="text-right">
     <a href="{{ route('admin.users.index') }}" class="text-sm text-gray-500 hover:underline">
-      See all users
+      {{ __('admin.see_all_users') }}
     </a>
   </div>
 </div>

@@ -1,0 +1,19 @@
+<?php
+
+return [
+  'title'      => 'Title',
+  'author'     => 'Author',
+  'level'      => 'Level',
+  'published'  => 'Published',
+  'status'     => 'Status',
+  'rating'     => 'Avg. Rating',
+  'students'   => 'Students',
+  'actions'    => 'Actions',
+  'name' => 'Name',
+  'email' => 'Email',
+  'role' => 'Role',
+  'registration_date' => 'Registration Date',
+  'last_login' => 'Last Login',
+  'never' => 'Never',
+  'change_role' => 'Change user role'
+];
