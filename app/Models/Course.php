@@ -47,13 +47,13 @@ class Course extends Model
       : false;
   }
 
-  public function getLevelNameAttribute()
+  public function getLevelKeyAttribute(): string
   {
     return match ((int) $this->level) {
-      1 => 'Beginner',
-      2 => 'Intermediate',
-      3 => 'Advanced',
-      default => 'Unknown',
+      1 => 'beginner',
+      2 => 'intermediate',
+      3 => 'advanced',
+      default => 'unknown',
     };
   }
 
