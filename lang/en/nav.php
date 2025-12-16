@@ -1,0 +1,11 @@
+<?php
+
+return [
+  'home' => 'Home',
+  'dashboard' => 'Dashboard',
+  'create-course' => 'Create Course',
+  'login' => 'Login',
+  'register' => 'Register',
+  'profile' => 'Profile',
+  'logout' => 'Log Out',
+];

@@ -15,6 +15,7 @@ use App\Http\Controllers\WishlistController;
 use App\Http\Controllers\StepController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EnrollmentController;
+use App\Http\Controllers\LocaleController;
 use App\Http\Controllers\Teacher\CourseController as TeacherCourseController;
 use App\Http\Controllers\Teacher\SectionController as TeacherSectionController;
 use App\Http\Controllers\Teacher\LessonController as TeacherLessonController;
@@ -25,6 +26,8 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/course/{course}', [CourseController::class, 'show'])->name(
   'courses.show',
 );
+Route::get('/language/{locale?}', [LocaleController::class, 'change'])
+  ->name('changeLanguage');
 
 Route::middleware(['auth', 'verified'])->group(function () {
   Route::post('/courses/{course}/enroll', [

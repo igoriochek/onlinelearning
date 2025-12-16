@@ -18,22 +18,22 @@
           <x-nav-link
             :href="route('admin.dashboard')"
             :active="request()->routeIs('admin.dashboard')">
-            {{ __('Dashboard') }}
+            {{ __('admin.dashboard') }}
           </x-nav-link>
           <x-nav-link
             :href="route('admin.users.index')"
             :active="request()->routeIs('admin.users.index')">
-            {{ __('Users') }}
+            {{ __('admin.users') }}
           </x-nav-link>
           <x-nav-link
             :href="route('admin.courses.index')"
             :active="request()->routeIs('admin.courses.*')">
-            {{ __('Courses') }}
+            {{ __('admin.courses') }}
           </x-nav-link>
           <x-nav-link
             :href="route('admin.reviews.index')"
             :active="request()->routeIs('admin.reviews.index')">
-            {{ __('Reviews') }}
+            {{ __('admin.reviews') }}
           </x-nav-link>
         </div>
       </div>
@@ -65,7 +65,7 @@
 
           <x-slot name="content">
             <x-dropdown-link :href="route('profile.edit')">
-              {{ __('Profile') }}
+              {{ __('nav.profile') }}
             </x-dropdown-link>
 
             <!-- Authentication -->
@@ -76,9 +76,31 @@
                 :href="route('logout')"
                 onclick="event.preventDefault();
                   this.closest('form').submit();">
-                {{ __('Log Out') }}
+                {{ __('nav.logout') }}
               </x-dropdown-link>
             </form>
+          </x-slot>
+        </x-dropdown>
+        <x-dropdown align="right" width="36">
+          <x-slot name="trigger">
+            <button class="inline-flex items-center rounded-md border
+									border-transparent bg-white px-3 py-2 text-sm font-medium
+									leading-4 text-gray-500 transition duration-150 ease-in-out
+									hover:text-gray-700 focus:outline-none">
+              <div class="ms-1">
+                <x-lucide-languages class="w-4 h-4" />
+              </div>
+            </button>
+          </x-slot>
+
+          <x-slot name="content">
+            @foreach (config('app.available_locales') as $name => $code)
+            @if ($code !== app()->currentLocale())
+            <x-dropdown-link href="{{ url('language/'.$code) }}">
+              {{ $name }}
+            </x-dropdown-link>
+            @endif
+            @endforeach
           </x-slot>
         </x-dropdown>
       </div>
@@ -112,6 +134,24 @@
               d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
+
+        <x-dropdown align="right" width="24">
+          <x-slot name="trigger">
+            <button class="inline-flex items-center rounded-md border border-transparent bg-white px-3 py-2 text-sm text-gray-500 hover:text-gray-700 focus:outline-none">
+              <x-lucide-languages class="w-4 h-4" />
+            </button>
+          </x-slot>
+
+          <x-slot name="content">
+            @foreach (config('app.available_locales') as $name => $code)
+            @if ($code !== app()->currentLocale())
+            <x-dropdown-link href="{{ url('language/'.$code) }}">
+              {{ $name }}
+            </x-dropdown-link>
+            @endif
+            @endforeach
+          </x-slot>
+        </x-dropdown>
       </div>
     </div>
   </div>
@@ -123,22 +163,22 @@
       <x-responsive-nav-link
         :href="route('admin.dashboard')"
         :active="request()->routeIs('admin.dashboard')">
-        {{ __('Dashboard') }}
+        {{ __('admin.dashboard') }}
       </x-responsive-nav-link>
       <x-responsive-nav-link
         :href="route('admin.users.index')"
         :active="request()->routeIs('admin.users.index')">
-        {{ __('Users') }}
+        {{ __('admin.users') }}
       </x-responsive-nav-link>
       <x-responsive-nav-link
         :href="route('admin.courses.index')"
         :active="request()->routeIs('admin.courses.*')">
-        {{ __('Courses') }}
+        {{ __('admin.courses') }}
       </x-responsive-nav-link>
       <x-responsive-nav-link
         :href="route('admin.reviews.index')"
         :active="request()->routeIs('admin.reviews.index')">
-        {{ __('Reviews') }}
+        {{ __('admin.reviews') }}
       </x-responsive-nav-link>
     </div>
 
@@ -155,7 +195,7 @@
 
       <div class="mt-3 space-y-1">
         <x-responsive-nav-link :href="route('profile.edit')">
-          {{ __('Profile') }}
+          {{ __('nav.profile') }}
         </x-responsive-nav-link>
 
         <!-- Authentication -->
@@ -166,7 +206,7 @@
             :href="route('logout')"
             onclick="event.preventDefault();
               this.closest('form').submit();">
-            {{ __('Log Out') }}
+            {{ __('nav.logout') }}
           </x-responsive-nav-link>
         </form>
       </div>
