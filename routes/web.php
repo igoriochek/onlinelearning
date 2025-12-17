@@ -22,10 +22,12 @@ use App\Http\Controllers\Teacher\LessonController as TeacherLessonController;
 use App\Http\Controllers\Teacher\StepController as TeacherStepController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/course/{course}', [CourseController::class, 'show'])->name(
-  'courses.show',
-);
+Route::middleware('redirect.if.admin')->group(function () {
+  Route::get('/', [HomeController::class, 'index'])->name('home');
+  Route::get('/course/{course}', [CourseController::class, 'show'])->name(
+    'courses.show',
+  );
+});
 Route::get('/language/{locale?}', [LocaleController::class, 'change'])
   ->name('changeLanguage');
 
@@ -54,7 +56,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     'completeStep',
   ])->name('lessons.step.complete');
 
-  Route::prefix('dashboard')->group(function () {
+  Route::prefix('dashboard')->middleware('redirect.if.admin')->group(function () {
     Route::get('/', function () {
       return view('dashboard.index');
     })->name('dashboard');
