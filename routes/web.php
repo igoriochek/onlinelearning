@@ -31,7 +31,7 @@ Route::middleware('redirect.if.admin')->group(function () {
 Route::get('/language/{locale?}', [LocaleController::class, 'change'])
   ->name('changeLanguage');
 
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::middleware(['auth'])->group(function () {
   Route::post('/courses/{course}/enroll', [
     EnrollmentController::class,
     'store',
