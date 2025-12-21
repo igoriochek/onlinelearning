@@ -10,16 +10,12 @@
         <table class="w-full text-sm text-left rtl:text-right">
           <thead class="bg-gray-50 text-gray-500 text-xs uppercase border-b font-medium ">
             <tr>
-              <th class="px-6 py-3">
+              <th class="px-4 py-3">
                 {{ __('tables.title') }}
               </th>
 
               <th class="px-6 py-3">
                 {{ __('tables.author') }}
-              </th>
-
-              <th class="px-6 py-3">
-                {{__('tables.level')}}
               </th>
 
               <th class="px-6 py-3">
@@ -44,18 +40,23 @@
                 {{__('tables.students')}}
               </th>
 
+
+              <th class="px-6 py-3">
+                {{__('tables.last_updated')}}
+              </th>
+
               <th class="px-6 py-3 text-right">
                 {{__('tables.actions')}}
               </th>
+
 
             </tr>
           </thead>
           <tbody class="bg-white">
             @foreach ($courses as $course)
             <tr class="border-b">
-              <td class="px-6 py-4 whitespace-nowrap">{{ $course->title }}</td>
+              <td class="px-4 py-4 whitespace-nowrap">{{ $course->title }}</td>
               <td class="px-6 py-4 whitespace-nowrap">{{ $course->author->name }}</td>
-              <td class="px-6 py-4 whitespace-nowrap">{{ __('levels.' . $course->level_key) }}</td>
               <td class="px-6 py-4 whitespace-nowrap">
                 <x-badge :type="$course->public ? 'success' : 'default'">
                   {{ $course->public
@@ -75,6 +76,7 @@
                 @endif
               </td>
               <td class="px-6 py-4 whitespace-nowrap">{{ $course->enrollments_count }}</td>
+              <td class="px-6 py-5 whitespace-nowrap">{{ $course->updated_at->diffForHumans() }}</td>
               <td class="px-4 py-4 whitespace-nowrap text-right text-sm font-medium">
                 @if($course->firstLesson)
                 <div class="flex justify-end items-center gap-2">
@@ -91,6 +93,8 @@
                     </button>
                     @method('PATCH')
                   </form>
+                  @endif
+                  @if($course->status != 'rejected')
                   <button
                     @click="courseId = '{{ $course->id }}'; $dispatch('open-modal', 'reject-course')"
                     class="text-gray-500 hover:text-red-600 rounded"
