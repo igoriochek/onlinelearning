@@ -135,8 +135,8 @@ Route::middleware(['auth'])->group(function () {
         AdminLessonController::class,
         'show',
       ])->name('courses.step.show');
-      Route::patch('/courses/{course}/update-status', [AdminCourseController::class, 'updateStatus'])
-        ->name('courses.update-status');
+      Route::patch('/courses/{course}/approve', [AdminCourseController::class, 'approve'])->name('courses.approve');
+      Route::patch('/courses/{course}/reject', [AdminCourseController::class, 'reject'])->name('courses.reject');
       Route::resource('reviews', AdminReviewController::class);
     });
 
