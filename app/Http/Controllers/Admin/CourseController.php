@@ -33,10 +33,6 @@ class CourseController extends Controller
       'reason' => 'required|string|max:1000',
     ]);
 
-    if ($course->status !== 'pending') {
-      return back()->with('error', 'Only pending courses can be approved.');
-    }
-
     $course->update(['status' => 'rejected']);
 
     try {

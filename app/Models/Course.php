@@ -112,6 +112,13 @@ class Course extends Model
     return true;
   }
 
+  public function markPending()
+  {
+    if ($this->status === 'rejected') {
+      $this->update(['status' => 'pending']);
+    }
+  }
+
   public function getFirstLessonAttribute()
   {
     return $this->sections->flatMap->lessons->first();

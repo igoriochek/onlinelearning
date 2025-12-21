@@ -21,9 +21,12 @@ class LessonController extends Controller
     ]);
 
     $course = $section->course;
+
     if ($course->public) {
       $course->update(['public' => false]);
     }
+
+    $course->markPending();
 
     $section->lessons()->create([
       'title' => $request->title,
@@ -45,6 +48,8 @@ class LessonController extends Controller
       'title' => $request->title,
     ]);
 
+    $lesson->section->course->markPending();
+
     return response()->json([
       'id' => $lesson->id,
       'title' => $lesson->title,
@@ -60,6 +65,8 @@ class LessonController extends Controller
       if ($course->public) {
         $course->update(['public' => false]);
       }
+
+      $course->markPending();
 
       return back()->with('success', 'Lesson deleted successfully!');
     } catch (\Exception $e) {

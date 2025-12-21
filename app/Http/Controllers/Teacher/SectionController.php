@@ -23,6 +23,7 @@ class SectionController extends Controller
     if ($course->public) {
       $course->update(['public' => false]);
     }
+    $course->markPending();
 
     $course->sections()->create([
       'title' => $request->title,
@@ -44,6 +45,8 @@ class SectionController extends Controller
       'title' => $request->title,
     ]);
 
+    $section->course->markPending();
+
     return response()->json([
       'id' => $section->id,
       'title' => $section->title,
@@ -59,6 +62,7 @@ class SectionController extends Controller
       if ($course->public) {
         $course->update(['public' => false]);
       }
+      $course->markPending();
 
       return back()->with('success', 'Section deleted successfully!');
     } catch (\Exception $e) {

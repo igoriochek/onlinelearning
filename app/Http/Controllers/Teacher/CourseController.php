@@ -83,6 +83,9 @@ class CourseController extends Controller
     try {
       if ($course->isDirty()) {
         $course->save();
+
+        $course->markPending();
+
         return redirect()
           ->route('teacher.courses.show', $course)
           ->with('success', 'Course updated successfully.');

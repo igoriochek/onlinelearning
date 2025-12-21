@@ -76,6 +76,8 @@ class StepController extends Controller
       }
     }
 
+    $step->lesson->section->course->markPending();
+
     return redirect()
       ->route('teacher.lessons.steps.index', $lesson->id)
       ->with('success', 'Step created successfully.');
@@ -101,6 +103,8 @@ class StepController extends Controller
         $this->updateQuizStep($request, $step);
         break;
     }
+
+    $step->lesson->section->course->markPending();
 
     return redirect()
       ->route('teacher.lessons.steps.index', $step->lesson_id)
@@ -203,6 +207,8 @@ class StepController extends Controller
       if ($course->public) {
         $course->update(['public' => false]);
       }
+
+      $course->markPending();
 
       return back()->with('success', 'Step deleted successfully');
     } catch (\Exception $e) {
