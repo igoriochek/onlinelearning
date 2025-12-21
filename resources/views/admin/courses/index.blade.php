@@ -4,9 +4,9 @@
       {{ __('admin.courses.title') }}
     </h2>
   </x-slot>
-  <div class="py-6">
+  <div class="py-6" x-data="{ courseId: null}">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-      <div class="relative overflow-x-auto shadow rounded-lg border border-default" x-data>
+      <div class="relative overflow-x-auto shadow rounded-lg border border-default">
         <table class="w-full text-sm text-left rtl:text-right">
           <thead class="bg-gray-50 text-gray-500 text-xs uppercase border-b font-medium ">
             <tr>
@@ -59,9 +59,9 @@
               <td class="px-6 py-4 whitespace-nowrap">
                 <x-badge :type="$course->public ? 'success' : 'default'">
                   {{ $course->public
-    ? __('status.published')
-    : __('status.unpublished')
-}}
+                      ? __('status.published')
+                      : __('status.unpublished')
+                  }}
                 </x-badge>
               </td>
               <td class="px-6 py-4 whitespace-nowrap">
@@ -83,28 +83,21 @@
                     title="{{ __('actions.view') }}">
                     <x-lucide-eye class="w-5 h-5" />
                   </a>
-
-                  <form action="{{ route('admin.courses.update-status', $course) }}" method="POST" class="flex items-center gap-2">
+                  @if($course->status === 'pending')
+                  <form action="{{ route('admin.courses.approve', $course) }}" method="POST" class="flex items-center gap-2">
                     @csrf
+                    <button type="submit" title="{{ __('actions.approve') }}" class="text-gray-500 hover:text-green-600 rounded">
+                      <x-lucide-check class="w-5 h-5" />
+                    </button>
                     @method('PATCH')
-
-                    @if($course->status === 'pending')
-                    <button type="submit" name="status" value="approved" title="{{ __('actions.approve') }}" class="text-gray-500 hover:text-green-600 rounded">
-                      <x-lucide-check class="w-5 h-5" />
-                    </button>
-                    <button type="submit" name="status" value="rejected" title="{{ __('actions.reject') }}" class="text-gray-500 hover:text-red-600 rounded">
-                      <x-lucide-x class="w-5 h-5" />
-                    </button>
-                    @elseif($course->status === 'approved')
-                    <button type="submit" name="status" value="rejected" title="{{ __('actions.reject') }}" class="text-gray-500 hover:text-red-600 rounded">
-                      <x-lucide-x class="w-5 h-5" />
-                    </button>
-                    @elseif($course->status === 'rejected')
-                    <button type="submit" name="status" value="approved" title="{{ __('actions.approve') }}" class="text-gray-500 hover:text-green-600 rounded">
-                      <x-lucide-check class="w-5 h-5" />
-                    </button>
-                    @endif
                   </form>
+                  <button
+                    @click="courseId = '{{ $course->id }}'; $dispatch('open-modal', 'reject-course')"
+                    class="text-gray-500 hover:text-red-600 rounded"
+                    title="{{ __('actions.reject') }}">
+                    <x-lucide-x class="w-5 h-5" />
+                  </button>
+                  @endif
                 </div>
                 @endif
               </td>
@@ -117,5 +110,6 @@
         {{ $courses->links() }}
       </div>
     </div>
+    @include('admin.courses.partials.reject-modal')
   </div>
 </x-admin-layout>
