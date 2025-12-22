@@ -15,5 +15,6 @@ return [
   'registration_date' => 'Registracijos data',
   'last_login' => 'Paskutinis prisijungimas',
   'never' => 'Niekada',
-  'change_role' => 'Pakeisti rolę'
+  'change_role' => 'Pakeisti rolę',
+  'last_updated' => 'Paskutinis atnaujinimas'
 ];

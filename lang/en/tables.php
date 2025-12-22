@@ -15,5 +15,6 @@ return [
   'registration_date' => 'Registration Date',
   'last_login' => 'Last Login',
   'never' => 'Never',
-  'change_role' => 'Change user role'
+  'change_role' => 'Change user role',
+  'last_updated' => 'Last time updated'
 ];
