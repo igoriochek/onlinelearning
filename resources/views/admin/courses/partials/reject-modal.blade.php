@@ -1,7 +1,7 @@
 <x-modal name="reject-course">
   <div class="p-6">
     <h3 class="text-lg font-semibold mb-4 text-gray-900">
-      Course Rejection
+      {{ __('modals.course_rejection') }}
     </h3>
 
     <form :action="`/admin/courses/${courseId}/reject`" method="POST">
@@ -14,17 +14,17 @@
           name="reason"
           class="w-full"
           required
-          placeholder="Provide a reason for course rejection">
+          placeholder="{{__('modals.rejection_reason')}}">
         </x-text-area-input>
       </div>
 
       <div class="flex justify-between">
         <x-secondary-button type="button" @click="$dispatch('close-modal', 'reject-course')">
-          Cancel
+          {{ __('modals.cancel') }}
         </x-secondary-button>
 
         <x-danger-button type="submit">
-          Reject
+          {{ __('modals.reject') }}
         </x-danger-button>
       </div>
     </form>

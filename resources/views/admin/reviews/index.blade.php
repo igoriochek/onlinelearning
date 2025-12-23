@@ -1,7 +1,7 @@
 <x-admin-layout>
   <x-slot name="header">
     <h2 class="text-xl font-semibold leading-tight text-gray-800">
-      {{ __('Reviews') }}
+      {{ __('admin.reviews') }}
     </h2>
   </x-slot>
   <div class="py-6" x-data="{ reviewId: null, selectedReview: null}">
@@ -11,11 +11,11 @@
           <thead class="bg-gray-50 text-gray-500 text-xs uppercase border-b font-medium ">
             <tr>
               <th class="px-6 py-3">
-                User
+                {{ __('tables.user') }}
               </th>
 
               <th class="px-6 py-3">
-                Course
+                {{__('tables.course')}}
               </th>
 
               <th class="px-6 py-3" data-sortable="number">

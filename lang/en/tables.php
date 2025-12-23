@@ -16,5 +16,7 @@ return [
   'last_login' => 'Last Login',
   'never' => 'Never',
   'change_role' => 'Change user role',
-  'last_updated' => 'Last time updated'
+  'last_updated' => 'Last time updated',
+  'user' => 'User',
+  'course' => 'Course',
 ];
