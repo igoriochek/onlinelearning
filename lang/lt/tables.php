@@ -16,5 +16,7 @@ return [
   'last_login' => 'Paskutinis prisijungimas',
   'never' => 'Niekada',
   'change_role' => 'Pakeisti rolę',
-  'last_updated' => 'Paskutinis atnaujinimas'
+  'last_updated' => 'Paskutinis atnaujinimas',
+  'user' => 'Naudotojas',
+  'course' => 'Kursas',
 ];

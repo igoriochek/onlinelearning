@@ -1,9 +1,9 @@
 <?php
 
 return [
-  'view'    => 'Peržiūrėti',
+  'view' => 'Peržiūrėti',
   'approve' => 'Patvirtinti',
-  'reject'  => 'Atmesti',
+  'reject' => 'Atmesti',
   'block' => 'Užblokuoti',
   'unblock' => 'Atblokuoti'
 ];

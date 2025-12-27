@@ -1,8 +1,8 @@
 <?php
 
 return [
-  'beginner'     => 'Pradedantysis',
+  'beginner' => 'Pradedantysis',
   'intermediate' => 'Pažengęs',
-  'advanced'     => 'Ekspertas',
-  'unknown'      => 'Nežinoma',
+  'advanced' => 'Ekspertas',
+  'unknown' => 'Nežinoma',
 ];

@@ -1,14 +1,14 @@
 <?php
 
 return [
-  'title'      => 'Title',
-  'author'     => 'Author',
-  'level'      => 'Level',
-  'published'  => 'Published',
-  'status'     => 'Status',
-  'rating'     => 'Avg. Rating',
-  'students'   => 'Students',
-  'actions'    => 'Actions',
+  'title' => 'Title',
+  'author' => 'Author',
+  'level' => 'Level',
+  'published' => 'Published',
+  'status' => 'Status',
+  'rating' => 'Avg. Rating',
+  'students' => 'Students',
+  'actions' => 'Actions',
   'name' => 'Name',
   'email' => 'Email',
   'role' => 'Role',

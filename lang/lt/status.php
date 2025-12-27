@@ -1,11 +1,11 @@
 <?php
 
 return [
-  'published'   => 'Paskelbtas',
+  'published' => 'Paskelbtas',
   'unpublished' => 'Nepaskelbtas',
-  'pending'     => 'Laukia patvirtinimo',
-  'approved'    => 'Patvirtintas',
-  'rejected'    => 'Atmestas',
-  'active'   => 'Aktyvus',
-  'blocked'  => 'Užblokuotas',
+  'pending' => 'Laukia patvirtinimo',
+  'approved' => 'Patvirtintas',
+  'rejected' => 'Atmestas',
+  'active' => 'Aktyvus',
+  'blocked' => 'Užblokuotas',
 ];
