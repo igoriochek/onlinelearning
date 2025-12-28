@@ -5,5 +5,6 @@ return [
   'approve' => 'Approve',
   'reject' => 'Reject',
   'block' => 'Block',
-  'unblock' => 'Unblock'
+  'unblock' => 'Unblock',
+  'delete_user' => 'Delete User'
 ];

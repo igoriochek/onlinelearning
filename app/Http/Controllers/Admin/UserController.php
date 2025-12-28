@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -45,6 +46,27 @@ class UserController extends Controller
       return back()->with('info', 'No updates were applied.');
     } catch (\Exception $e) {
       return back()->with('error', 'Failed to update user role.');
+    }
+  }
+
+  public function destroy(User $user)
+  {
+
+    if (Auth::id() === $user->id) {
+      return back()->with('error', 'You cannot delete your own account.');
+    }
+
+    if ($user->isAdmin()) {
+      return back()->with('error', 'You cannot delete another admin.');
+    }
+
+    try {
+      $user->delete();
+      return redirect()->route('admin.users.index')
+        ->with('success', 'User deleted successfully');
+    } catch (\Exception $e) {
+      return redirect()->route('admin.users.index')
+        ->with('error', 'Failed to delete user.');
     }
   }
 }

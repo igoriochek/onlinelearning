@@ -101,6 +101,13 @@
                     @endif
                   </button>
                 </form>
+
+                <button
+                  @click="userId = {{ $user->id }}; $dispatch('open-modal', 'delete-user');"
+                  class="text-gray-500 hover:text-red-500 transition"
+                  title="{{ __('actions.delete_user') }}">
+                  <x-lucide-trash-2 class="w-5 h-5" />
+                </button>
               </td>
             </tr>
             @endforeach
@@ -111,5 +118,6 @@
         {{ $users->links() }}
       </div>
     </div>
+    @include('admin.users.partials.delete-modal')
   </div>
 </x-admin-layout>

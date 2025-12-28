@@ -127,7 +127,7 @@ Route::middleware(['auth'])->group(function () {
     ->group(function () {
       Route::get('/dashboard', [AdminDashboardController::class, 'index'])
         ->name('dashboard');
-      Route::resource('users', UserController::class)->only(['index']);
+      Route::resource('users', UserController::class)->only(['index', 'destroy']);
       Route::patch('users/{user}/toggle-status', [UserController::class, 'toggleStatus'])->name('users.toggle-status');
       Route::patch('users/{user}/update-role', [UserController::class, 'updateRole'])->name('users.update-role');
       Route::resource('courses', AdminCourseController::class)->only(['index']);

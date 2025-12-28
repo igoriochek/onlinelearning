@@ -79,4 +79,9 @@ class User extends Authenticatable implements MustVerifyEmail
       ->withTimestamps()
       ->withPivot('purchased_at');
   }
+
+  public function isAdmin(): bool
+  {
+    return $this->role === 'admin';
+  }
 }

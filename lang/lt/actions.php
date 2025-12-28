@@ -5,5 +5,6 @@ return [
   'approve' => 'Patvirtinti',
   'reject' => 'Atmesti',
   'block' => 'Užblokuoti',
-  'unblock' => 'Atblokuoti'
+  'unblock' => 'Atblokuoti',
+  'delete_user' => 'Ištrinti naudotoją'
 ];
