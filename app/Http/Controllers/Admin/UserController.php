@@ -11,7 +11,8 @@ class UserController extends Controller
 {
   public function index()
   {
-    $users = User::orderBy('created_at', 'desc')->paginate(20);
+    $users = User::orderBy('created_at', 'desc')
+      ->paginate(20);
 
     return view('admin.users.index', compact('users'));
   }
@@ -20,12 +21,14 @@ class UserController extends Controller
   {
     try {
       $user->update([
-        'account_status' => $user->account_status === 'active' ? 'blocked' : 'active'
+        'account_status' => $user->account_status === 'active'
+          ? 'blocked'
+          : 'active',
       ]);
 
-      return back()->with('success', 'User status updated successfully.');
+      return back()->with('success', __('toast.user.status_updated'));
     } catch (\Exception $e) {
-      return back()->with('error', 'Failed to update user status.');
+      return back()->with('error', __('toast.user.status_update_failed'));
     }
   }
 
@@ -40,12 +43,14 @@ class UserController extends Controller
     try {
       if ($user->isDirty()) {
         $user->save();
-        return back()->with('success', "Role updated to {$user->role}.");
+        return back()->with('success', __('toast.user.role_updated', [
+          'role' => __('roles.' . $user->role),
+        ]));
       }
 
-      return back()->with('info', 'No updates were applied.');
+      return back()->with('info', __('toast.generic.no_changes'));
     } catch (\Exception $e) {
-      return back()->with('error', 'Failed to update user role.');
+      return back()->with('error', __('toast.user.role_update_failed'));
     }
   }
 
@@ -53,20 +58,20 @@ class UserController extends Controller
   {
 
     if (Auth::id() === $user->id) {
-      return back()->with('error', 'You cannot delete your own account.');
+      return back()->with('error', __('toast.user.cannot_delete_self'));
     }
 
     if ($user->isAdmin()) {
-      return back()->with('error', 'You cannot delete another admin.');
+      return back()->with('error', __('toast.user.cannot_delete_admin'));
     }
 
     try {
       $user->delete();
       return redirect()->route('admin.users.index')
-        ->with('success', 'User deleted successfully');
+        ->with('success', __('toast.user.deleted'));
     } catch (\Exception $e) {
       return redirect()->route('admin.users.index')
-        ->with('error', 'Failed to delete user.');
+        ->with('error', __('toast.user.delete_failed'));
     }
   }
 }

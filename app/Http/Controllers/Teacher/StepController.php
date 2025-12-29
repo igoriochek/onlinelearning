@@ -80,7 +80,7 @@ class StepController extends Controller
 
     return redirect()
       ->route('teacher.lessons.steps.index', $lesson->id)
-      ->with('success', 'Step created successfully.');
+      ->with('success', __('toast.step.created'));
   }
 
   public function edit(Step $step)
@@ -108,7 +108,7 @@ class StepController extends Controller
 
     return redirect()
       ->route('teacher.lessons.steps.index', $step->lesson_id)
-      ->with('success', 'Step updated successfully.');
+      ->with('success', __('toast.step.updated'));
   }
 
   protected function updateTextStep(Request $request, Step $step): void
@@ -192,7 +192,7 @@ class StepController extends Controller
       back()
         ->withInput()
         ->withErrors([
-          'options_correct' => 'At least one option must be marked as correct.',
+          'options_correct' => __('toast.step.options_missing'),
         ])
         ->throwResponse();
     }
@@ -210,9 +210,9 @@ class StepController extends Controller
 
       $course->markPending();
 
-      return back()->with('success', 'Step deleted successfully');
+      return back()->with('success', __('toast.step.deleted'));
     } catch (\Exception $e) {
-      return back()->with('error', 'Failed to delete step. Please try again.');
+      return back()->with('error', __('toast.step.delete_failed'));
     }
   }
 
@@ -228,7 +228,7 @@ class StepController extends Controller
       return response()->json(['status' => 'success']);
     } catch (\Exception $e) {
       return response()->json(
-        ['status' => 'error', 'message' => $e->getMessage()],
+        ['status' => 'error', 'message' => __('toast.step.reorder_failed')],
         500,
       );
     }

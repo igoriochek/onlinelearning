@@ -35,7 +35,7 @@ class LessonController extends Controller
 
     return redirect()
       ->route('teacher.sections.lessons.index', $section->id)
-      ->with('success', 'Lesson created successfully!');
+      ->with('success', __('toast.lesson.created'));
   }
 
   public function update(Request $request, Lesson $lesson)
@@ -68,9 +68,9 @@ class LessonController extends Controller
 
       $course->markPending();
 
-      return back()->with('success', 'Lesson deleted successfully!');
+      return back()->with('success', __('toast.lesson.deleted'));
     } catch (\Exception $e) {
-      return back()->with('error', 'Failed to delete lesson. Please try again.');
+      return back()->with('error', __('toast.lesson.delete_failed'));
     }
   }
 
@@ -88,7 +88,7 @@ class LessonController extends Controller
       return response()->json(['status' => 'success']);
     } catch (\Exception $e) {
       return response()->json(
-        ['status' => 'error', 'message' => $e->getMessage()],
+        ['status' => 'error', 'message' => __('toast.lesson.reorder_failed')],
         500,
       );
     }

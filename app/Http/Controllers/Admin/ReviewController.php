@@ -28,15 +28,16 @@ class ReviewController extends Controller
     try {
       if ($review->isDirty()) {
         $review->save();
+
         return redirect()->route('admin.reviews.index')
-          ->with('success', 'Review updated successfully.');
+          ->with('success', __('toast.review.status_updated'));
       }
 
       return redirect()->route('admin.reviews.index')
-        ->with('info', 'No updates were applied.');
+        ->with('info', __('toast.generic.no_changes'));
     } catch (\Exception $e) {
       return redirect()->route('admin.reviews.index')
-        ->with('error', 'Failed to update review.');
+        ->with('error', __('toast.review.update_failed'));
     }
   }
 
@@ -44,11 +45,12 @@ class ReviewController extends Controller
   {
     try {
       $review->delete();
+
       return redirect()->route('admin.reviews.index')
-        ->with('success', 'Review deleted successfully.');
+        ->with('success', __('toast.review.deleted'));
     } catch (\Exception $e) {
       return redirect()->route('admin.reviews.index')
-        ->with('error', 'Failed to delete review.');
+        ->with('error', __('toast.review.delete_failed'));
     }
   }
 }

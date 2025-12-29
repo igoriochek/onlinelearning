@@ -28,13 +28,13 @@ class ReviewController extends Controller
     );
 
     return redirect()->route('courses.show', $course->id)
-      ->with('success', 'Your review has been submitted and is awaiting approval.');
+      ->with('success', __('toast.review.submitted'));
   }
 
   public function destroy(Review $review)
   {
     $review->delete();
 
-    return back()->with('success', 'Your review and rating has been deleted.');
+    return back()->with('success', __('toast.review.deleted_own'));
   }
 }

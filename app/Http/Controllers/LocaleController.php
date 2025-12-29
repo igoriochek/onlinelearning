@@ -12,7 +12,7 @@ class LocaleController extends Controller
   {
     try {
       if (!in_array($locale, config('app.available_locales'))) {
-        throw new HttpException(400, __('messages.errorInvalidLanguage'));
+        throw new HttpException(400, __('toast.locale.invalid'));
       }
       session()->put('locale', $locale);
 

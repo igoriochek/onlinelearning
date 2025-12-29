@@ -14,11 +14,11 @@ class EnrollmentController extends Controller
     $user = Auth::user();
 
     if ($course->isAuthoredBy($user)) {
-      return back()->with('error', 'You cannot enroll into your own course.');
+      return back()->with('error', __('toast.enrollment.self_enroll'));
     }
 
     if ($course->isEnrolled($user)) {
-      return back()->with('info', 'You are already enrolled in this course.');
+      return back()->with('info', __('toast.enrollment.already_enrolled'));
     }
 
     Enrollment::create([
@@ -29,7 +29,7 @@ class EnrollmentController extends Controller
 
     return back()->with(
       'success',
-      'You have successfully enrolled in the course!',
+      __('toast.enrollment.success'),
     );
   }
 }

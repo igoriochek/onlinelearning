@@ -36,10 +36,10 @@ class CourseController extends Controller
         ->route('teacher.courses.sections.index', $course->id)
         ->with(
           'success',
-          'Course created successfully! You can now add sections.',
+          __('toast.course.created_add_sections'),
         );
     } catch (Exception $e) {
-      return back()->with('error', $e->getMessage());
+      return back()->with('error', __('toast.course.create_failed'));
     }
   }
 
@@ -50,6 +50,10 @@ class CourseController extends Controller
 
   public function destroy(Course $course)
   {
+    if (!$course->isAuthoredBy(Auth::user())) {
+      abort(403, 'You are not authorized to delete this course.');
+    }
+
     try {
       $this->deleteCourseImage($course->image_url);
 
@@ -57,21 +61,29 @@ class CourseController extends Controller
 
       return redirect()
         ->route('dashboard.manage-courses')
-        ->with('success', 'Course deleted successfully.');
+        ->with('success', __('toast.course.deleted'));
     } catch (Exception $e) {
       return redirect()
         ->route('dashboard.manage-courses')
-        ->with('error', 'Failed to delete course. Please try again.');
+        ->with('error', __('toast.course.delete_failed'));
     }
   }
 
   public function edit(Course $course)
   {
+    if (!$course->isAuthoredBy(Auth::user())) {
+      abort(403, 'You are not authorized to edit this course.');
+    }
+
     return view('teacher.courses.edit', compact('course'));
   }
 
   public function update(StoreCourseRequest $request, Course $course)
   {
+    if (!$course->isAuthoredBy(Auth::user())) {
+      abort(403, 'You are not authorized to update this course.');
+    }
+
     $data = $request->validated();
 
     if ($request->hasFile('image')) {
@@ -88,14 +100,14 @@ class CourseController extends Controller
 
         return redirect()
           ->route('teacher.courses.show', $course)
-          ->with('success', 'Course updated successfully.');
+          ->with('success', __('toast.course.updated'));
       }
 
       return redirect()
         ->route('teacher.courses.show', $course)
-        ->with('info', 'No updates were applied.');
+        ->with('info', __('toast.generic.no_changes'));
     } catch (Exception $e) {
-      return back()->with('error', 'Failed to update course.');
+      return back()->with('error', __('toast.course.update_failed'));
     }
   }
 
@@ -107,7 +119,7 @@ class CourseController extends Controller
       return response()->json(
         [
           'error' =>
-          'Course is incomplete. You must add sections, lessons and steps before publishing.',
+          __('toast.course.not_completable'),
         ],
         422,
       );

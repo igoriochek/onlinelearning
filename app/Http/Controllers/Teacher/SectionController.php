@@ -32,7 +32,7 @@ class SectionController extends Controller
 
     return redirect()
       ->route('teacher.courses.sections.index', $course->id)
-      ->with('success', 'Section created successfully!');
+      ->with('success', __('toast.section.created'));
   }
 
   public function update(Request $request, Section $section)
@@ -64,9 +64,9 @@ class SectionController extends Controller
       }
       $course->markPending();
 
-      return back()->with('success', 'Section deleted successfully!');
+      return back()->with('success', __('toast.section.deleted'));
     } catch (\Exception $e) {
-      return back()->with('error', 'Failed to delete section. Please try again.');
+      return back()->with('error', __('toast.section.delete_failed'));
     }
   }
 
@@ -83,7 +83,7 @@ class SectionController extends Controller
       return response()->json(['status' => 'success']);
     } catch (\Exception $e) {
       return response()->json(
-        ['status' => 'error', 'message' => $e->getMessage()],
+        ['status' => 'error', 'message' => __('toast.section.reorder_failed')],
         500,
       );
     }
