@@ -11,7 +11,9 @@ class CourseController extends Controller
 {
   public function index()
   {
-    $courses = Course::with('author')->withCount('enrollments')->paginate(20);
+    $courses = Course::with('author')
+      ->withCount('enrollments')
+      ->paginate(20);
 
     return view('admin.courses.index', compact('courses'));
   }
@@ -19,12 +21,12 @@ class CourseController extends Controller
   public function approve(Course $course)
   {
     if ($course->status !== 'pending') {
-      return back()->with('error', 'Only pending courses can be approved.');
+      return back()->with('error', __('toast.course.only_pending_can_be_approved'));
     }
 
     $course->update(['status' => 'approved']);
 
-    return back()->with('success', 'Course approved successfully.');
+    return back()->with('success', __('toast.course.approved'));
   }
 
   public function reject(Request $request, Course $course)
@@ -40,9 +42,9 @@ class CourseController extends Controller
         new CourseRejected($course->title, $request->reason)
       );
     } catch (\Throwable $e) {
-      return back()->with('warning', 'Course rejected, but notification was not sent.');
+      return back()->with('warning', __('toast.course.rejected_notification_failed'));
     }
 
-    return back()->with('success', 'Course rejected and author notified.');
+    return back()->with('success', __('toast.course.rejected_and_notified'));
   }
 }
