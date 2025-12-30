@@ -6,5 +6,7 @@ return [
   'reject' => 'Atmesti',
   'block' => 'Užblokuoti',
   'unblock' => 'Atblokuoti',
-  'delete_user' => 'Ištrinti naudotoją'
+  'delete_user' => 'Ištrinti naudotoją',
+  'moderate_review' => 'Moderuoti atsiliepimą',
+  'delete_review' => 'Ištrinti atsiliepimą',
 ];

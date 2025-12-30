@@ -20,7 +20,7 @@
 
               <th class="px-6 py-3" data-sortable="number">
                 <div class="flex items-center">
-                  Rating
+                  {{__('tables.rating')}}
                   <a href="#" id="sortRating">
                     <x-lucide-arrow-up-down class="w-4 h-4 ms-1" />
                   </a>
@@ -28,12 +28,12 @@
               </th>
 
               <th class="px-6 py-3">
-                Comment
+                {{ __('tables.comment') }}
               </th>
 
               <th class="px-6 py-3" data-sortable="text">
                 <div class="flex items-center">
-                  Status
+                  {{__('tables.status')}}
                   <a href="#" id="sortStatus">
                     <x-lucide-arrow-up-down class="w-4 h-4 ms-1" />
                   </a>
@@ -41,7 +41,7 @@
               </th>
 
               <th class="px-6 py-3 text-right">
-                Actions
+                {{__('tables.actions')}}
               </th>
 
             </tr>
@@ -64,7 +64,7 @@
               </td>
 
               <td class="px-6 py-4 whitespace-nowrap">
-                <x-badge :type="$review->status">{{ ucfirst($review->status) }}</x-badge>
+                <x-badge :type="$review->status">{{ __('status.' . $review->status) }}</x-badge>
               </td>
 
               <td class="px-4 py-4 whitespace-nowrap text-right text-sm font-medium">
@@ -75,14 +75,14 @@
                       $dispatch('open-modal', 'moderate-review');
                     "
                     class="p-1 rounded-md text-gray-500 hover:text-gray-700 hover:bg-gray-100 transition"
-                    title="Moderate review">
+                    title="{{ __('actions.moderate_review') }}">
                     <x-lucide-eye class="w-5 h-5" />
                   </button>
 
                   <button
                     @click="reviewId = {{ $review->id }}; $dispatch('open-modal', 'delete-review');"
                     class="text-gray-500 hover:text-red-500 transition"
-                    title="Delete review">
+                    title="{{ __('actions.delete_review') }}">
                     <x-lucide-trash-2 class="w-5 h-5" />
                   </button>
                 </div>

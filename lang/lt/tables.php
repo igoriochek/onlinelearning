@@ -6,7 +6,7 @@ return [
   'level' => 'Lygis',
   'published' => 'Matomumas',
   'status' => 'Būsena',
-  'rating' => 'Vid. Įvertinimas',
+  'avg.rating' => 'Vid. Įvertinimas',
   'students' => 'Studentai',
   'actions' => 'Veiksmai',
   'name' => 'Vardas',
@@ -19,4 +19,6 @@ return [
   'last_updated' => 'Paskutinis atnaujinimas',
   'user' => 'Naudotojas',
   'course' => 'Kursas',
+  'comment' => 'Komentaras',
+  'rating' => 'Įvertinimas'
 ];

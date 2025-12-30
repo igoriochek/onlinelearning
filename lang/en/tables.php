@@ -6,7 +6,7 @@ return [
   'level' => 'Level',
   'published' => 'Published',
   'status' => 'Status',
-  'rating' => 'Avg. Rating',
+  'avg.rating' => 'Avg. Rating',
   'students' => 'Students',
   'actions' => 'Actions',
   'name' => 'Name',
@@ -19,4 +19,6 @@ return [
   'last_updated' => 'Last time updated',
   'user' => 'User',
   'course' => 'Course',
+  'comment' => 'Comment',
+  'rating' => 'Rating'
 ];

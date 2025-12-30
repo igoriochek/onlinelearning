@@ -6,5 +6,7 @@ return [
   'reject' => 'Reject',
   'block' => 'Block',
   'unblock' => 'Unblock',
-  'delete_user' => 'Delete User'
+  'delete_user' => 'Delete user',
+  'moderate_review' => 'Moderate review',
+  'delete_review' => 'Delete review',
 ];
