@@ -8,4 +8,5 @@ return [
   'register' => 'Register',
   'profile' => 'Profile',
   'logout' => 'Log Out',
+  'back_courses' => 'Back to Courses'
 ];

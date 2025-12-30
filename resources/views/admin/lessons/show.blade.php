@@ -7,7 +7,7 @@
     <div class="text-sm mt-1">
       <a href="{{ route('admin.courses.index') }}"
         class="inline-block text-gray-700 rounded-md font-medium hover:underline hover:text-gray-900 transition-colors duration-200">
-        Back to Courses
+        {{__('nav.back_courses')}}
       </a>
     </div>
 
@@ -49,7 +49,7 @@
         <x-secondary-button
           type="button"
           onclick="window.location=`{{ route('admin.courses.step.show', $prevStepRoute) }}`">
-          Previous
+          {!! __('pagination.previous') !!}
         </x-secondary-button>
         @endif
 
@@ -57,7 +57,7 @@
         <x-secondary-button
           type="button"
           onclick="window.location=`{{ route('admin.courses.step.show', $nextStepRoute) }}`">
-          next
+          {!! __('pagination.next') !!}
         </x-secondary-button>
         @endif
       </div>

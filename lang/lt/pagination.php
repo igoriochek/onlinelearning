@@ -13,11 +13,11 @@ return [
     |
     */
 
-  'previous' => '&laquo; Previous',
-  'next' => 'Next &raquo;',
-  'showing' => 'Showing',
+  'previous' => '&laquo; Praeitas',
+  'next' => 'Sekantis &raquo;',
+  'showing' => 'Rodoma',
   'to' => 'to',
-  'of' => 'of',
-  'results' => 'results'
+  'of' => 'iš',
+  'results' => 'rezultatų'
 
 ];
