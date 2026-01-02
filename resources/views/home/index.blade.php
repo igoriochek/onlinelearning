@@ -1,4 +1,6 @@
 <x-app-layout>
+  @section('title', 'Home')
+  @section('meta_description', 'Online learning platform to browse courses and improve your skills')
   <x-slot name="header">
     <h2 class="text-xl font-semibold leading-tight text-gray-800">
       {{ __('Available Courses') }}
