@@ -1,13 +1,19 @@
 <x-app-layout>
+  @section('title', $course->title)
   <x-slot name="header">
     <h2 class="text-xl font-semibold leading-tight text-gray-800">
       {{ $course->title }} — Overview
     </h2>
+    <div class="text-sm mt-1">
+      <a href="{{ route('dashboard.manage-courses') }}"
+        class="inline-block text-gray-700 rounded-md font-medium hover:underline hover:text-gray-900 transition-colors duration-200">
+        {{__('nav.back_courses')}}
+      </a>
+    </div>
   </x-slot>
 
   <main x-data="{ courseId: null, courseTitle: '' }" class="max-w-7xl mx-auto py-6">
     <div class="bg-white p-6 rounded-lg shadow">
-      <h3 class="text-lg font-semibold mb-2">Course Overview</h3>
       <img
         src="{{ $course->image_url ? asset('storage/' . $course->image_url) : 'https://placehold.co/600x400?text=Course+Image' }}"
         alt="{{ $course->title }}"

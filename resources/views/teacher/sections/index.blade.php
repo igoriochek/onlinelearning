@@ -1,15 +1,16 @@
 <x-app-layout>
+  @section('title', $course->title . ' — Sections')
   <x-slot name="header">
     <h2 class="text-xl font-semibold leading-tight text-gray-800">
       {{ $course->title }} — Sections
     </h2>
-    <nav class="text-sm text-gray-500 mt-1">
-      <a
-        href="{{ route('teacher.courses.show', $course->id) }}"
-        class="text-blue-500">
+    <nav class="text-sm text-gray-700 mt-1">
+      <a href="{{ route('teacher.courses.show', $course->id) }}"
+        class="inline-block font-medium hover:underline hover:text-gray-900 transition-colors duration-200">
         Course Overview
       </a>
-      / Sections
+      <span class="mx-1">/</span>
+      <span>Sections</span>
     </nav>
   </x-slot>
 

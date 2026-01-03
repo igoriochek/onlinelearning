@@ -1,27 +1,27 @@
 <x-app-layout>
+  @section('title', $lesson->title . ' — Steps')
+
   <x-slot name="header">
     <h2 class="text-xl font-semibold leading-tight text-gray-800">
       {{ $lesson->title }} — Steps
     </h2>
-    <nav class="text-sm text-gray-500 mt-1">
-      <a
-        href="{{ route('teacher.courses.show', $lesson->section->course_id) }}"
-        class="text-blue-500">
+    <nav class="text-sm text-gray-700 mt-1">
+      <a href="{{ route('teacher.courses.show', $lesson->section->course_id) }}"
+        class="inline-block font-medium hover:underline hover:text-gray-900 transition-colors duration-200">
         Course Overview
       </a>
-      /
-      <a
-        href="{{ route('teacher.courses.sections.index', $lesson->section->course_id) }}"
-        class="text-blue-500">
+      <span class="mx-1">/</span>
+      <a href="{{ route('teacher.courses.sections.index', $lesson->section->course_id) }}"
+        class="inline-block font-medium hover:underline hover:text-gray-900 transition-colors duration-200">
         Sections
       </a>
-      /
-      <a
-        href="{{ route('teacher.sections.lessons.index', $lesson->section->id) }}"
-        class="text-blue-500">
+      <span class="mx-1">/</span>
+      <a href="{{ route('teacher.sections.lessons.index', $lesson->section->id) }}"
+        class="inline-block font-medium hover:underline hover:text-gray-900 transition-colors duration-200">
         Lessons
       </a>
-      / Steps
+      <span class="mx-1">/</span>
+      <span>Steps</span>
     </nav>
   </x-slot>
 

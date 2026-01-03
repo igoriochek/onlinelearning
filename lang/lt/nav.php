@@ -8,5 +8,6 @@ return [
   'register' => 'Registruotis',
   'profile' => 'Profilis',
   'logout' => 'Atsijungti',
-  'back_courses' => 'Grįžti į kursų puslapį'
+  'back_courses' => 'Grįžti į kursų puslapį',
+  'back' => 'Grįžti'
 ];

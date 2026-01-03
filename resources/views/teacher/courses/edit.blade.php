@@ -1,8 +1,15 @@
 <x-app-layout>
+  @section('title', 'Edit Course')
   <x-slot name="header">
     <h2 class="text-xl font-semibold leading-tight text-gray-800">
-      Edit Course
+      Edit Course {{ $course->title }}
     </h2>
+    <div class="text-sm mt-1">
+      <a href="{{ route('teacher.courses.show', $course) }}"
+        class="inline-block text-gray-700 rounded-md font-medium hover:underline hover:text-gray-900 transition-colors duration-200">
+        {{__('nav.back')}}
+      </a>
+    </div>
   </x-slot>
 
   <main
