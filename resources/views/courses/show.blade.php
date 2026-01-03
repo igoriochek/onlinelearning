@@ -1,4 +1,6 @@
 <x-app-layout>
+  @section('title', $course->title)
+  @section('meta_description', Str::limit($course->description, 155))
   <x-slot name="header">
     <header class="flex justify-between">
       <div class="container">
