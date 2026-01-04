@@ -9,9 +9,17 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\StoreCourseRequest;
+use App\Services\ProgressService;
 
 class CourseController extends Controller
 {
+  protected ProgressService $progressService;
+
+  public function __construct(ProgressService $progressService)
+  {
+    $this->progressService = $progressService;
+  }
+
   public function create()
   {
     return view('teacher.courses.create');
@@ -45,7 +53,22 @@ class CourseController extends Controller
 
   public function show(Course $course)
   {
-    return view('teacher.courses.show', compact('course'));
+    $course->load(['sections.lessons.steps', 'enrollments.user']);
+
+    $students = $course->enrollments->map(function ($enrollment) {
+      $user = $enrollment->user;
+
+      $progress = $this->progressService->getCourseProgress($enrollment->course, $user->id);
+
+      return [
+        'name' => $user->name,
+        'email' => $user->email,
+        'registered_at' => $enrollment->purchased_at ?? $enrollment->created_at,
+        'progress_percent' => $progress['percent'],
+      ];
+    });
+
+    return view('teacher.courses.show', compact('course', 'students'));
   }
 
   public function destroy(Course $course)

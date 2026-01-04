@@ -42,7 +42,7 @@
         <x-secondary-button
           type="button"
           onclick="window.location=`{{ route('lessons.step.show', $prevStepRoute) }}`">
-          Previous
+          {!! __('pagination.previous') !!}
         </x-secondary-button>
         @endif
 
@@ -50,7 +50,7 @@
         <x-secondary-button
           type="button"
           onclick="window.location=`{{ route('lessons.step.show', $nextStepRoute) }}`">
-          next
+          {!! __('pagination.next') !!}
         </x-secondary-button>
         @endif
       </div>

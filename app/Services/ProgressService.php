@@ -52,9 +52,9 @@ class ProgressService
       ->toArray();
   }
 
-  public function getCourseProgress(Course $course): array
+  public function getCourseProgress(Course $course, ?int $userId = null): array
   {
-    $userId = Auth::id();
+    $userId = $userId ?? Auth::id();
 
     $allStepIds = $course->sections
       ->flatMap(fn($section) => $section->lessons)
