@@ -6,8 +6,7 @@
       <img
         src="{{ asset('images/hero-laptop.jpg') }}"
         alt="Online Learning"
-        class="w-full h-full object-cover"
-        loading="lazy">
+        class="w-full h-full object-cover">
       <div class="absolute inset-0 bg-gray-900 opacity-50"></div>
     </div>
 

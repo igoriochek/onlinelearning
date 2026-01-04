@@ -16,6 +16,7 @@
           </span>
         </div>
       </div>
+      @if ($course->reviewsWithRating->count() > 0)
       <div class="flex items-center" aria-label="Course rating">
         <x-rating :value="$course->averageRating" />
         <span class="ml-2 text-gray-600 text-sm">
@@ -23,6 +24,7 @@
           votes)
         </span>
       </div>
+      @endif
     </header>
   </x-slot>
 
