@@ -7,4 +7,8 @@
   title="Created Courses"
   :courses="$courses"
   :builder="true" />
+
+<div class="mt-4">
+  {{ $courses->links() }}
+</div>
 @endsection

@@ -10,5 +10,9 @@
   title="My Courses"
   :courses="$courses"
   :showPrice="false" />
+
+<div class="mt-4">
+  {{ $courses->links() }}
+</div>
 @endif
 @endsection

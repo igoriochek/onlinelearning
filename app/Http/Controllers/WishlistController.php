@@ -9,34 +9,36 @@ use Illuminate\Support\Facades\Auth;
 
 class WishlistController extends Controller
 {
-	public function index()
-	{
-		/** @var \App\Models\User $user */
-		$user = Auth::user();
+  public function index()
+  {
+    /** @var \App\Models\User $user */
+    $user = Auth::user();
 
-		$wishlists = $user->wishlist()->with('course')->get();
+    $courses = Course::whereHas('wishlists', function ($query) use ($user) {
+      $query->where('user_id', $user->id);
+    })
+      ->latest()
+      ->paginate(9);
 
-		$courses = $wishlists->pluck('course');
+    return view('dashboard.wishlist', compact('courses'));
+  }
 
-		return view('dashboard.wishlist', compact('courses'));
-	}
+  public function store(Request $request, Course $course)
+  {
+    Wishlist::firstOrCreate([
+      'user_id' => Auth::id(),
+      'course_id' => $course->id,
+    ]);
 
-	public function store(Request $request, Course $course)
-	{
-		Wishlist::firstOrCreate([
-			'user_id' => Auth::id(),
-			'course_id' => $course->id,
-		]);
+    return response()->json(['success' => true]);
+  }
 
-		return response()->json(['success' => true]);
-	}
+  public function destroy(Course $course)
+  {
+    Wishlist::where('user_id', Auth::id())
+      ->where('course_id', $course->id)
+      ->delete();
 
-	public function destroy(Course $course)
-	{
-		Wishlist::where('user_id', Auth::id())
-			->where('course_id', $course->id)
-			->delete();
-
-		return response()->json(['success' => true]);
-	}
+    return response()->json(['success' => true]);
+  }
 }

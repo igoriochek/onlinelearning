@@ -2,37 +2,37 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Course;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 
 class DashboardController extends Controller
 {
-	public function index()
-	{
-		return view('dashboard.index');
-	}
+  public function index()
+  {
+    return view('dashboard.index');
+  }
 
-	public function manageCourses()
-	{
-		/** @var User $user */
-		$user = Auth::user();
+  public function manageCourses()
+  {
+    /** @var User $user */
+    $user = Auth::user();
 
-		$courses = $user->courses()->latest()->get();
-		return view('dashboard.manage-courses', compact('courses'));
-	}
-	public function myCourses()
-	{
-		/** @var User $user */
-		$user = Auth::user();
+    $courses = $user->courses()->latest()->paginate(9);
+    return view('dashboard.manage-courses', compact('courses'));
+  }
+  public function myCourses()
+  {
+    /** @var User $user */
+    $user = Auth::user();
 
-		$courses = $user
-			->enrollments()
-			->with('course')
-			->latest('purchased_at')
-			->get()
-			->pluck('course');
+    $courses = Course::whereHas('enrollments', function ($query) use ($user) {
+      $query->where('user_id', $user->id);
+    })
+      ->latest()
+      ->paginate(9);
 
-		return view('dashboard.my-courses', compact('courses'));
-	}
+    return view('dashboard.my-courses', compact('courses'));
+  }
 }
