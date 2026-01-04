@@ -13,7 +13,7 @@
     <div class="relative z-10">
       <h1 class="text-4xl font-bold mb-4">Learn New Skills Online</h1>
       <p class="text-lg mb-6">Browse courses, improve your knowledge and track your progress</p>
-      <a href="#" class="bg-white text-gray-900 px-6 py-3 rounded font-semibold hover:bg-gray-100 transition inline-block">Browse All Courses</a>
+      <a href="{{ route('courses.index') }}" class="bg-white text-gray-900 px-6 py-3 rounded font-semibold hover:bg-gray-100 transition inline-block">Browse All Courses</a>
     </div>
   </div>
 

@@ -24,6 +24,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('redirect.if.admin')->group(function () {
   Route::get('/', [HomeController::class, 'index'])->name('home');
+  Route::get('/courses', [CourseController::class, 'index'])->name('courses.index');
   Route::get('/course/{course}', [CourseController::class, 'show'])->name(
     'courses.show',
   );

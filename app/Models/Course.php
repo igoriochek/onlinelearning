@@ -184,4 +184,9 @@ class Course extends Model
       ->withTimestamps()
       ->withPivot('purchased_at');
   }
+
+  public function wishlists()
+  {
+    return $this->hasMany(Wishlist::class, 'course_id');
+  }
 }
