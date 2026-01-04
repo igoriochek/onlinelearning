@@ -22,17 +22,17 @@
            	{{ $step->id }},
            	{{ in_array($step->type, ['text', 'video']) ? 1 : 0 }},
            	{{ $isCompleted ? 'true' : 'false' }},
+            {{ $isAuthor ? 'true' : 'false' }}
            )">
       @if ($step->type === 'text')
       <x-steps.text :step="$step" />
       @elseif ($step->type === 'video')
       <x-steps.video :step="$step" />
-      @elseif ($step->type === 'quiz_code')
-      <x-steps.quiz-code :step="$step" />
       @elseif (in_array($step->type, ['quiz_single', 'quiz_multiple']))
       <x-steps.quiz
         :step="$step"
-        :type="$step->type === 'quiz_multiple' ? 'multiple' : 'single'" />
+        :type="$step->type === 'quiz_multiple' ? 'multiple' : 'single'"
+        :is-author="$isAuthor" />
       @endif
     </section>
     <div class="md:col-span-4 w-full flex justify-end px-2 md:px-0">

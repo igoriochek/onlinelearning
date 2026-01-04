@@ -9,38 +9,41 @@ use App\Services\ProgressService;
 
 class LessonController extends Controller
 {
-	protected ProgressService $progressService;
+  protected ProgressService $progressService;
 
-	public function __construct(ProgressService $progressService)
-	{
-		$this->progressService = $progressService;
-	}
+  public function __construct(ProgressService $progressService)
+  {
+    $this->progressService = $progressService;
+  }
 
-	public function show(Lesson $lesson, $stepPosition)
-	{
-		$lesson->load('section.course.sections.lessons.steps');
-		$course = $lesson->section->course;
+  public function show(Lesson $lesson, $stepPosition)
+  {
+    $lesson->load('section.course.sections.lessons.steps');
+    $course = $lesson->section->course;
 
-		$step = $lesson->steps()->where('position', $stepPosition)->firstOrFail();
+    $step = $lesson->steps()->where('position', $stepPosition)->firstOrFail();
 
-		$prevStepRoute = StepService::getStepRoute($step, 'prev');
-		$nextStepRoute = StepService::getStepRoute($step, 'next');
+    $prevStepRoute = StepService::getStepRoute($step, 'prev');
+    $nextStepRoute = StepService::getStepRoute($step, 'next');
 
-		$isCompleted = $this->progressService->stepCompleted($step);
+    $isAuthor = $course->isAuthoredBy(auth()->user());
 
-		$completedSteps = $this->progressService->getCompletedSteps($lesson);
+    $isCompleted = $isAuthor ? false : $this->progressService->stepCompleted($step);
 
-		return view(
-			'lessons.show',
-			compact(
-				'course',
-				'lesson',
-				'step',
-				'prevStepRoute',
-				'nextStepRoute',
-				'isCompleted',
-				'completedSteps',
-			),
-		);
-	}
+    $completedSteps = $isAuthor ? [] : $this->progressService->getCompletedSteps($lesson);
+
+    return view(
+      'lessons.show',
+      compact(
+        'course',
+        'lesson',
+        'step',
+        'prevStepRoute',
+        'nextStepRoute',
+        'isCompleted',
+        'completedSteps',
+        'isAuthor'
+      ),
+    );
+  }
 }
