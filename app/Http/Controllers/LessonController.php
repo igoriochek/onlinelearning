@@ -31,6 +31,7 @@ class LessonController extends Controller
     $isCompleted = $isAuthor ? false : $this->progressService->stepCompleted($step);
 
     $completedSteps = $isAuthor ? [] : $this->progressService->getCompletedSteps($lesson);
+    $notCompletedSteps = $isAuthor ? [] : $this->progressService->getNotCompletedSteps($lesson);
 
     return view(
       'lessons.show',
@@ -42,7 +43,8 @@ class LessonController extends Controller
         'nextStepRoute',
         'isCompleted',
         'completedSteps',
-        'isAuthor'
+        'isAuthor',
+        'notCompletedSteps'
       ),
     );
   }

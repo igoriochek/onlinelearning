@@ -2,6 +2,7 @@
 'step',
 'type' => 'single',
 'isAuthor' => false,
+'isCompleted' => false,
 ])
 
 <form
@@ -20,10 +21,11 @@
       @foreach ($step->options as $option)
       <label class="flex items-center gap-2 py-2">
         <input
-          @if($isAuthor) disabled @endif
-          type="{{ $type === 'single' ? 'radio' : 'checkbox' }}"
-          name="{{ $type === 'single' ? 'answer' : 'answer[]' }}"
-          value="{{ $option->id }}" />
+          @if($isAuthor || $isCompleted) disabled @endif
+          @if($isCompleted && $option->is_correct) checked @endif
+        type="{{ $type === 'single' ? 'radio' : 'checkbox' }}"
+        name="{{ $type === 'single' ? 'answer' : 'answer[]' }}"
+        value="{{ $option->id }}" />
         <span class="block px-3 py-1 rounded-m text-gray-800">
           {{ $option->text }}
         </span>
@@ -32,7 +34,7 @@
     </div>
   </fieldset>
 
-  @unless($isAuthor)
+  @unless($isAuthor || $isCompleted)
   <div class="flex justify-center">
     <x-primary-button
       type="submit"

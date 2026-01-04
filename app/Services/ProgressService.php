@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Services;
+
 use App\Models\Step;
 use App\Models\Progress;
 use App\Models\Lesson;
@@ -9,62 +10,83 @@ use Illuminate\Support\Facades\Auth;
 
 class ProgressService
 {
-	public function stepCompleted(Step $step): bool
-	{
-		$userId = Auth::id();
-		return Progress::where('step_id', $step->id)
-			->where('user_id', $userId)
-			->where('is_completed', true)
-			->exists();
-	}
+  public function stepCompleted(Step $step): bool
+  {
+    $userId = Auth::id();
+    return Progress::where('step_id', $step->id)
+      ->where('user_id', $userId)
+      ->where('is_completed', true)
+      ->exists();
+  }
 
-	public function markStepCompleted(Step $step): void
-	{
-		$userId = Auth::id();
-		Progress::updateOrCreate(
-			['step_id' => $step->id, 'user_id' => $userId],
-			['is_completed' => true],
-		);
-	}
+  public function markStepCompleted(Step $step, ?bool $isCorrect = null): void
+  {
+    $userId = Auth::id();
 
-	public function getCompletedSteps(Lesson $lesson): array
-	{
-		$userId = Auth::id();
-		return Progress::where('user_id', $userId)
-			->whereIn('step_id', $lesson->steps->pluck('id'))
-			->where('is_completed', true)
-			->pluck('step_id')
-			->toArray();
-	}
+    $completed = $isCorrect === null ? true : $isCorrect;
 
-	public function getCourseProgress(Course $course): array
-	{
-		$userId = Auth::id();
+    Progress::updateOrCreate(
+      ['step_id' => $step->id, 'user_id' => $userId],
+      ['is_completed' => $completed]
+    );
+  }
 
-		$allStepIds = $course->sections
-			->flatMap(fn($section) => $section->lessons)
-			->flatMap(fn($lesson) => $lesson->steps)
-			->pluck('id');
+  public function getCompletedSteps(Lesson $lesson): array
+  {
+    $userId = Auth::id();
+    return Progress::where('user_id', $userId)
+      ->whereIn('step_id', $lesson->steps->pluck('id'))
+      ->where('is_completed', true)
+      ->pluck('step_id')
+      ->toArray();
+  }
 
-		$totalSteps = $allStepIds->count();
+  public function getNotCompletedSteps(Lesson $lesson): array
+  {
+    $userId = Auth::id();
 
-		if ($totalSteps === 0) {
-			return [
-				'total' => 0,
-				'completed' => 0,
-				'percent' => 0,
-			];
-		}
+    return Progress::where('user_id', $userId)
+      ->whereIn('step_id', $lesson->steps->pluck('id'))
+      ->where('is_completed', false)
+      ->pluck('step_id')
+      ->toArray();
+  }
 
-		$completed = Progress::where('user_id', $userId)
-			->whereIn('step_id', $allStepIds)
-			->where('is_completed', true)
-			->count();
+  public function getCourseProgress(Course $course): array
+  {
+    $userId = Auth::id();
 
-		return [
-			'total' => $totalSteps,
-			'completed' => $completed,
-			'percent' => round(($completed / $totalSteps) * 100),
-		];
-	}
+    $allStepIds = $course->sections
+      ->flatMap(fn($section) => $section->lessons)
+      ->flatMap(fn($lesson) => $lesson->steps)
+      ->pluck('id');
+
+    $totalSteps = $allStepIds->count();
+
+    if ($totalSteps === 0) {
+      return [
+        'total' => 0,
+        'completed' => 0,
+        'percent' => 0,
+      ];
+    }
+
+    $completed = Progress::where('user_id', $userId)
+      ->whereIn('step_id', $allStepIds)
+      ->where('is_completed', true)
+      ->count();
+
+    $notCorrect = Progress::where('user_id', $userId)
+      ->whereIn('step_id', $allStepIds)
+      ->where('is_completed', false)
+      ->pluck('step_id')
+      ->toArray();
+
+    return [
+      'total' => $totalSteps,
+      'completed' => $completed,
+      'notCorrect' => $notCorrect,
+      'percent' => round(($completed / $totalSteps) * 100),
+    ];
+  }
 }

@@ -32,7 +32,8 @@
       <x-steps.quiz
         :step="$step"
         :type="$step->type === 'quiz_multiple' ? 'multiple' : 'single'"
-        :is-author="$isAuthor" />
+        :is-author="$isAuthor"
+        :is-completed="$isCompleted" />
       @endif
     </section>
     <div class="md:col-span-4 w-full flex justify-end px-2 md:px-0">

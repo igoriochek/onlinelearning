@@ -2,13 +2,26 @@
   @foreach ($lesson->steps->sortBy('position') as $s)
   @php
   $isCompleted = !$isAuthor && in_array($s->id, $completedSteps);
+  $isNotCompleted = !$isAuthor && in_array($s->id, $notCompletedSteps);
+  if ($isAuthor) {
+  $bg = 'bg-gray-200';
+  $text = 'text-gray-700';
+  } elseif ($isCompleted) {
+  $bg = 'bg-green-500';
+  $text = 'text-white';
+  } elseif ($isNotCompleted) {
+  $bg = 'bg-red-500';
+  $text = 'text-white';
+  } else {
+  $bg = 'bg-gray-200';
+  $text = 'text-gray-700';
+  }
   @endphp
   <a
     href="{{ route('lessons.step.show', ['lesson' => $lesson->id, 'position' => $s->position]) }}"
-    class="step-pin flex items-center justify-center w-10 h-10 rounded
-                border-2
-                {{ $step->id === $s->id ? 'border-black' : 'border-transparent' }}
-                {{ $isAuthor ? 'bg-gray-200 text-gray-700' : ($isCompleted ? 'bg-green-500 text-white' : 'bg-gray-200 text-gray-700') }}"
+    class="step-pin flex items-center justify-center w-10 h-10 rounded border-2
+           {{ $step->id === $s->id ? 'border-black' : 'border-transparent' }}
+           {{ $bg }} {{ $text }}"
     data-step-id="{{ $s->id }}">
     @switch($s->type)
     @case('video')
