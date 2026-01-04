@@ -1,4 +1,9 @@
-export function stepCompletion(stepId, autoCompleteDelay, isCompleted) {
+export function stepCompletion(
+    stepId,
+    autoCompleteDelay,
+    isCompleted,
+    isAuthor,
+) {
     return {
         init() {
             if (isAuthor) return;
@@ -23,7 +28,9 @@ export function stepCompletion(stepId, autoCompleteDelay, isCompleted) {
 
                 if (res.ok) {
                     document.dispatchEvent(
-                        new CustomEvent("stepCompleted", { detail: stepId }),
+                        new CustomEvent("stepCompleted", {
+                            detail: { stepId, isAuthor },
+                        }),
                     );
                 }
             } catch (e) {
@@ -33,7 +40,10 @@ export function stepCompletion(stepId, autoCompleteDelay, isCompleted) {
     };
 }
 document.addEventListener("stepCompleted", (e) => {
-    const stepId = e.detail;
+    const { stepId, isAuthor } = e.detail;
+
+    if (isAuthor) return;
+
     const stepEl = document.querySelector(
         `.step-pin[data-step-id='${stepId}']`,
     );
