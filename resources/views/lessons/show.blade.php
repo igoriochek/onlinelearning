@@ -1,7 +1,19 @@
 <x-app-layout>
   @section('title', $lesson->title . ' — Step ' . $step->position)
-  @include('lessons.partials.lesson-topbar', ['lesson' => $lesson, 'step' => $step])
-  <main
+  <x-slot name="header">
+    <h2 class="text-xl font-semibold leading-tight text-gray-800">
+      {{ $course->title }}
+    </h2>
+    <div class="text-sm mt-1">
+      <a href="{{ route('courses.show', $course->id) }}"
+        class="inline-block text-gray-700 rounded-md font-medium hover:underline hover:text-gray-900 transition-colors duration-200">
+        {{__('nav.back_course')}}
+      </a>
+    </div>
+    @include('lessons.partials.lesson-topbar', ['lesson' => $lesson, 'step' => $step])
+  </x-slot>
+
+  <div
     class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-6 py-6 px-2">
     @include('lessons.partials.lesson-sidebar', ['course' => $course, 'lesson' => $lesson])
     <section
@@ -42,5 +54,5 @@
         @endif
       </div>
     </div>
-  </main>
+  </div>
 </x-app-layout>

@@ -45,9 +45,6 @@
             <option value="text">Text / Content only (no answers)</option>
             <option value="video">Video (YouTube URL)</option>
             <option value="quiz">Multiple Choice Quiz</option>
-            <option value="quiz_code">
-              Code challenge / Expected answer required
-            </option>
           </x-select-input>
         </div>
         <div class="mb-4" x-show="stepType === 'text'">

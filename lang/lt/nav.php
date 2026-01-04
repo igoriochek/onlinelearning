@@ -9,5 +9,6 @@ return [
   'profile' => 'Profilis',
   'logout' => 'Atsijungti',
   'back_courses' => 'Grįžti į kursų puslapį',
+  'back_course' => 'Grįžti į kurso puslapį',
   'back' => 'Grįžti'
 ];

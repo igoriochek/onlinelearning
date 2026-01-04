@@ -1,7 +1,6 @@
 <x-admin-layout>
   @section('title', $course->title . ' - Overview' )
   <x-slot name="header">
-    <div class="flex items-center justify-between"></div>
     <h2 class="text-xl font-semibold leading-tight text-gray-800">
       {{ $course->title }} — Overview
     </h2>
