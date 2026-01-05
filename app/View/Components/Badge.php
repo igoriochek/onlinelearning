@@ -26,6 +26,9 @@ class Badge extends Component
       'admin'    => 'info',
       'teacher'  => 'warning',
       'student'  => 'neutral',
+      'beginner' => 'success',
+      'intermediate' => 'warning',
+      'advanced' => 'danger',
     ];
 
     $colors = [

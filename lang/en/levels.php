@@ -1,8 +1,8 @@
 <?php
 
 return [
-  'beginner' => 'Beginner',
-  'intermediate' => 'Intermediate',
-  'advanced' => 'Advanced',
+  'beginner' => 'Beginner Lever',
+  'intermediate' => 'Intermediate Level',
+  'advanced' => 'Advanced Level',
   'unknown' => 'Unknown',
 ];

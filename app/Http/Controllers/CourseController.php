@@ -24,7 +24,8 @@ class CourseController extends Controller
       3 => 'advanced',
     ];
 
-    $courses = Course::query();
+    $courses = Course::where('public', true)
+      ->where('status', 'approved');
 
     if ($request->filled('level')) {
       $levelsFilter = array_intersect($request->level, array_keys($levels));

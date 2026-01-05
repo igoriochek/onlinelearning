@@ -6,7 +6,7 @@ return [
   'level' => 'Lygis',
   'published' => 'Matomumas',
   'status' => 'Būsena',
-  'avg.rating' => 'Vid. Įvertinimas',
+  'avg_rating' => 'Vid. Įvertinimas',
   'students' => 'Studentai',
   'actions' => 'Veiksmai',
   'name' => 'Vardas',

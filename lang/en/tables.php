@@ -6,7 +6,7 @@ return [
   'level' => 'Level',
   'published' => 'Published',
   'status' => 'Status',
-  'avg.rating' => 'Avg. Rating',
+  'avg_rating' => 'Avg. Rating',
   'students' => 'Students',
   'actions' => 'Actions',
   'name' => 'Name',

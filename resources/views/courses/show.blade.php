@@ -11,9 +11,9 @@
           {{ $course->description }}
         </p>
         <div class="flex items-center mt-2 gap-2">
-          <span class="text-sm text-gray-500 capitalize">
-            {{ __('levels.' . $course->level_key) }} Level
-          </span>
+          <x-badge :type="$course->level_key">
+            {{ __('levels.' . $course->level_key) }}
+          </x-badge>
         </div>
       </div>
       @if ($course->reviewsWithRating->count() > 0)

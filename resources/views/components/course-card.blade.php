@@ -39,15 +39,15 @@
       @endif
 
       <div class="mt-2 flex justify-between items-center">
-        <span class="text-sm text-gray-500 capitalize">
-          {{ __('levels.' . $course->level_key) }} Level
-        </span>
+        <x-badge :type="$course->level_key">
+          {{ __('levels.' . $course->level_key) }}
+        </x-badge>
         @if ($showPrice)
         <span class="font-semibold text-green-600">
           @if ($course->price == 0)
-          Free
+          {{ __('courses.free') }}
           @else
-          ${{ $course->price }}
+          {{ __('courses.price', ['price' => $course->price]) }}
           @endif
         </span>
         @endif
