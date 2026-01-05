@@ -21,7 +21,7 @@
         <x-rating :value="$course->averageRating" />
         <span class="ml-2 text-gray-600 text-sm">
           {{ $course->averageRating }}/5 ({{ $course->reviewsWithRating->count() }}
-          votes)
+          {{ __('teacher.votes') }})
         </span>
       </div>
       @endif
@@ -39,7 +39,7 @@
 
       <section aria-labelledby="learning-outcomes" class="mb-6">
         <h2 id="learning-outcomes" class="text-xl font-semibold mb-2">
-          What you'll learn
+          {{ __('courses.learning_outcomes') }}
         </h2>
         <ul class="list-disc ml-6 space-y-2">
           @foreach ($course->sections as $section)
@@ -50,14 +50,14 @@
 
       <section aria-labelledby="about-course" class="mb-6">
         <h2 id="about-course" class="text-xl font-semibold mb-2">
-          About this course
+          {{ __('courses.about_course') }}
         </h2>
         <p>{{ $course->description }}</p>
       </section>
 
       <section aria-labelledby="instructor" class="mb-6">
         <h2 id="instructor" class="text-xl font-semibold mb-2">
-          Meet the instructor
+          {{ __('courses.instructor') }}
         </h2>
         <div class="flex items-center gap-3">
           <x-avatar :user="$course->author" />
@@ -67,7 +67,7 @@
 
       <div aria-labelledby="learning-method" class="mb-6">
         <h2 id="learning-method" class="text-xl font-semibold mb-2">
-          How you will learn
+          {{ __('courses.learning_method') }}
         </h2>
         <ol class="list-decimal ml-6 space-y-1">
           @foreach ($course->sections as $section)
@@ -80,7 +80,7 @@
 
               @if ($section->lessons->count() > 3)
               <li>
-                ...and {{ $section->lessons->count() - 3 }} more lessons
+                {{ __('courses.more_lessons', ['count' => $section->lessons->count() - 3]) }}
               </li>
               @endif
             </ul>
@@ -91,7 +91,7 @@
 
       <section aria-labelledby="student-reviews" class="mt-8">
         <h2 id="student-reviews" class="text-xl font-semibold mb-4">
-          Student Reviews
+          {{ __('courses.student_reviews') }}
         </h2>
 
         @forelse ($course->approvedReviews as $review)
@@ -137,7 +137,7 @@
           @endif
         </article>
         @empty
-        <p class="text-gray-500 mb-4">No reviews yet.</p>
+        <p class="text-gray-500 mb-4">{{ __('courses.no_reviews') }}</p>
         @endforelse
         @if($isEnrolled && !$userReview)
 
@@ -172,22 +172,22 @@
     <x-primary-button
       :href="route('teacher.courses.show', $course->id)"
       class="w-full justify-center mb-2">
-      Manage Course
+      {{ __('courses.manage_course') }}
     </x-primary-button>
 
     <x-secondary-button
       :href="route('lessons.step.show', ['lesson' => $firstLesson->id, 'position' => 1])"
       class="w-full justify-center">
-      Preview
+      {{__('courses.preview_student')}}
     </x-secondary-button>
     @elseif ($isEnrolled)
     <x-primary-button
       :href="route('lessons.step.show', ['lesson' => $firstLesson->id, 'position' => 1])"
       class="w-full justify-center">
-      Study
+      {{ __('courses.continue') }}
     </x-primary-button>
     @else
-    <span class="text-lg font-bold ml-2 mb-1">${{ $course->price }}</span>
+    <span class="text-lg font-bold ml-2 mb-1">{{ $course->price == 0 ? __('courses.free') : __('courses.price', ['price' => $course->price]) }}</span>
 
     <div class="flex gap-2 justify-between">
       <form
@@ -195,7 +195,7 @@
         method="POST"
         class="flex-1">
         @csrf
-        <x-primary-button class="w-full justify-center">Enroll</x-primary-button>
+        <x-primary-button class="w-full justify-center">{{ __('courses.enroll') }}</x-primary-button>
       </form>
 
       <div class="flex items-center">

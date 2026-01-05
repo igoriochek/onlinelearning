@@ -1,12 +1,12 @@
 <x-guest-layout>
-  @section('title','Register')
-  @section('meta_description', 'Create a new account on ' . config('app.name') . ' to start learning online')
+  @section('title',__('auth.register_title'))
+  @section('meta_description', __('auth.register_meta_description'))
   <form method="POST" action="{{ route('register') }}">
     @csrf
 
     <!-- Name -->
     <div>
-      <x-input-label for="name" :value="__('Name')" />
+      <x-input-label for="name" :value="__('auth.name')" />
       <x-text-input
         id="name"
         class="mt-1 block w-full"
@@ -21,7 +21,7 @@
 
     <!-- Email Address -->
     <div class="mt-4">
-      <x-input-label for="email" :value="__('Email')" />
+      <x-input-label for="email" :value="__('auth.email')" />
       <x-text-input
         id="email"
         class="mt-1 block w-full"
@@ -35,7 +35,7 @@
 
     <!-- Password -->
     <div class="mt-4">
-      <x-input-label for="password" :value="__('Password')" />
+      <x-input-label for="password" :value="__('auth.password')" />
 
       <x-text-input
         id="password"
@@ -52,7 +52,7 @@
     <div class="mt-4">
       <x-input-label
         for="password_confirmation"
-        :value="__('Confirm Password')" />
+        :value="__('auth.confirm_password')" />
 
       <x-text-input
         id="password_confirmation"
@@ -75,7 +75,7 @@
           name="is_teacher"
           value="1"
           class="form-checkbox" />
-        <span class="ml-2 text-gray-700">I'm a teacher</span>
+        <span class="ml-2 text-gray-700">{{ __('auth.teacher_checkbox') }}</span>
       </label>
     </div>
 
@@ -85,11 +85,11 @@
 					focus:outline-none focus:ring-2 focus:ring-indigo-500
 					focus:ring-offset-2"
         href="{{ route('login') }}">
-        {{ __('Already registered?') }}
+        {{ __('auth.already_registered') }}
       </a>
 
       <x-primary-button class="ms-4">
-        {{ __('Register') }}
+        {{ __('auth.register_button') }}
       </x-primary-button>
     </div>
   </form>

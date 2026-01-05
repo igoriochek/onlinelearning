@@ -20,5 +20,6 @@ return [
   'user' => 'User',
   'course' => 'Course',
   'comment' => 'Comment',
-  'rating' => 'Rating'
+  'rating' => 'Rating',
+  'progress' => 'Progress',
 ];

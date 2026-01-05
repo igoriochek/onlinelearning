@@ -1,13 +1,13 @@
 @extends('dashboard.index')
 
-@section('title', 'My Courses')
+@section('title', __('dashboard.my_courses'))
 
 @section('dashboard-content')
 @if ($courses->isEmpty())
-<p class="text-gray-500">You haven't enrolled in any courses yet.</p>
+<p class="text-gray-500">{{ __('dashboard.my_courses_empty') }}</p>
 @else
 <x-course-section
-  title="My Courses"
+  :title="__('dashboard.my_courses')"
   :courses="$courses"
   :showPrice="false" />
 

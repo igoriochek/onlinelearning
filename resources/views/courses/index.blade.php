@@ -1,9 +1,9 @@
 <x-app-layout>
-  @section('title', 'Browse Online Courses')
-  @section('meta_description', 'Browse, enroll, and boost your skills today!')
+  @section('title', __('courses.page_title'))
+  @section('meta_description', __('courses.meta_description'))
   <x-slot name="header">
     <h2 class="text-xl font-semibold leading-tight text-gray-800">
-      Browse Courses
+      {{ __('courses.header') }}
     </h2>
   </x-slot>
 
@@ -11,14 +11,14 @@
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 flex flex-col md:flex-row gap-6">
       <aside class="hidden md:block w-1/5 bg-white shadow-sm rounded-lg p-4 h-60">
         <form method="GET" action="{{ route('courses.index') }}" class="space-y-2">
-          <p class="font-semibold mb-2">Sort by</p>
+          <p class="font-semibold mb-2">{{ __('courses.sort_by') }}</p>
           <x-select-input name="sort" id="sort" onchange="this.form.submit()">
-            <option value="">Default</option>
-            <option value="newest" @selected(request('sort')==='newest' )>Newest First</option>
-            <option value="popular" @selected(request('sort')==='popular' )>Most Popular</option>
-            <option value="best" @selected(request('sort')==='best' )>Best Rated</option>
+            <option value="">{{ __('courses.default') }}</option>
+            <option value="newest" @selected(request('sort')==='newest' )>{{ __('courses.newest') }}</option>
+            <option value="popular" @selected(request('sort')==='popular' )>{{ __('courses.popular') }}</option>
+            <option value="best" @selected(request('sort')==='best' )>{{ __('courses.best') }}</option>
           </x-select-input>
-          <p class="font-semibold mb-2">Filter by Level</p>
+          <p class="font-semibold mb-2">{{ __('courses.filter_by_level') }}</p>
           <div class="space-y-2">
             @foreach($levels as $value => $key)
             <label class="flex items-center gap-2">
@@ -38,17 +38,17 @@
       <div class="md:hidden bg-white shadow rounded-lg p-4 mb-4">
         <form method="GET" action="{{ route('courses.index') }}">
           <div class="mb-4">
-            <label for="sort_mobile" class="font-semibold block mb-1">Sort by</label>
+            <label for="sort_mobile" class="font-semibold block mb-1">{{ __('courses.sort_by') }}</label>
             <x-select-input name="sort" id="sort_mobile" onchange="this.form.submit()">
-              <option value="">Default</option>
-              <option value="newest" @selected(request('sort')==='newest' )>Newest First</option>
-              <option value="popular" @selected(request('sort')==='popular' )>Most Popular</option>
-              <option value="best" @selected(request('sort')==='best' )>Best Rated</option>
+              <option value="">{{ __('courses.default') }}</option>
+              <option value="newest" @selected(request('sort')==='newest' )>{{ __('courses.newest') }}</option>
+              <option value="popular" @selected(request('sort')==='popular' )>{{ __('courses.popular') }}</option>
+              <option value="best" @selected(request('sort')==='best' )>{{ __('courses.best') }}</option>
             </x-select-input>
           </div>
 
           <details class="border-t border-gray-200 pt-2">
-            <summary class="font-semibold cursor-pointer mb-2">Filter by Level</summary>
+            <summary class="font-semibold cursor-pointer mb-2">{{ __('courses.filter_by_level') }}</summary>
             <div class="mt-2 space-y-2">
               @foreach($levels as $value => $key)
               <label class="flex items-center gap-2">

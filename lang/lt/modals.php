@@ -11,5 +11,22 @@ return [
   'delete_user_confirm' => 'Ar tikrai norite ištrinti šį vartotoją? Šio veiksmo nebus galima atšaukti.',
   'delete_review' => 'Ištrinti atsiliepimą',
   'delete_review_confirm' => 'Ar tikrai norite ištrinti šį atsiliepimą? Šio veiksmo nebus galima atšaukti.',
-  'moderate_review' => 'Atsiliepimo moderavimas'
+  'moderate_review' => 'Atsiliepimo moderavimas',
+  'delete_course' => 'Ištrinti kursą',
+  'delete_course_confirm' => 'Ar tikrai norite ištrinti šį kursą? Šio veiksmo atšaukti negalima.',
+  'delete_section' => 'Ištrinti temą',
+  'delete_section_confirm' => 'Ar tikrai norite ištrinti šią temą? Visos pamokos ir užduotys esančios viduje bus prarastos.',
+  'edit_section' => 'Redaguoti temą',
+  'section_title' => 'Temos pavadinimas',
+  'save_changes' => 'Išsaugoti pakeitimus',
+  'add_section' => 'Sukurti naują temą',
+  'save' => 'Išsaugoti',
+  'edit_lesson' => 'Redaguoti pamoką',
+  'lesson_title' => 'Pamokos pavadinimas',
+  'add_lesson' => 'Sukurti naują pamoką',
+  'delete_lesson' => 'Ištrinti pamoką',
+  'delete_lesson_confirm' => 'Ar tikrai norite ištrinti šią pamoką? Visos užduotys esančios viduje bus prarastos.',
+  'delete_step'   => 'Ištrinti užduotį',
+  'delete_step_confirm' => 'Ar tikrai norite ištrinti šią užduotį? Šio veiksmo atšaukti nebus galima.',
+
 ];

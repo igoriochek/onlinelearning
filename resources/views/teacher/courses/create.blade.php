@@ -1,8 +1,8 @@
 <x-app-layout>
-  @section('title', 'Create a Course')
+  @section('title', __('teacher.create_course'))
   <x-slot name="header">
     <h2 class="text-xl font-semibold leading-tight text-gray-800">
-      {{ __('Create a course') }}
+      {{ __('teacher.create_course') }}
     </h2>
   </x-slot>
   <main
@@ -16,7 +16,7 @@
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div class="mb-2">
-          <x-input-label for="title" value="Course Title" />
+          <x-input-label for="title" :value="__('teacher.course_title')" />
           <x-text-input
             type="text"
             name="title"
@@ -28,17 +28,17 @@
         </div>
 
         <div class="mb-2">
-          <x-input-label for="level" value="Level" />
+          <x-input-label for="level" :value="__('teacher.level')" />
           <x-select-input name="level" id="level">
-            <option value="1">Beginner</option>
-            <option value="2">Intermediate</option>
-            <option value="3">Advanced</option>
+            <option value="1">{{ __('teacher.level_beginner') }}</option>
+            <option value="2">{{ __('teacher.level_intermediate') }}</option>
+            <option value="3">{{ __('teacher.level_advanced') }}</option>
           </x-select-input>
         </div>
 
         <div class="mb-4 flex items-end gap-4">
           <div id="price_wrapper">
-            <x-input-label for="price" value="Price $" />
+            <x-input-label for="price" :value="__('teacher.price')" />
             <x-text-input
               type="number"
               name="price"
@@ -55,12 +55,12 @@
               name="free_course"
               id="free_course"
               :checked="old('free_course')" />
-            <x-input-label for="free_course">Free course</x-input-label>
+            <x-input-label for="free_course">{{ __('teacher.free_course') }}</x-input-label>
           </div>
         </div>
 
         <div class="mb-2 pt-1">
-          <x-input-label for="image" value="Course Image" />
+          <x-input-label for="image" :value="__('teacher.course_image')" />
           <input
             type="file"
             name="image"
@@ -70,7 +70,7 @@
       </div>
 
       <div class="mb-4">
-        <x-input-label for="description" value="Description" />
+        <x-input-label for="description" :value="__('teacher.description')" />
         <x-text-area-input name="description" id="description" rows="4">
           {{ old('description') }}
         </x-text-area-input>
@@ -78,7 +78,7 @@
       </div>
 
       <div class="flex justify-center mt-4">
-        <x-primary-button type="submit">Next</x-primary-button>
+        <x-primary-button type="submit">{{ __('teacher.next') }}</x-primary-button>
       </div>
     </form>
   </main>

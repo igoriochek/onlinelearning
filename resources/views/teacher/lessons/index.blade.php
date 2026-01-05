@@ -1,21 +1,21 @@
 <x-app-layout>
-  @section('title', $section->title . ' — Lessons')
+  @section('title', $section->title . ' — ' . __('teacher.lessons'))
   <x-slot name="header">
     <h2 class="text-xl font-semibold leading-tight text-gray-800">
-      {{ $section->title }} — Lessons
+      {{ $section->title }} — {{ __('teacher.lessons') }}
     </h2>
     <nav class="text-sm text-gray-700 mt-1">
       <a href="{{ route('teacher.courses.show', $section->course_id) }}"
         class="inline-block font-medium hover:underline hover:text-gray-900 transition-colors duration-200">
-        Course Overview
+        {{ __('teacher.course_overview') }}
       </a>
       <span class="mx-1">/</span>
       <a href="{{ route('teacher.courses.sections.index', $section->course_id) }}"
         class="inline-block font-medium hover:underline hover:text-gray-900 transition-colors duration-200">
-        Sections
+        {{ __('teacher.sections') }}
       </a>
       <span class="mx-1">/</span>
-      <span>Lessons</span>
+      <span>{{ __('teacher.lessons') }}</span>
     </nav>
   </x-slot>
 
@@ -24,15 +24,15 @@
     class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
     <div class="bg-white p-6 rounded-lg shadow">
       <div class="flex justify-between items-center mb-6">
-        <h3 class="text-lg font-semibold text-gray-900">Lessons</h3>
+        <h3 class="text-lg font-semibold text-gray-900">{{ __('teacher.lessons') }}</h3>
 
         <x-primary-button @click="$dispatch('open-modal', 'create-lesson')">
-          Add Lesson
+          {{ __('teacher.add_lesson') }}
         </x-primary-button>
       </div>
 
       @if ($section->lessons->isEmpty())
-      <p class="text-gray-500">No lessons created yet.</p>
+      <p class="text-gray-500">{{ __('teacher.no_lessons') }}</p>
       @else
       <div
         x-data="reorderItems('{{ route('teacher.sections.lessons.reorder', $section->id) }}')"
@@ -65,7 +65,7 @@
               <x-secondary-button
                 href="{{ route('teacher.lessons.steps.index', $lesson->id) }}"
                 class="w-full sm:w-auto justify-center">
-                Manage Steps
+                {{ __('teacher.manage_steps') }}
               </x-secondary-button>
 
               <x-primary-button
@@ -75,7 +75,7 @@
                     $dispatch('open-modal','edit-lesson');"
                 aria-label="Edit {{ $lesson->title }}"
                 class="w-full sm:w-auto justify-center">
-                Edit
+                {{ __('teacher.edit') }}
               </x-primary-button>
 
               <x-danger-button
@@ -84,7 +84,7 @@
                       $dispatch('open-modal','delete-lesson');"
                 aria-label="Delete {{ $lesson->title }}"
                 class="w-full sm:w-auto justify-center">
-                Delete
+                {{ __('teacher.delete') }}
               </x-danger-button>
             </div>
           </div>

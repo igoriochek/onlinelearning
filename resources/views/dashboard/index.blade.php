@@ -1,7 +1,7 @@
 <x-app-layout>
   <x-slot name="header">
     <h2 class="text-xl font-semibold leading-tight text-gray-800">
-      {{ __('Dashboard') }}
+      {{ __('dashboard.heading') }}
     </h2>
   </x-slot>
 
@@ -14,20 +14,20 @@
           <x-aside-nav-link
             href="{{ route('dashboard.my-courses') }}"
             :active="request()->routeIs('dashboard.my-courses')">
-            My Courses
+            {{ __('dashboard.my_courses') }}
           </x-aside-nav-link>
 
           <x-aside-nav-link
             href="{{ route('dashboard.wishlist') }}"
             :active="request()->routeIs('dashboard.wishlist')">
-            Wishlist
+            {{ __('dashboard.wishlist') }}
           </x-aside-nav-link>
           @auth
           @if (auth()->user()->role === 'teacher')
           <x-aside-nav-link
             href="{{ route('dashboard.manage-courses') }}"
             :active="request()->routeIs('dashboard.manage-courses')">
-            Manage Courses
+            {{ __('dashboard.manage_courses') }}
           </x-aside-nav-link>
           @endif
           @endauth
@@ -39,19 +39,19 @@
         <x-aside-nav-link
           href="{{ route('dashboard.my-courses') }}"
           :active="request()->routeIs('dashboard.my-courses')">
-          My Courses
+          {{ __('dashboard.my_courses') }}
         </x-aside-nav-link>
 
         <x-aside-nav-link
           href="{{ route('dashboard.wishlist') }}"
           :active="request()->routeIs('dashboard.wishlist')">
-          Wishlist
+          {{ __('dashboard.wishlist') }}
         </x-aside-nav-link>
         @if (auth()->user()->role === 'teacher')
         <x-aside-nav-link
           href="{{ route('dashboard.manage-courses') }}"
           :active="request()->routeIs('dashboard.manage-courses')">
-          Manage Courses
+          {{ __('dashboard.manage_courses') }}
         </x-aside-nav-link>
         @endif
       </nav>

@@ -6,10 +6,10 @@
 
 <form method="POST" action="{{  route('courses.review.store', $courseId) }}" class="border p-4 rounded-lg bg-white shadow-md space-y-4 text-center">
   @csrf
-  <h2 class="text-xl font-semibold text-gray-800">Share your experience</h2>
+  <h2 class="text-xl font-semibold text-gray-800">{{ __('courses.review.title') }}</h2>
 
   <div>
-    <p class="font-medium text-gray-700 mb-2">How would you rate this course?</p>
+    <p class="font-medium text-gray-700 mb-2">{{ __('courses.review.rating_label') }}</p>
     <div class="flex justify-center gap-2" x-data="{ rating: @json($userRating ?? 0), hover: 0 }">
       @for ($i = 1; $i <= 5; $i++)
         <svg
@@ -34,18 +34,18 @@
   </div>
 
   <div class="flex flex-col items-center">
-    <label for="comment" class="font-medium text-gray-700 mb-1">Review</label>
+    <label for="comment" class="font-medium text-gray-700 mb-1">{{ __('courses.review.review_label') }}</label>
     <x-text-area-input
       id="comment"
       name="comment"
       rows="4"
       required
       class="w-full"
-      placeholder="Write your review...">{{ old('comment', $userComment) }}</x-text-area-input>
+      placeholder="{{ __('courses.review.review_placeholder') }}">{{ old('comment', $userComment) }}</x-text-area-input>
     <x-input-error :messages="$errors->get('comment')" class="mt-1" />
   </div>
 
   <x-primary-button type="submit" class="mt-4 px-6 py-2 ">
-    Submit
+    {{ __('courses.review.submit') }}
   </x-primary-button>
 </form>

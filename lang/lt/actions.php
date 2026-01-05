@@ -9,4 +9,5 @@ return [
   'delete_user' => 'Ištrinti naudotoją',
   'moderate_review' => 'Moderuoti atsiliepimą',
   'delete_review' => 'Ištrinti atsiliepimą',
+  'submit_answer' => 'Pateikti atsakymą'
 ];

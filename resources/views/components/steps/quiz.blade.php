@@ -40,7 +40,7 @@
       type="submit"
       x-bind:disabled="!canSubmit"
       class="mt-4 justify-center">
-      Submit Answer
+      {{__('actions.submit_answer')}}
     </x-primary-button>
   </div>
   @endunless

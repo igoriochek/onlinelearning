@@ -9,40 +9,40 @@ $stepTypeLabels = [
 @endphp
 
 <x-app-layout>
-  @section('title', $lesson->title . ' — Edit Step '. $step->position)
+  @section('title', $lesson->title . ' — ' . __('teacher.edit_step'). $step->position)
   <x-slot name="header">
     <h2 class="text-xl font-semibold leading-tight text-gray-800">
-      {{ $lesson->title }} — Edit Step {{ $step->position }}
+      {{ $lesson->title }} — {{__('teacher.edit_step')}} {{ $step->position }}
     </h2>
     <nav class="text-sm mt-1">
       <a href="{{ route('teacher.courses.show', $lesson->section->course_id) }}"
         class="inline-block text-gray-700 rounded-md font-medium hover:underline hover:text-gray-900 transition-colors duration-200">
-        Course Overview
+        {{ __('teacher.course_overview') }}
       </a>
       <span class="mx-1">/</span>
       <a href="{{ route('teacher.courses.sections.index', $lesson->section->course_id) }}"
         class="inline-block text-gray-700 rounded-md font-medium hover:underline hover:text-gray-900 transition-colors duration-200">
-        Sections
+        {{ __('teacher.sections') }}
       </a>
       <span class="mx-1">/</span>
       <a href="{{ route('teacher.sections.lessons.index', $lesson->section->id) }}"
         class="inline-block text-gray-700 rounded-md font-medium hover:underline hover:text-gray-900 transition-colors duration-200">
-        Lessons
+        {{ __('teacher.lessons') }}
       </a>
       <span class="mx-1">/</span>
       <a href="{{ route('teacher.lessons.steps.index', $lesson->id) }}"
         class="inline-block text-gray-700 rounded-md font-medium hover:underline hover:text-gray-900 transition-colors duration-200">
-        Steps
+        {{ __('teacher.steps') }}
       </a>
       <span class="mx-1">/</span>
-      <span>Edit</span>
+      <span>{{ __('teacher.edit_step') }}</span>
     </nav>
   </x-slot>
 
   <main class="max-w-7xl mx-auto py-6">
     <div class="bg-white p-6 rounded-lg shadow">
       <h3 class="text-lg font-semibold text-gray-900 mb-6">
-        Edit {{ $stepTypeLabels[$step->type] ?? ucfirst($step->type) }} Step
+        {{ __('teacher.edit') }} {{ $stepTypeLabels[$step->type] ?? ucfirst($step->type) }} {{ __('teacher.step') }}
       </h3>
 
       <form
@@ -78,7 +78,7 @@ $stepTypeLabels = [
         @endswitch
 
         <div class="flex justify-center mt-4">
-          <x-primary-button type="submit">Update Step</x-primary-button>
+          <x-primary-button type="submit">{{ __('teacher.update_step') }}</x-primary-button>
         </div>
       </form>
     </div>

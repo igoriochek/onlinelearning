@@ -9,4 +9,5 @@ return [
   'delete_user' => 'Delete user',
   'moderate_review' => 'Moderate review',
   'delete_review' => 'Delete review',
+  'submit_answer' => 'Submit Answer'
 ];

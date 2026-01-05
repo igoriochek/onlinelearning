@@ -1,41 +1,41 @@
 <x-app-layout>
-  @section('title', $lesson->title . ' — Steps')
+  @section('title', $lesson->title . ' — ' . __('teacher.steps'))
 
   <x-slot name="header">
     <h2 class="text-xl font-semibold leading-tight text-gray-800">
-      {{ $lesson->title }} — Steps
+      {{ $lesson->title }} — {{ __('teacher.steps') }}
     </h2>
     <nav class="text-sm text-gray-700 mt-1">
       <a href="{{ route('teacher.courses.show', $lesson->section->course_id) }}"
         class="inline-block font-medium hover:underline hover:text-gray-900 transition-colors duration-200">
-        Course Overview
+        {{ __('teacher.course_overview') }}
       </a>
       <span class="mx-1">/</span>
       <a href="{{ route('teacher.courses.sections.index', $lesson->section->course_id) }}"
         class="inline-block font-medium hover:underline hover:text-gray-900 transition-colors duration-200">
-        Sections
+        {{ __('teacher.sections') }}
       </a>
       <span class="mx-1">/</span>
       <a href="{{ route('teacher.sections.lessons.index', $lesson->section->id) }}"
         class="inline-block font-medium hover:underline hover:text-gray-900 transition-colors duration-200">
-        Lessons
+        {{ __('teacher.lessons') }}
       </a>
       <span class="mx-1">/</span>
-      <span>Steps</span>
+      <span>{{ __('teacher.steps') }}</span>
     </nav>
   </x-slot>
 
-  <main x-data="{ stepId: null }" class="max-w-7xl mx-auto py-6">
+  <main x-data="{ stepId: null }" class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
     <div class="bg-white p-6 rounded-lg shadow">
       <div class="flex justify-between items-center mb-6">
-        <h3 class="text-lg font-semibold text-gray-900">Lesson Steps</h3>
+        <h3 class="text-lg font-semibold text-gray-900">{{ __('teacher.lesson_steps') }}</h3>
         <x-primary-button
           href="{{ route('teacher.lessons.steps.create', $lesson->id) }}">
-          Add Step
+          {{ __('teacher.add_step') }}
         </x-primary-button>
       </div>
       @if ($lesson->steps->isEmpty())
-      <p class="text-gray-500">No steps created yet.</p>
+      <p class="text-gray-500">{{ __('teacher.no_steps') }}</p>
       @else
       <div
         x-data="reorderItems('{{ route('teacher.lessons.steps.reorder', $lesson->id) }}')"
@@ -60,13 +60,13 @@
               <x-primary-button
                 href="{{ route('teacher.steps.edit', $step->id) }}"
                 class="w-full sm:w-auto justify-center">
-                Edit
+                {{ __('teacher.edit') }}
               </x-primary-button>
               <x-danger-button
                 @click=" stepId = {{ $step->id }};
                   $dispatch('open-modal', 'delete-step');"
                 class="w-full sm:w-auto justify-center">
-                Delete
+                {{ __('teacher.delete') }}
               </x-danger-button>
             </div>
           </div>

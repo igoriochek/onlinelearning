@@ -1,8 +1,8 @@
 <x-app-layout>
-  @section('title', 'Edit Profile')
+  @section('title', __('profile.title'))
   <x-slot name="header">
     <h2 class="text-xl font-semibold leading-tight text-gray-800">
-      {{ __('Profile') }}
+      {{ __('profile.header') }}
     </h2>
   </x-slot>
 

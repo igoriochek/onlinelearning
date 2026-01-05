@@ -1,10 +1,10 @@
 @extends('dashboard.index')
 
-@section('title', 'Manage Courses')
+@section('title', __('dashboard.manage_courses'))
 
 @section('dashboard-content')
 <x-course-section
-  title="Created Courses"
+  :title="__('dashboard.created_courses')"
   :courses="$courses"
   :builder="true" />
 

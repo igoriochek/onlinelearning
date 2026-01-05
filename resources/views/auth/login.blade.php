@@ -1,6 +1,7 @@
 <x-guest-layout>
-  @section('title','Login')
-  @section('meta_description', 'Login to access your account on ' . config('app.name'))
+  @section('title',__('auth.login_title'))
+  @section('meta_description', __('auth.login_meta_description'))
+
   <!-- Session Status -->
   <x-auth-session-status class="mb-4" :status="session('status')" />
 
@@ -9,7 +10,7 @@
 
     <!-- Email Address -->
     <div>
-      <x-input-label for="email" :value="__('Email')" />
+      <x-input-label for="email" :value="__('auth.email')" />
       <x-text-input
         id="email"
         class="mt-1 block w-full"
@@ -24,7 +25,7 @@
 
     <!-- Password -->
     <div class="mt-4">
-      <x-input-label for="password" :value="__('Password')" />
+      <x-input-label for="password" :value="__('auth.password')" />
 
       <x-text-input
         id="password"
@@ -47,7 +48,7 @@
 						focus:ring-indigo-500"
           name="remember" />
         <span class="ms-2 text-sm text-gray-600">
-          {{ __('Remember me') }}
+          {{ __('auth.remember_me') }}
         </span>
       </label>
     </div>
@@ -59,12 +60,12 @@
 						focus:outline-none focus:ring-2 focus:ring-indigo-500
 						focus:ring-offset-2"
         href="{{ route('password.request') }}">
-        {{ __('Forgot your password?') }}
+        {{ __('auth.forgot_password') }}
       </a>
       @endif
 
       <x-primary-button class="ms-3">
-        {{ __('Log in') }}
+        {{ __('auth.login_button') }}
       </x-primary-button>
     </div>
   </form>

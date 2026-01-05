@@ -20,5 +20,6 @@ return [
   'user' => 'Naudotojas',
   'course' => 'Kursas',
   'comment' => 'Komentaras',
-  'rating' => 'Įvertinimas'
+  'rating' => 'Įvertinimas',
+  'progress' => 'Progresas',
 ];

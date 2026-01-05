@@ -1,16 +1,16 @@
 <x-app-layout>
-  @section('title', $course->title . ' — Sections')
+  @section('title', $course->title . ' — ' . __('teacher.sections'))
   <x-slot name="header">
     <h2 class="text-xl font-semibold leading-tight text-gray-800">
-      {{ $course->title }} — Sections
+      {{ $course->title }} — {{ __('teacher.sections') }}
     </h2>
     <nav class="text-sm text-gray-700 mt-1">
       <a href="{{ route('teacher.courses.show', $course->id) }}"
         class="inline-block font-medium hover:underline hover:text-gray-900 transition-colors duration-200">
-        Course Overview
+        {{ __('teacher.course_overview') }}
       </a>
       <span class="mx-1">/</span>
-      <span>Sections</span>
+      <span>{{ __('teacher.sections') }}</span>
     </nav>
   </x-slot>
 
@@ -19,15 +19,15 @@
     class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
     <div class="bg-white p-6 rounded-lg shadow">
       <div class="flex justify-between items-center mb-6">
-        <h3 class="text-lg font-semibold text-gray-900">Sections</h3>
+        <h3 class="text-lg font-semibold text-gray-900">{{ __('teacher.sections') }}</h3>
 
         <x-primary-button @click="$dispatch('open-modal', 'create-section')">
-          Add Section
+          {{ __('teacher.add_section') }}
         </x-primary-button>
       </div>
 
       @if ($course->sections->isEmpty())
-      <p class="text-gray-500">No sections created yet.</p>
+      <p class="text-gray-500">{{ __('teacher.no_sections_yet') }}</p>
       @else
       <div
         x-data="reorderItems('{{ route('teacher.courses.sections.reorder', $course->id) }}')"
@@ -60,7 +60,7 @@
               <x-secondary-button
                 href="{{ route('teacher.sections.lessons.index', $section->id) }}"
                 class="w-full sm:w-auto justify-center">
-                Manage Lessons
+                {{ __('teacher.manage_lessons') }}
               </x-secondary-button>
 
               <x-primary-button
@@ -70,7 +70,7 @@
                     $dispatch('open-modal', 'edit-section');"
                 aria-label="Edit {{ $section->title }}"
                 class="w-full sm:w-auto justify-center">
-                Edit
+                {{ __('teacher.edit') }}
               </x-primary-button>
 
               <x-danger-button
@@ -79,7 +79,7 @@
                   $dispatch('open-modal', 'delete-section');"
                 aria-label="Delete {{ $section->title }}"
                 class="w-full sm:w-auto justify-center">
-                Delete
+                {{ __('teacher.delete') }}
               </x-danger-button>
             </div>
           </div>

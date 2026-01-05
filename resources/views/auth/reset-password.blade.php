@@ -1,5 +1,5 @@
 <x-guest-layout>
-  @section('title', 'Reset Password')
+  @section('title', __('auth.reset_password'))
   <form method="POST" action="{{ route('password.store') }}">
     @csrf
 
@@ -8,7 +8,7 @@
 
     <!-- Email Address -->
     <div>
-      <x-input-label for="email" :value="__('Email')" />
+      <x-input-label for="email" :value="__('auth.email')" />
       <x-text-input
         id="email"
         class="mt-1 block w-full"
@@ -23,7 +23,7 @@
 
     <!-- Password -->
     <div class="mt-4">
-      <x-input-label for="password" :value="__('Password')" />
+      <x-input-label for="password" :value="__('auth.password')" />
       <x-text-input
         id="password"
         class="mt-1 block w-full"
@@ -38,7 +38,7 @@
     <div class="mt-4">
       <x-input-label
         for="password_confirmation"
-        :value="__('Confirm Password')" />
+        :value="__('auth.confirm_password')" />
 
       <x-text-input
         id="password_confirmation"
@@ -55,7 +55,7 @@
 
     <div class="mt-4 flex items-center justify-end">
       <x-primary-button>
-        {{ __('Reset Password') }}
+        {{ __('auth.reset_password_title') }}
       </x-primary-button>
     </div>
   </form>
