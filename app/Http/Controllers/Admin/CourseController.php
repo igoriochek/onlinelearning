@@ -13,6 +13,7 @@ class CourseController extends Controller
   {
     $courses = Course::with('author')
       ->withCount('enrollments')
+      ->orderByDesc('updated_at')
       ->paginate(20);
 
     return view('admin.courses.index', compact('courses'));
