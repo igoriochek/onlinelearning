@@ -17,12 +17,12 @@ class HomeController extends Controller
       ->take(3)
       ->get();
 
-    $popularCourses = Course::with('reviews')
+    $popularCourses = Course::withCount('enrollments')
       ->where('public', true)
       ->where('status', 'approved')
-      ->get()
-      ->sortByDesc(fn($course) => $course->averageRating)
-      ->take(3);
+      ->orderByDesc('enrollments_count')
+      ->take(3)
+      ->get();
 
     $beginnerCourses = (clone $baseQuery)
       ->where('level', '1')
